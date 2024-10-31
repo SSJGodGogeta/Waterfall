@@ -147,3 +147,7 @@ CREATE TABLE IF NOT EXISTS `waterfall_swe`.`timetable` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- changeset arman:ar2
+ALTER TABLE `waterfall_swe`.`user`
+ADD COLUMN `user_password` VARCHAR(200) NOT NULL AFTER `user_salt`;
