@@ -1,0 +1,25 @@
+{
+  "directories": {
+    "lib": "src"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "name": "waterfall",
+  "version": "1.0.0",
+  "description": "Waterfall Project for Softwaretechnik",
+  "main": "login.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
