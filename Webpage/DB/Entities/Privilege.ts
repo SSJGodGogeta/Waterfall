@@ -4,7 +4,7 @@ import {
     Column,
     OneToMany, BaseEntity,
 } from 'typeorm';
-import {Role} from "./Role";
+import {Role} from "./Role.js";
 
 
 // Privilege Entity

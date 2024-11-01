@@ -5,7 +5,7 @@ import {
     OneToMany,
     Unique, BaseEntity,
 } from 'typeorm';
-import {Staff} from "./Staff";
+import {Staff} from "./Staff.js";
 // User Entity
 @Entity('user')
 @Unique(['user_email'])

@@ -4,7 +4,7 @@ import {
     Column,
     OneToMany, BaseEntity,
 } from 'typeorm';
-import {Timetable} from "./TimeTable";
+import {Timetable} from "./TimeTable.js";
 
 
 // Project Entity

@@ -4,7 +4,7 @@ import {
     Column,
     OneToMany, BaseEntity,
 } from 'typeorm';
-import {Staff} from "./Staff";
+import {Staff} from "./Staff.js";
 
 // Group Entity
 @Entity('group')

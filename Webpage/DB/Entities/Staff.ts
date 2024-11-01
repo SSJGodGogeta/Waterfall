@@ -6,12 +6,12 @@ import {
     OneToMany,
     JoinColumn, BaseEntity,
 } from 'typeorm';
-import {Group} from "./Group";
-import {User} from "./User";
-import {Role} from "./Role";
-import {FlexTime} from "./FlexTime";
-import {Absence} from "./Absence";
-import {Timetable} from "./TimeTable";
+import {Group} from "./Group.js";
+import {User} from "./User.js";
+import {Role} from "./Role.js";
+import {FlexTime} from "./FlexTime.js";
+import {Absence} from "./Absence.js";
+import {Timetable} from "./TimeTable.js";
 
 // Staff Entity
 @Entity('staff')

@@ -4,8 +4,8 @@ import {
     ManyToOne,
     JoinColumn, BaseEntity,
 } from 'typeorm';
-import {Staff} from "./Staff";
-import {Project} from "./Project";
+import {Staff} from "./Staff.js";
+import {Project} from "./Project.js";
 
 
 // Timetable Entity

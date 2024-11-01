@@ -1,17 +1,19 @@
 {
   "name": "waterfall",
   "version": "1.0.0",
-  "main": "login.js",
+  "main": "Webpage/dist/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/login.js"
+    "start": "node Webpage/dist/index.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "Waterfall Project for Softwaretechnik",
   "directories": {
-    "lib": "src"
+    "lib": "dist"
   },
   "dependencies": {
     "mysql2": "^3.11.3",
@@ -20,7 +22,11 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
+    "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
   }
 }

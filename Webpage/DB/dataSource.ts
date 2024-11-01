@@ -1,5 +1,4 @@
 import {DataSource} from "typeorm";
-import {Privilege} from "./Entities/Privilege";
 export const dataSource: DataSource = new DataSource({
     type: "mysql",
     host: "localhost",
@@ -9,6 +8,6 @@ export const dataSource: DataSource = new DataSource({
     database: "waterfall_swe",
     synchronize: false,
     logging: true,
-    entities: [Privilege],
+    entities: ["Webpage/dist/DB/Entities/*.js"], // U may need to reference the js files directly from /Webpage/dist/..
     subscribers: [],
 });

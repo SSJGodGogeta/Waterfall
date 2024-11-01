@@ -4,7 +4,7 @@ import {
     ManyToOne,
     JoinColumn, BaseEntity,
 } from 'typeorm';
-import {Staff} from "./Staff";
+import {Staff} from "./Staff.js";
 
 // Absence Entity
 @Entity('absence')

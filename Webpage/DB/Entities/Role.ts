@@ -6,8 +6,8 @@ import {
     OneToMany,
     JoinColumn, BaseEntity,
 } from 'typeorm';
-import {Privilege} from "./Privilege";
-import {Staff} from "./Staff";
+import {Privilege} from "./Privilege.js";
+import {Staff} from "./Staff.js";
 
 // Role Entity
 @Entity('role')

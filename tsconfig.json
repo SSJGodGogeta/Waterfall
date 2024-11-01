@@ -1,24 +1,26 @@
+// tsconfig.json
 {
   "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */
-    "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
-    "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
-    "module": "NodeNext",                                /* Specify what module code is generated. */
-    "rootDir": ".",                                  /* Specify the root folder within your source files. */
-    "resolveJsonModule": true,                        /* Enable importing .json files. */
-    "allowJs": true,                                  /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
-    "sourceMap": true,                                /* Create source map files for emitted JavaScript files. */
-    "outDir": "./dist",                                   /* Specify an output folder for all emitted files. */
-    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
-    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
-    "strict": true,                                      /* Enable all strict type-checking options. */
-    "noUnusedLocals": true,                           /* Enable error reporting when local variables aren't read. */
-    "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read. */
-    "noFallthroughCasesInSwitch": true,               /* Enable error reporting for fallthrough cases in switch statements. */
-    "noImplicitOverride": true,                       /* Ensure overriding members in derived classes are marked with an override modifier. */
-    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "target": "es2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "rootDir": "./Webpage",
+    "outDir": "./Webpage/dist",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "skipLibCheck": true
   },
-  "include": ["Webpage/**/*"],
-  "exclude": ["node_modules", "dist"]                           }
+  "include": ["Webpage/**/*.ts"],
+  "exclude": ["node_modules", "Database"]
+}
