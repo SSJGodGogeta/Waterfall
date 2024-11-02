@@ -3,7 +3,6 @@ import {
     PrimaryGeneratedColumn,
     Column,
     ManyToMany,
-    JoinTable,
     BaseEntity,
     JoinColumn,
     ManyToOne, OneToMany
@@ -30,14 +29,11 @@ export class Project extends BaseEntity {
     @JoinColumn({ name: "group_group_id" })
     group?: StaffGroup;
 
-    // Many-to-Many relationship with Group
-    @ManyToMany('StaffGroup', (group: StaffGroup) => group.projectGroups)
-    @JoinTable({
-        name: 'project_group',  // Name of the join table
-        joinColumns: [{ name: "project_id" }],  // Column in the join table that references Project
-        inverseJoinColumns: [{ name: "group_id" }] // Column in the join table that references Group
-    })
-    assignedGroups?: StaffGroup[];
     @OneToMany('Staff', (staff: Staff) => staff.project)
     assigned_staff_to_project?: Staff[];
+
+    // Many-to-Many relationship with Group
+    @ManyToMany('StaffGroup', (group: StaffGroup) => group.projectGroups)
+    assignedGroups?: StaffGroup[];
+
 }
