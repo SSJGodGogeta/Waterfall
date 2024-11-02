@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Webpage/dist/index.js",
-    "build": "tsc"
+    "start": "rimraf Webpage/dist && tsc && node Webpage/dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +21,7 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
+    "rimraf": "^6.0.1",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",
