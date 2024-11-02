@@ -1,27 +1,26 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
     ManyToOne,
     OneToMany,
-    JoinColumn, BaseEntity,
+    JoinColumn, BaseEntity, PrimaryColumn,
 } from 'typeorm';
-import {Privilege} from "./Privilege.js";
-import {Staff} from "./Staff.js";
+import type {Privilege} from "./Privilege.js";
+import type {Staff} from "./Staff.js";
 
 // Role Entity
 @Entity('role')
 export class Role extends BaseEntity{
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn({ name: "role_id" })
     role_id!: number;
 
     @Column({ length: 45 })
     role_name!: string;
 
-    @ManyToOne(() => Privilege, (privilege) => privilege.roles)
+    @ManyToOne('Privilege', (privilege:Privilege) => privilege.roles)
     @JoinColumn({ name: 'privilege_privilege_id' })
     privilege!: Privilege;
 
-    @OneToMany(() => Staff, (staff) => staff.role)
+    @OneToMany('Staff', (staff:Staff) => staff.role)
     staff?: Staff[];
 }

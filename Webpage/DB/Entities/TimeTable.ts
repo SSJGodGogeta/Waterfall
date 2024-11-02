@@ -2,16 +2,16 @@ import {
     Entity,
     Column,
     ManyToOne,
-    JoinColumn, BaseEntity,
+    JoinColumn, BaseEntity, PrimaryGeneratedColumn,
 } from 'typeorm';
-import {Staff} from "./Staff.js";
-import {Project} from "./Project.js";
+import type {Staff} from "./Staff.js";
+import type {Project} from "./Project.js";
 
 
 // Timetable Entity
 @Entity('timetable')
 export class Timetable extends BaseEntity{
-    @Column({ length: 45, primary: true })
+    @PrimaryGeneratedColumn()
     index!: string;
 
     @Column({ type: 'date' })
@@ -38,11 +38,11 @@ export class Timetable extends BaseEntity{
     @Column({ length: 45, nullable: true })
     abscence?: string;
 
-    @ManyToOne(() => Staff, (staff) => staff.timetables)
+    @ManyToOne('Staff', (staff:Staff) => staff.timetables)
     @JoinColumn({ name: 'staff_staff_id' })
     staff!: Staff;
 
-    @ManyToOne(() => Project, (project) => project.timetables)
+    @ManyToOne('Project', (project:Project) => project.timetables)
     @JoinColumn({ name: 'project_project_id' })
     project!: Project;
 }

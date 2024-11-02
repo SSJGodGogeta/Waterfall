@@ -5,7 +5,7 @@ import {
     OneToMany,
     Unique, BaseEntity,
 } from 'typeorm';
-import {Staff} from "./Staff.js";
+import type {Staff} from "./Staff.js";
 // User Entity
 @Entity('user')
 @Unique(['user_email'])
@@ -22,6 +22,6 @@ export class User extends BaseEntity{
     @Column({ length: 200 })
     user_password!: string;
 
-    @OneToMany(() => Staff, (staff) => staff.user)
+    @OneToMany('Staff', (staff:Staff) => staff.user)
     staff?: Staff[];
 }

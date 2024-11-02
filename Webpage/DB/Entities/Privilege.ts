@@ -4,7 +4,7 @@ import {
     Column,
     OneToMany, BaseEntity,
 } from 'typeorm';
-import {Role} from "./Role.js";
+import type {Role} from "./Role.js";
 
 
 // Privilege Entity
@@ -16,6 +16,6 @@ export class Privilege extends BaseEntity{
     @Column({ length: 45 })
     privilege_techcode!: string;
 
-    @OneToMany(() => Role, (role) => role.privilege)
+    @OneToMany('Role', (role:Role) => role.privilege)
     roles?: Role[];
 }

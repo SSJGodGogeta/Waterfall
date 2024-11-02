@@ -4,7 +4,7 @@ import {
     Column,
     OneToMany, BaseEntity,
 } from 'typeorm';
-import {Timetable} from "./TimeTable.js";
+import type {Timetable} from "./TimeTable.js";
 
 
 // Project Entity
@@ -25,6 +25,6 @@ export class Project extends BaseEntity{
     @Column({ length: 45, nullable: true })
     project_assigned_group_ids?: string;
 
-    @OneToMany(() => Timetable, (timetable) => timetable.project)
+    @OneToMany('Timetable', (timetable:Timetable) => timetable.project)
     timetables?: Timetable[];
 }

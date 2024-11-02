@@ -9,5 +9,6 @@ export const dataSource: DataSource = new DataSource({
     synchronize: false,
     logging: true,
     entities: ["Webpage/dist/DB/Entities/*.js"], // U may need to reference the js files directly from /Webpage/dist/..
+    //entities: [Absence, FlexTime, Group, Privilege, Project, Role, Staff, Timetable, User],
     subscribers: [],
 });

@@ -2,13 +2,16 @@ import {
     Entity,
     Column,
     ManyToOne,
-    JoinColumn, BaseEntity,
+    JoinColumn, BaseEntity, PrimaryColumn,
 } from 'typeorm';
-import {Staff} from "./Staff.js";
+import type {Staff} from "./Staff.js";
 
 // Absence Entity
 @Entity('absence')
 export class Absence extends BaseEntity{
+    @PrimaryColumn({ name: "absence_id" })
+    absence_id!: number;
+
     @Column({ type: 'datetime', nullable: true })
     start_time?: Date;
 
@@ -21,7 +24,7 @@ export class Absence extends BaseEntity{
     @Column({ length: 45 })
     type_techcode!: string;
 
-    @ManyToOne(() => Staff, (staff) => staff.absences)
+    @ManyToOne('Staff', (staff:Staff) => staff.absences)
     @JoinColumn({ name: 'staff_staff_id' })
     staff!: Staff;
 }

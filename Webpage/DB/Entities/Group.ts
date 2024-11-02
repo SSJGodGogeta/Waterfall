@@ -4,7 +4,7 @@ import {
     Column,
     OneToMany, BaseEntity,
 } from 'typeorm';
-import {Staff} from "./Staff.js";
+import type {Staff} from "./Staff.js";
 
 // Group Entity
 @Entity('group')
@@ -15,6 +15,6 @@ export class Group extends BaseEntity{
     @Column({ length: 45 })
     group_name!: string;
 
-    @OneToMany(() => Staff, (staff) => staff.group)
+    @OneToMany('Staff', (staff:Staff) => staff.group)
     staff?: Staff[];
 }
