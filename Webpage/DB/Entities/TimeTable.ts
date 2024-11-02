@@ -1,7 +1,7 @@
 import {
     Entity,
     Column,
-    BaseEntity, PrimaryGeneratedColumn, OneToMany,
+    BaseEntity, PrimaryGeneratedColumn, ManyToOne, JoinColumn,
 } from 'typeorm';
 import type {Staff} from "./Staff.js";
 
@@ -36,6 +36,11 @@ export class Timetable extends BaseEntity{
     @Column({ length: 45, nullable: true })
     abscence?: string;
 
-    @OneToMany('Staff', (staff:Staff) => staff.timetable)
-    staff_members!: Staff;
+    @ManyToOne('Staff', (staff:Staff) => staff.timetables)
+    @JoinColumn({
+        name: 'staff_id',
+        referencedColumnName: 'staff_id',
+        foreignKeyConstraintName: 'fk_timetable_staff'
+    })
+    staff!: Staff;
 }

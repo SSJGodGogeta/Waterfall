@@ -8,7 +8,7 @@ import {
     JoinColumn,
     ManyToOne, OneToMany
 } from 'typeorm';
-import type { Group } from './Group.js';
+import type { StaffGroup } from './Group.js';
 import {Staff} from "./Staff.js";
 
 @Entity('project')
@@ -26,18 +26,18 @@ export class Project extends BaseEntity {
     project_due_date?: Date;
 
     // Many-to-One relationship with Group (each project belongs to one group)
-    @ManyToOne('Group', (group: Group) => group.projects)
+    @ManyToOne('StaffGroup', (group: StaffGroup) => group.projects)
     @JoinColumn({ name: "group_group_id" })
-    group?: Group;
+    group?: StaffGroup;
 
     // Many-to-Many relationship with Group
-    @ManyToMany('Group', (group: Group) => group.projectGroups)
+    @ManyToMany('StaffGroup', (group: StaffGroup) => group.projectGroups)
     @JoinTable({
         name: 'project_group',  // Name of the join table
         joinColumns: [{ name: "project_id" }],  // Column in the join table that references Project
         inverseJoinColumns: [{ name: "group_id" }] // Column in the join table that references Group
     })
-    assignedGroups?: Group[];
+    assignedGroups?: StaffGroup[];
     @OneToMany('Staff', (staff: Staff) => staff.project)
     assigned_staff_to_project?: Staff[];
 }

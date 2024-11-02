@@ -6,7 +6,7 @@ import {
     OneToMany,
     JoinColumn, BaseEntity, OneToOne,
 } from 'typeorm';
-import type {Group} from "./Group.js";
+import type {StaffGroup} from "./Group.js";
 import type {User} from "./User.js";
 import type {Role} from "./Role.js";
 import type {FlexTime} from "./FlexTime.js";
@@ -38,13 +38,13 @@ export class Staff extends BaseEntity{
     @Column({ type: 'int', nullable: false })
     supervisor_id!: number;
 
-    @ManyToOne('Group', (group:Group) => group.staff_members)
+    @ManyToOne('StaffGroup', (group:StaffGroup) => group.staff_members)
     @JoinColumn({
         name: 'group_group_id',
         referencedColumnName: 'group_id',
         foreignKeyConstraintName: 'fk_staff_group1'
     })
-    group!: Group;
+    group!: StaffGroup;
 
     @OneToOne('User', (user:User) => user.staff)
     @JoinColumn({
@@ -79,11 +79,6 @@ export class Staff extends BaseEntity{
     absences?: Absence[];
 
 
-    @ManyToOne('Timetable', (timetable:Timetable) => timetable.staff_members)
-    @JoinColumn({
-        name: 'timetable_index',
-        referencedColumnName: 'index',
-        foreignKeyConstraintName: 'fk_staff_timetable1'
-    })
-    timetable!: Timetable;
+    @OneToMany('Timetable', (timetable:Timetable) => timetable.staff)
+    timetables!: Timetable[];
 }

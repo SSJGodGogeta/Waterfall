@@ -260,3 +260,25 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
+-- changeset arman:ar2
+ALTER TABLE `waterfall_swe`.`user`
+ADD COLUMN `user_password` VARCHAR(100) NOT NULL AFTER `user_salt`;
+
+-- changeset arman:ar3
+ALTER TABLE `waterfall_swe`.`staff`
+DROP FOREIGN KEY `fk_staff_timetable1`;
+
+ALTER TABLE `waterfall_swe`.`staff`
+DROP COLUMN `timetable_index`;
+
+ALTER TABLE `waterfall_swe`.`timetable`
+    ADD COLUMN `staff_id` INT NOT NULL,
+    ADD CONSTRAINT `fk_timetable_staff`
+        FOREIGN KEY (`staff_id`)
+        REFERENCES `waterfall_swe`.`staff` (`staff_id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE;
+
+-- changeset arman:ar4
+ALTER TABLE `waterfall_swe`.`group`
+    RENAME TO  `waterfall_swe`.`staff_group` ;

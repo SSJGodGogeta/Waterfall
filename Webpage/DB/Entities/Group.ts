@@ -2,8 +2,8 @@ import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, BaseEntity, OneToMan
 import type { Project } from './Project.js';
 import {Staff} from "./Staff.js";
 
-@Entity('group')
-export class Group extends BaseEntity {
+@Entity('staff_group')
+export class StaffGroup extends BaseEntity {
     @PrimaryGeneratedColumn()
     group_id!: number;
 
