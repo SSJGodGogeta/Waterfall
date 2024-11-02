@@ -1,7 +1,7 @@
 
 UPDATE SUMMARY
-Run:                          2
-Previously run:               0
+Run:                          0
+Previously run:               2
 Filtered out:                 0
 -------------------------------
 Total change sets:            2

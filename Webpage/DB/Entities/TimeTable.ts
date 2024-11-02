@@ -1,11 +1,9 @@
 import {
     Entity,
     Column,
-    ManyToOne,
-    JoinColumn, BaseEntity, PrimaryGeneratedColumn,
+    BaseEntity, PrimaryGeneratedColumn, OneToMany,
 } from 'typeorm';
 import type {Staff} from "./Staff.js";
-import type {Project} from "./Project.js";
 
 
 // Timetable Entity
@@ -38,11 +36,6 @@ export class Timetable extends BaseEntity{
     @Column({ length: 45, nullable: true })
     abscence?: string;
 
-    @ManyToOne('Staff', (staff:Staff) => staff.timetables)
-    @JoinColumn({ name: 'staff_staff_id' })
-    staff!: Staff;
-
-    @ManyToOne('Project', (project:Project) => project.timetables)
-    @JoinColumn({ name: 'project_project_id' })
-    project!: Project;
+    @OneToMany('Staff', (staff:Staff) => staff.timetable)
+    staff_members!: Staff;
 }

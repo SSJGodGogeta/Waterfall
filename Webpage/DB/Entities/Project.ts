@@ -2,14 +2,17 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToMany, BaseEntity,
+    ManyToMany,
+    JoinTable,
+    BaseEntity,
+    JoinColumn,
+    ManyToOne, OneToMany
 } from 'typeorm';
-import type {Timetable} from "./TimeTable.js";
+import type { Group } from './Group.js';
+import {Staff} from "./Staff.js";
 
-
-// Project Entity
 @Entity('project')
-export class Project extends BaseEntity{
+export class Project extends BaseEntity {
     @PrimaryGeneratedColumn()
     project_id!: number;
 
@@ -22,9 +25,19 @@ export class Project extends BaseEntity{
     @Column({ type: 'datetime', nullable: true })
     project_due_date?: Date;
 
-    @Column({ length: 45, nullable: true })
-    project_assigned_group_ids?: string;
+    // Many-to-One relationship with Group (each project belongs to one group)
+    @ManyToOne('Group', (group: Group) => group.projects)
+    @JoinColumn({ name: "group_group_id" })
+    group?: Group;
 
-    @OneToMany('Timetable', (timetable:Timetable) => timetable.project)
-    timetables?: Timetable[];
+    // Many-to-Many relationship with Group
+    @ManyToMany('Group', (group: Group) => group.projectGroups)
+    @JoinTable({
+        name: 'project_group',  // Name of the join table
+        joinColumns: [{ name: "project_id" }],  // Column in the join table that references Project
+        inverseJoinColumns: [{ name: "group_id" }] // Column in the join table that references Group
+    })
+    assignedGroups?: Group[];
+    @OneToMany('Staff', (staff: Staff) => staff.project)
+    assigned_staff_to_project?: Staff[];
 }

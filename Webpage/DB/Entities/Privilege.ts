@@ -2,7 +2,7 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToMany, BaseEntity,
+    OneToMany, BaseEntity
 } from 'typeorm';
 import type {Role} from "./Role.js";
 

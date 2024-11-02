@@ -12,19 +12,23 @@ export class Absence extends BaseEntity{
     @PrimaryColumn({ name: "absence_id" })
     absence_id!: number;
 
-    @Column({ type: 'datetime', nullable: true })
-    start_time?: Date;
+    @Column({ type: 'datetime', nullable: false })
+    start_time!: Date;
 
-    @Column({ type: 'datetime', nullable: true })
-    end_time?: Date;
+    @Column({ type: 'datetime', nullable: false })
+    end_time!: Date;
 
-    @Column({ length: 45, nullable: true })
-    permission_status?: string;
+    @Column({ length: 45, nullable: false })
+    permission_status!: string;
 
-    @Column({ length: 45 })
+    @Column({ length: 45, nullable: false })
     type_techcode!: string;
 
     @ManyToOne('Staff', (staff:Staff) => staff.absences)
-    @JoinColumn({ name: 'staff_staff_id' })
+    @JoinColumn({
+        name: 'staff_staff_id',
+        referencedColumnName: 'staff_id',
+        foreignKeyConstraintName: 'fk_absence_staff1'
+    })
     staff!: Staff;
 }

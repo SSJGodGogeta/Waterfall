@@ -2,8 +2,7 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToMany,
-    Unique, BaseEntity,
+    Unique, BaseEntity, OneToOne,
 } from 'typeorm';
 import type {Staff} from "./Staff.js";
 // User Entity
@@ -22,6 +21,6 @@ export class User extends BaseEntity{
     @Column({ length: 200 })
     user_password!: string;
 
-    @OneToMany('Staff', (staff:Staff) => staff.user)
-    staff?: Staff[];
+    @OneToOne('Staff', (staff:Staff) => staff.user)
+    staff?: Staff;
 }
