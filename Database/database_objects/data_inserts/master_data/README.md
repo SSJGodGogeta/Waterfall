@@ -1,0 +1,2 @@
+This sub directory is used to define .sql files that will get executed in order to insert data manually for the first time.
+So if u think, that there is something, which every group member needs to have in their database, to have a working environment, please add the .sql file in this directory and then add a reference to this .sql file in data_inserts/data_inserts.xml

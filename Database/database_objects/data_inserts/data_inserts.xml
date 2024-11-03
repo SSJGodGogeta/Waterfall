@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+   <include file="master_data/group.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
+   <include file="master_data/privilege.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
+   <include file="master_data/role.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
+   <include file="master_data/project.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
+   <include file="master_data/user.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
+   <include file="master_data/staff.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
+</databaseChangeLog>
+<!-- Example on how to include a .sql file:-->
