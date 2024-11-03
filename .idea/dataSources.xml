@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="waterfall_swe@localhost" uuid="32a4bdff-31b3-4e88-9eea-dce0bc44884b">
+    <data-source source="LOCAL" name="waterfall_swe@localhost" uuid="fb13db8c-5872-4e0f-9252-3c2b4faea4db">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

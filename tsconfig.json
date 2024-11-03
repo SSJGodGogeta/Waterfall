@@ -3,8 +3,8 @@
   "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
     "target": "es2022",
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "rootDir": "./Webpage",
@@ -19,7 +19,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["dom", "es2022"]
   },
   "include": ["Webpage/**/*.ts"],
   "exclude": ["node_modules", "Database"]
