@@ -1,12 +1,12 @@
 import {Role} from "../DB/Entities/Role.js";
-import {Absence} from "../DB/Entities/Absence";
-import {FlexTime} from "../DB/Entities/FlexTime";
-import {StaffGroup} from "../DB/Entities/Group";
-import {Privilege} from "../DB/Entities/Privilege";
-import {Project} from "../DB/Entities/Project";
-import {Staff} from "../DB/Entities/Staff";
-import {Timetable} from "../DB/Entities/TimeTable";
-import {User} from "../DB/Entities/User";
+import {Absence} from "../DB/Entities/Absence.js";
+import {FlexTime} from "../DB/Entities/FlexTime.js";
+import {StaffGroup} from "../DB/Entities/Group.js";
+import {Privilege} from "../DB/Entities/Privilege.js";
+import {Project} from "../DB/Entities/Project.js";
+import {Staff} from "../DB/Entities/Staff.js";
+import {Timetable} from "../DB/Entities/TimeTable.js";
+import {User} from "../DB/Entities/User.js";
 
 // Purpose of these methods is a simple cache. You can either load everything on startup which is not recommended as it will cost u some load time
 // However, u will have everything in cache afterwards which might help you later. I would recommend loading the entity that u need into cache. using it then as u need.
