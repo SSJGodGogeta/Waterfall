@@ -158,3 +158,4 @@ Database/database_objects/liquibase/dev.properties
 /.idea/vcs.xml
 /.idea/Waterfall.iml
 /.idea/inspectionProfiles/Project_Default.xml
+/Database/data_model/waterfall_model.mwb.bak

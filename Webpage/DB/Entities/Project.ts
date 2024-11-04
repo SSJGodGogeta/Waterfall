@@ -21,6 +21,9 @@ export class Project extends BaseEntity {
     @Column({ length: 250, nullable: true })
     project_description?: string;
 
+    @Column({ length: 500, nullable: true })
+    imageurl?: string;
+
     @Column({ type: 'datetime', nullable: true })
     project_due_date?: Date;
 

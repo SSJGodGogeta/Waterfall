@@ -294,4 +294,7 @@ ALTER TABLE `waterfall_swe`.`user`
     MODIFY COLUMN `user_token` VARCHAR(255) NOT NULL
     COLLATE utf8mb4_general_ci;
 
+-- changeset arman:ar6
+ALTER TABLE `waterfall_swe`.`project`
+    ADD COLUMN `imageurl` VARCHAR(500) NULL DEFAULT NULL;
 

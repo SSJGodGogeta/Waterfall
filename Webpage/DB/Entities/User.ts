@@ -21,6 +21,9 @@ export class User extends BaseEntity{
     @Column({ length: 200 })
     user_password!: string;
 
+    @Column({ length: 255})
+    user_token?: string;
+
     @OneToOne('Staff', (staff:Staff) => staff.user)
     staff?: Staff;
 }
