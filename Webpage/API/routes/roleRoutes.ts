@@ -1,7 +1,7 @@
 // Waterfall/Webpage/API/routes/roleRoutes.ts
 import {Router, Request, Response} from "express";
 import {Role} from "../../DB/Entities/Role.js";
-import {clearRolesCache, getRolesFromDBOrCache} from "../DatabaseService.js"; // Adjusted path to Role entity
+import {clearRolesCache, getRolesFromDBOrCache} from "../Service/RolesService.js"; // Adjusted path to Role entity
 
 const router = Router();
 // GET all roles
