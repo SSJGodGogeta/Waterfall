@@ -2,7 +2,7 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    Unique, BaseEntity, OneToOne,
+    Unique, BaseEntity, OneToOne, Timestamp,
 } from 'typeorm';
 import type {Staff} from "./Staff.js";
 // User Entity
@@ -15,8 +15,8 @@ export class User extends BaseEntity{
     @Column({ length: 75 })
     user_email!: string;
 
-    @Column({ length: 45 })
-    user_salt!: string;
+    @Column()
+    login_timeStamp!: Timestamp;
 
     @Column({ length: 200 })
     user_password!: string;
