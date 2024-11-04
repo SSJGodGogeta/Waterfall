@@ -282,3 +282,19 @@ ALTER TABLE `waterfall_swe`.`timetable`
 -- changeset arman:ar4
 ALTER TABLE `waterfall_swe`.`group`
     RENAME TO  `waterfall_swe`.`staff_group` ;
+
+--changeset arman:ar5
+ALTER TABLE `waterfall_swe`.`user`
+    ADD COLUMN `user_token` VARCHAR(255)
+        COLLATE utf8mb4_general_ci;
+UPDATE `waterfall_swe`.`user`
+SET `user_token` = ""
+WHERE `user_token` IS NULL OR `user_token` = '';
+ALTER TABLE `waterfall_swe`.`user`
+    MODIFY COLUMN `user_token` VARCHAR(255) NOT NULL
+    COLLATE utf8mb4_general_ci;
+
+-- changeset arman:ar6
+ALTER TABLE `waterfall_swe`.`project`
+    ADD COLUMN `imageurl` VARCHAR(500) NULL DEFAULT NULL;
+
