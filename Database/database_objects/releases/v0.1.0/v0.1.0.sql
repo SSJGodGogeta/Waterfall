@@ -288,10 +288,10 @@ ALTER TABLE `waterfall_swe`.`user`
     ADD COLUMN `user_token` VARCHAR(255)
         COLLATE utf8mb4_general_ci;
 UPDATE `waterfall_swe`.`user`
-SET `user_token` = UUID()
+SET `user_token` = ""
 WHERE `user_token` IS NULL OR `user_token` = '';
 ALTER TABLE `waterfall_swe`.`user`
-    MODIFY COLUMN `user_token` VARCHAR(255) NOT NULL UNIQUE
+    MODIFY COLUMN `user_token` VARCHAR(255) NOT NULL
     COLLATE utf8mb4_general_ci;
 
 
