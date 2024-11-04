@@ -1,29 +1,26 @@
 import {Role} from "../../DB/Entities/Role.js";
-import {IRole} from "../Interface/IRole";
 
-export let rolesCache: IRole[]|null = null;
-export async function getRolesFromDBOrCache(): Promise<IRole[] | null>  {
+export let rolesCache: Role[]|null = null;
+export async function getRolesFromDBOrCache(): Promise<Role[] | null>  {
     if (rolesCache) {
         // Return cached data if available
-        console.log("Serving roles from cache");
+        console.log("Using Cache for table: Role");
     }
     else {
         try {
-            const roles = (await Role.find({
+            rolesCache = (await Role.find({
                 relations: {
                     privilege:true,
                     staff: true
                 }
             }));
-            rolesCache = roles as unknown as IRole[];
-
         } catch (error) {
             console.error("Error fetching roles:", error);
         }
     }
     return rolesCache;
 }
-
 export function clearRolesCache() {
     rolesCache = null;
+    console.log("Clearing roles cache");
 }
