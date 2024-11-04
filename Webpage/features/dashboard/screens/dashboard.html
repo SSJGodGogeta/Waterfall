@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/Webpage/style.css">
+    </head>
+
+    <body class="screen">
+        <div>
+            <div class="sidebar">
+                <img width="130px" height="130px" src="/Webpage/assets/logo.png" alt="logo">
+                <br><br>
+                <li class="navigationButton" id="dashboard" data-selected="true">Dashboard</li>
+                <li id="my_work_times" class="navigationButton">My work times</li>
+                <li id="my_vacations" class="navigationButton">My vacations</li>
+                <li id="sickness" class="navigationButton">Sickness</li>
+            </div>
+        </div>
+
+        <div class="content">
+            <h1 id="greeting">Hello Agathe 👋</h1>
+
+            <h4>My statistics:</h4>
+            <div class="element_container" id="statistics">
+                <div class="statistics_element" id="hours_this_week">
+                    <p class="statistics_title">Hours this week</p>
+                    <h1 class="statistics_value">-</h1>
+                </div>
+
+                <div class="statistics_element" id="flex_time_account">
+                    <p class="statistics_title">Flex time account</p>
+                    <h1 class="statistics_value">-</h1>
+                </div>
+
+                <div class="statistics_element" id="sick_days">
+                    <p class="statistics_title">Sick days</p>
+                    <h1 class="statistics_value">-</h1>
+                </div>
+
+                <div class="statistics_element" id="remaining_vacation_days">
+                    <p class="statistics_title">Remaining vacation days</p>
+                    <h1 class="statistics_value">-</h1>
+                </div>
+            </div>
+            
+            <div style="height: 40px;"></div>
+
+            <h4>My projects:</h4>
+            <div class="element_container" id="my_projects">
+                
+            </div>
+
+            <div style="height: 40px;"></div>
+
+            <h4>Events this week:</h4>
+            <div class="event_container" id="my_events">
+                <!-- the events will be loaded by js and displayed here -->
+            </div>
+        </div>
+
+        <script src="/Webpage/dist/navigation.js"></script>
+        <script src="/Webpage/dist/features/dashboard/scripts/user.js"></script>
+        <script src="/Webpage/dist/features/dashboard/scripts/statistics.js"></script>
+        <script src="/Webpage/dist/features/dashboard/scripts/projects.js"></script>
+        <script src="/Webpage/dist/features/dashboard/scripts/events.js"></script>
+    </body>
+</html>

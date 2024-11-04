@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import { dataSource } from "../DB/dataSource.js"; // Updated path
 import roleRoutes from "./routes/roleRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 
 const app = express();
@@ -20,6 +22,8 @@ dataSource.initialize()
 
 // Use role routes
 app.use("/api/roles", roleRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
