@@ -21,6 +21,20 @@ export async function getProjectFromDBOrCache(): Promise<Project[] | null>  {
     }
     return projectCache;
 }
+/**
+ * Returns one Project from the DB that matches the keyValue.
+ * If only one exists, returns that.
+ * If many exist, returns the first to match the keyValue.
+ * If none exist, returns undefined.
+ * @param keyName
+ * @param keyValue
+ */
+export async function getProjectByKey<K extends keyof Project>(keyName: K, keyValue: Project[K]): Promise<Project | undefined> {
+    const projects = await getProjectFromDBOrCache();
+    if (!projects) return undefined;
+    return projects.find(project => project[keyName] === keyValue);
+}
+
 export function clearProjectCache() {
     projectCache = null;
     console.log("Clearing Project cache");

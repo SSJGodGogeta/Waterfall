@@ -1,5 +1,4 @@
 import {StaffGroup} from "../../DB/Entities/Group.js";
-
 export let groupCache: StaffGroup[]|null = null;
 export async function getStaffGroupFromDBOrCache(): Promise<StaffGroup[] | null>  {
     if (groupCache) {
@@ -21,6 +20,20 @@ export async function getStaffGroupFromDBOrCache(): Promise<StaffGroup[] | null>
     }
     return groupCache;
 }
+/**
+ * Returns one StaffGroup from the DB that matches the keyValue.
+ * If only one exists, returns that.
+ * If many exist, returns the first to match the keyValue.
+ * If none exist, returns undefined.
+ * @param keyName
+ * @param keyValue
+ */
+export async function getStaffGroupByKey<K extends keyof StaffGroup>(keyName: K, keyValue: StaffGroup[K]): Promise<StaffGroup | undefined> {
+    const staffGroups = await getStaffGroupFromDBOrCache();
+    if (!staffGroups) return undefined;
+    return staffGroups.find(staffGroup => staffGroup[keyName] === keyValue);
+}
+
 export function clearStaffGroupCache() {
     groupCache = null;
     console.log("Clearing staffGroup cache");

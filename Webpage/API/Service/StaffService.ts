@@ -25,6 +25,20 @@ export async function getStaffFromDBOrCache(): Promise<Staff[] | null>  {
     }
     return staffCache;
 }
+/**
+ * Returns one Staff from the DB that matches the keyValue.
+ * If only one exists, returns that.
+ * If many exist, returns the first to match the keyValue.
+ * If none exist, returns undefined.
+ * @param keyName
+ * @param keyValue
+ */
+export async function getStaffByKey<K extends keyof Staff>(keyName: K, keyValue: Staff[K]): Promise<Staff | undefined> {
+    const staffs = await getStaffFromDBOrCache();
+    if (!staffs) return undefined;
+    return staffs.find(staff => staff[keyName] === keyValue);
+}
+
 export function clearStaffCache() {
     staffCache = null;
     console.log("Clearing Staff cache");
