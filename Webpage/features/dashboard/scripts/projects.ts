@@ -34,12 +34,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const project_header: HTMLDivElement = document.createElement('div');
                 project_header.className = 'project_header';
 
-                // generate the image element
-                const project_image: HTMLImageElement = document.createElement('img');
-                project_image.className = 'project_image';
-                //project_image.src = project.imageUrl;
-                project_image.src = "/Webpage/assets/demo/board.png"
-                project_header.appendChild(project_image); // add the image to the header
+                if (project.imageurl) {
+                    // generate the image element
+                    const project_image: HTMLImageElement = document.createElement('img');
+                    project_image.className = 'project_image';
+                    project_image.src = project.imageurl
+                    project_header.appendChild(project_image); // add the image to the header
+                }
 
                 // generate the title element
                 const project_title: HTMLHeadingElement = document.createElement('h4');
