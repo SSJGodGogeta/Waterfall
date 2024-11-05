@@ -298,3 +298,19 @@ ALTER TABLE `waterfall_swe`.`user`
 ALTER TABLE `waterfall_swe`.`project`
     ADD COLUMN `imageurl` VARCHAR(500) NULL DEFAULT NULL;
 
+-- changeset arman:ar7
+ALTER TABLE `waterfall_swe`.`user`
+DROP COLUMN `user_salt`;
+
+ALTER TABLE `waterfall_swe`.`user`
+ADD COLUMN `login_timeStamp` TIMESTAMP
+COLLATE utf8mb4_0900_ai_ci;
+
+-- changeset arman:ar8
+DELETE FROM waterfall_swe.databasechangelog WHERE FILENAME = 'data_inserts/master_data/user.sql';
+
+-- changeset arman:ar9
+DELETE from waterfall_swe.staff;
+
+-- changeset arman:ar10
+DELETE FROM waterfall_swe.databasechangelog WHERE FILENAME = 'data_inserts/master_data/staff.sql'

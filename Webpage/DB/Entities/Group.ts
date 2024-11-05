@@ -1,6 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, BaseEntity, OneToMany, JoinTable} from 'typeorm';
 import type { Project } from './Project.js';
-import {Staff} from "./Staff.js";
+import type {Staff} from "./Staff.js";
 
 @Entity('staff_group')
 export class StaffGroup extends BaseEntity {
