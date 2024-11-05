@@ -6,3 +6,4 @@ INSERT INTO user(user_id, user_email, user_password, user_token) VALUES (3, 'bjo
 INSERT INTO user(user_id, user_email, user_password, user_token) VALUES (4, 'lasseschlueter@stc.com', '$2a$10$lAJxh3Ej6T0QFPfk5RI/TujlfKR11YQMaiCD9M/zNtZwUWBmhOTMy', '' );
 INSERT INTO user(user_id, user_email, user_password, user_token) VALUES (5, 'armansingh@stc.com', '$2a$10$jqrFJlBljvPWlhoqTkT4w.9ryuiBqY/ZgeJ9MX86eQ/rjORzp/Vtm', '' );
 INSERT INTO user(user_id, user_email, user_password, user_token) VALUES (6, 'kevinschmidhaeusler@stc.com', '$2a$10$tyoyrqi3Bn9puaQHiS2dxeOZDq1eRZkSCq/6/.klHZCs9x0HjKNv2', '' );
+COMMIT;
