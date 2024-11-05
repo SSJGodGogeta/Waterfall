@@ -2,10 +2,11 @@
 import {Router, Request, Response} from "express";
 import {Role} from "../../DB/Entities/Role.js";
 import {clearRolesCache, getRolesFromDBOrCache} from "../Service/RolesService.js";
-import {Privilege} from "../../DB/Entities/Privilege.js"; // Adjusted path to Role entity
+import {Privilege} from "../../DB/Entities/Privilege.js";
+import {authenticate} from "../authenticationMiddleware.js"; // Adjusted path to Role entity
 
 const router = Router();
-router.get("/", async (_req: Request, res: Response) => {
+router.get("/", authenticate, async (_req: Request, res: Response) => {
     try {
         const roles = await getRolesFromDBOrCache();
         res.json(roles);
@@ -15,7 +16,7 @@ router.get("/", async (_req: Request, res: Response) => {
     }
 });
 
-router.put("/:id", async (req: Request, res: Response) => {
+router.put("/:id", authenticate, async (req: Request, res: Response) => {
     const roleId = parseInt(req.params.id);
     const { role_name, privilege_id } = req.body;
     const validRoleName = role_name && role_name.trim().length > 0;

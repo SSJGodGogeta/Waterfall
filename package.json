@@ -15,6 +15,8 @@
     "lib": "dist"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "mysql2": "^3.11.3",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.8.7",

@@ -1,12 +1,13 @@
 // Waterfall/Webpage/API/routes/roleRoutes.ts
 import {Router, Request, Response} from "express";
 import {clearPrivilegeCache, getPrivilegeFromDBOrCache} from "../Service/PrivilegeService";
-import {Privilege} from "../../DB/Entities/Privilege"; // Adjusted path to Role entity
+import {Privilege} from "../../DB/Entities/Privilege";
+import {authenticate} from "../authenticationMiddleware.js"; // Adjusted path to Role entity
 
 const router = Router();
 // GET all roles
 
-router.get("/", async (_req: Request, res: Response) => {
+router.get("/", authenticate, async (_req: Request, res: Response) => {
     try {
         const privileges = await getPrivilegeFromDBOrCache();
         res.json(privileges);
@@ -16,7 +17,7 @@ router.get("/", async (_req: Request, res: Response) => {
     }
 });
 
-router.put("/:id", async (req: Request, res: Response) => {
+router.put("/:id", authenticate, async (req: Request, res: Response) => {
     const privilegeId = parseInt(req.params.id);
     const {privilegeTechcode} = req.body;
 
