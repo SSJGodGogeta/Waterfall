@@ -1,6 +1,5 @@
 --liquibase formatted sql
 --changeset arman:ar1
-DELETE FROM user;
 INSERT INTO user(user_id, user_email, user_password, user_token) VALUES (1, 'agatheberke@stc.com', '$2a$10$YTZ17zEARPmEc5doi10cnOyS0t51zj3rnPKEIAhpC1luxakaq3Q4a', '' );
 INSERT INTO user(user_id, user_email, user_password, user_token) VALUES (2, 'naomiMiddendorf@stc.com', '$2a$10$oqqDRZTRz/hqR8ySIkgdTeC/seus4zLZyViz7oLbHpSPbVKaoXc9.', '' );
 INSERT INTO user(user_id, user_email, user_password, user_token) VALUES (3, 'bjoerndbrandner@stc.com', '$2a$10$L.4bZQ8SxG1kndLQjtkoje2L9vLigPgfJk5Di4UPAKikuKyF/GxlO', '' );
