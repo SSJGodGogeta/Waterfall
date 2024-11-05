@@ -21,9 +21,9 @@ CREATE SCHEMA IF NOT EXISTS `waterfall_swe` DEFAULT CHARACTER SET utf8mb4 COLLAT
 USE `waterfall_swe` ;
 
 -- -----------------------------------------------------
--- Table `waterfall_swe`.`group`
+-- Table `waterfall_swe`.`staff_group`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `waterfall_swe`.`group` (
+CREATE TABLE IF NOT EXISTS `waterfall_swe`.`staff_group` (
                                                        `group_id` INT NOT NULL AUTO_INCREMENT,
                                                        `group_name` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`group_id`))
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `waterfall_swe`.`project` (
     INDEX `fk_project_group1_idx` (`group_group_id` ASC) VISIBLE,
     CONSTRAINT `fk_project_group1`
     FOREIGN KEY (`group_group_id`)
-    REFERENCES `waterfall_swe`.`group` (`group_id`))
+    REFERENCES `waterfall_swe`.`staff_group` (`group_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `waterfall_swe`.`role` (
 CREATE TABLE IF NOT EXISTS `waterfall_swe`.`user` (
                                                       `user_id` INT NOT NULL AUTO_INCREMENT,
                                                       `user_email` VARCHAR(75) NOT NULL,
-    `user_salt` VARCHAR(45) NOT NULL,
+                                                    `user_password` VARCHAR(100) NOT NULL,
     PRIMARY KEY (`user_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `waterfall_swe`.`staff` (
     INDEX `fk_staff_timetable1_idx` (`timetable_index` ASC) VISIBLE,
     CONSTRAINT `fk_staff_group1`
     FOREIGN KEY (`group_group_id`)
-    REFERENCES `waterfall_swe`.`group` (`group_id`),
+    REFERENCES `waterfall_swe`.`staff_group` (`group_id`),
     CONSTRAINT `fk_staff_project1`
     FOREIGN KEY (`project_project_id`)
     REFERENCES `waterfall_swe`.`project` (`project_id`),
@@ -243,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `waterfall_swe`.`project_group` (
     INDEX `fk_project_group_group_idx` (`group_id` ASC) VISIBLE,
     CONSTRAINT `fk_project_group_group`
     FOREIGN KEY (`group_id`)
-    REFERENCES `waterfall_swe`.`group` (`group_id`)
+    REFERENCES `waterfall_swe`.`staff_group` (`group_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     CONSTRAINT `fk_project_group_project`
@@ -260,11 +260,8 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
--- changeset arman:ar2
-ALTER TABLE `waterfall_swe`.`user`
-ADD COLUMN `user_password` VARCHAR(100) NOT NULL AFTER `user_salt`;
 
--- changeset arman:ar3
+-- changeset arman:ar2
 ALTER TABLE `waterfall_swe`.`staff`
 DROP FOREIGN KEY `fk_staff_timetable1`;
 
@@ -279,38 +276,23 @@ ALTER TABLE `waterfall_swe`.`timetable`
         ON DELETE CASCADE
         ON UPDATE CASCADE;
 
--- changeset arman:ar4
-ALTER TABLE `waterfall_swe`.`group`
-    RENAME TO  `waterfall_swe`.`staff_group` ;
-
---changeset arman:ar5
+--changeset arman:ar3
 ALTER TABLE `waterfall_swe`.`user`
     ADD COLUMN `user_token` VARCHAR(255)
         COLLATE utf8mb4_general_ci;
 UPDATE `waterfall_swe`.`user`
-SET `user_token` = ""
+SET `user_token` = ''
 WHERE `user_token` IS NULL OR `user_token` = '';
+
 ALTER TABLE `waterfall_swe`.`user`
     MODIFY COLUMN `user_token` VARCHAR(255) NOT NULL
     COLLATE utf8mb4_general_ci;
 
--- changeset arman:ar6
+-- changeset arman:ar4
 ALTER TABLE `waterfall_swe`.`project`
     ADD COLUMN `imageurl` VARCHAR(500) NULL DEFAULT NULL;
 
--- changeset arman:ar7
-ALTER TABLE `waterfall_swe`.`user`
-DROP COLUMN `user_salt`;
 
 ALTER TABLE `waterfall_swe`.`user`
 ADD COLUMN `login_timeStamp` TIMESTAMP
 COLLATE utf8mb4_0900_ai_ci;
-
--- changeset arman:ar8
-DELETE FROM waterfall_swe.databasechangelog WHERE FILENAME = 'data_inserts/master_data/user.sql';
-
--- changeset arman:ar9
-DELETE from waterfall_swe.staff;
-
--- changeset arman:ar10
-DELETE FROM waterfall_swe.databasechangelog WHERE FILENAME = 'data_inserts/master_data/staff.sql'
