@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Login STC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="notScrollable center">
+    <form id="loginForm">
+        <img width="200px" height="200px" src="../assets/logo.png" alt="logo">
+        <h2>Willkommen</h2>
+        <input type="email" placeholder="Email-Adresse" id="email" autocomplete="username">
+        <br>
+        <input type="password" placeholder="Passwort" id="password" autocomplete="current-password">
+        <p class="errorMessage" id="loginError">Email oder Passwort falsch</p>
+        <button type="button" id="loginButton">Login</button>
+    </form>
+
+    <script src="../dist/authentication/login.js"></script>
+</body>
+</html>

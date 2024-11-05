@@ -1,0 +1,27 @@
+// tsconfig.json
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "rootDir": "./Webpage",
+    "outDir": "./Webpage/dist",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "lib": ["dom", "es2022"]
+  },
+  "include": ["Webpage/**/*.ts"],
+  "exclude": ["node_modules", "Database"]
+}

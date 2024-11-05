@@ -9,3 +9,6 @@ Main branch is the stable version, even if it doesnt contain anything (kinda a b
 Then create a Pull request for others to review your code and merge it to the general dev branch. 
 If PR is reviewed and accepted, merge the changes to the dev branch. 
 Once the results have been presented, merge dev into main
+
+## U will have to install some dependencies on the first launch using 
+`npm install`. (Simply click on this)
