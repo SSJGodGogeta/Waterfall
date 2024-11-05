@@ -8,7 +8,7 @@ import {
     ManyToOne, OneToMany
 } from 'typeorm';
 import type { StaffGroup } from './Group.js';
-import {Staff} from "./Staff.js";
+import type {Staff} from "./Staff.js";
 
 @Entity('project')
 export class Project extends BaseEntity {
@@ -20,6 +20,9 @@ export class Project extends BaseEntity {
 
     @Column({ length: 250, nullable: true })
     project_description?: string;
+
+    @Column({ length: 500, nullable: true })
+    imageurl?: string;
 
     @Column({ type: 'datetime', nullable: true })
     project_due_date?: Date;

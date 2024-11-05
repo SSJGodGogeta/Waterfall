@@ -12,7 +12,7 @@ import type {Role} from "./Role.js";
 import type {FlexTime} from "./FlexTime.js";
 import type {Absence} from "./Absence.js";
 import type {Timetable} from "./TimeTable.js";
-import {Project} from "./Project.js";
+import type {Project} from "./Project.js";
 
 // Staff Entity
 @Entity('staff')

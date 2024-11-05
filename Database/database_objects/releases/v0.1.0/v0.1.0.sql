@@ -282,3 +282,35 @@ ALTER TABLE `waterfall_swe`.`timetable`
 -- changeset arman:ar4
 ALTER TABLE `waterfall_swe`.`group`
     RENAME TO  `waterfall_swe`.`staff_group` ;
+
+--changeset arman:ar5
+ALTER TABLE `waterfall_swe`.`user`
+    ADD COLUMN `user_token` VARCHAR(255)
+        COLLATE utf8mb4_general_ci;
+UPDATE `waterfall_swe`.`user`
+SET `user_token` = ""
+WHERE `user_token` IS NULL OR `user_token` = '';
+ALTER TABLE `waterfall_swe`.`user`
+    MODIFY COLUMN `user_token` VARCHAR(255) NOT NULL
+    COLLATE utf8mb4_general_ci;
+
+-- changeset arman:ar6
+ALTER TABLE `waterfall_swe`.`project`
+    ADD COLUMN `imageurl` VARCHAR(500) NULL DEFAULT NULL;
+
+-- changeset arman:ar7
+ALTER TABLE `waterfall_swe`.`user`
+DROP COLUMN `user_salt`;
+
+ALTER TABLE `waterfall_swe`.`user`
+ADD COLUMN `login_timeStamp` TIMESTAMP
+COLLATE utf8mb4_0900_ai_ci;
+
+-- changeset arman:ar8
+DELETE FROM waterfall_swe.databasechangelog WHERE FILENAME = 'data_inserts/master_data/user.sql';
+
+-- changeset arman:ar9
+DELETE from waterfall_swe.staff;
+
+-- changeset arman:ar10
+DELETE FROM waterfall_swe.databasechangelog WHERE FILENAME = 'data_inserts/master_data/staff.sql'

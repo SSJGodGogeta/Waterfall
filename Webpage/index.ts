@@ -31,23 +31,24 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchRoles();
 });
 
-async function updateRole(roleId: number, newRoleName: string) {
+
+
+async function updateRole(roleId: number, newRoleName: string, newPrivilegeId: number) {
     try {
         const response = await fetch(`http://localhost:3000/api/roles/${roleId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ role_name: newRoleName }), // Sending the new role name
+            body: JSON.stringify({ role_name: newRoleName, privilege_id: newPrivilegeId }), // Sending the new role name
         });
 
         if (!response.ok) {
             throw new Error('Failed to update role: ' + response.statusText);
         }
-        window.location.reload();
         const updatedRole = await response.json();
-        console.log("Updated role:", updatedRole);
-
+        console.log("Updated/Added role:", updatedRole);
+        window.location.reload();
         // Optionally, refresh the role list or update the UI as needed
     } catch (error) {
         console.error("Error updating role:", error);
@@ -59,6 +60,7 @@ document.getElementById("updateRoleForm")?.addEventListener("submit", (event) =>
     event.preventDefault(); // Prevent default form submission
     const roleId = parseInt((document.getElementById("roleId") as HTMLInputElement).value);
     const newRoleName = (document.getElementById("newRoleName") as HTMLInputElement).value;
-    updateRole(roleId, newRoleName); // Call the update function
+    const newPrivilege = parseInt((document.getElementById("newPrivilegeId") as HTMLInputElement).value);
+    updateRole(roleId, newRoleName, newPrivilege); // Call the update function
 });
 
