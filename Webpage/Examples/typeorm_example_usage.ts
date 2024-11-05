@@ -1,7 +1,7 @@
-import {dataSource} from "./DB/dataSource.js";
-import {Staff} from "./DB/Entities/Staff.js";
-import {Project} from "./DB/Entities/Project.js";
-import {StaffGroup} from "./DB/Entities/Group.js";
+import {dataSource} from "../DB/dataSource.js";
+import {Staff} from "../DB/Entities/Staff.js";
+import {Project} from "../DB/Entities/Project.js";
+import {StaffGroup} from "../DB/Entities/Group.js";
 
 export async function typeorm_example_usage() {
     await dataSource.initialize();
