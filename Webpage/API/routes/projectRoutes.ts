@@ -2,12 +2,12 @@
 import {Router, Request, Response} from "express";
 import {Project} from "../../DB/Entities/Project.js";
 import {clearProjectCache, getProjectFromDBOrCache} from "../Service/ProjectService.js";
+import {authenticate} from "../authenticationMiddleware.js";
 
 const router = Router();
 // GET all projects
 
-// @ts-ignore
-router.get("/", async (_req: Request, res: Response) => {
+router.get("/", authenticate, async (_req: Request, res: Response) => {
     try {
         const projects = await getProjectFromDBOrCache();
         res.json(projects);
@@ -17,25 +17,25 @@ router.get("/", async (_req: Request, res: Response) => {
     }
 });
 
-
-// @ts-ignore
-router.put("/:id", async (req: Request, res: Response) => {
+router.put("/:id", authenticate, async (req: Request, res: Response) => {
     const projectId = parseInt(req.params.id);
     const {project_name} = req.body;
 
     try {
         const project = await Project.findOneBy({project_id: projectId});
         if (!project) {
-            return res.status(404).json({message: "Project not found"});
+            res.status(404).json({message: "Project not found"});
+            return;
         }
 
         project.project_name = project_name;
         await project.save();
         clearProjectCache();
-        return res.json(project);
+        res.json(project);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({message: "Error updating project"});
+        res.status(500).json({message: "Error updating project"});
+        return;
     }
 });
 

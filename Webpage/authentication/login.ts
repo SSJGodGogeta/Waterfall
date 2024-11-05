@@ -13,19 +13,17 @@ loginButton.onclick = async function () {
        // hide the error message for a retry
        loginError.style.display = "none";
 
-       let email_address: String = emailAdressInput.value!.trim().toLowerCase(); // trim and lowercase the email address
+       let email: String = emailAdressInput.value!.trim().toLowerCase(); // trim and lowercase the email address
        let password: String = passwordInput.value!; // read the password
-
-       console.log(email_address);
-       console.log(password);
 
        const response = await fetch("http://localhost:3000/api/authentication/login", {
            method: 'POST',
            headers: {
                'Content-Type': 'application/json',
            },
+           credentials: 'include', // allow receiving cookies
            body: JSON.stringify({
-               email_address: email_address,
+               email: email,
                password: password,
            }), // Sending the new role name
        });
@@ -35,7 +33,7 @@ loginButton.onclick = async function () {
        }
 
        console.log("Logged in successfully");
-       window.location.href = "/Webpage/features/dashboard/screens/dashboard.html";
+       window.location.href = "/Waterfall/Webpage/features/dashboard/screens/dashboard.html";
    } catch (e) {
        // If the login failed, show an error message and log the error
        console.error(e);

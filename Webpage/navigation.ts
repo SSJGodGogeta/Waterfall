@@ -6,20 +6,20 @@ const sickness_button: HTMLDataListElement = document.getElementById("sickness")
 
 dashboard_button.onclick = function() {
     // go to the dashboard screen
-    window.location.href = "/Webpage/features/dashboard/screens/dashboard.html";
+    window.location.href = "/Waterfall/Webpage/features/dashboard/screens/dashboard.html";
 }
 
 my_work_times_button.onclick = function() {
     // go to the my work times screen
-    window.location.href = "/Webpage/features/work_times/screens/my_work_times.html";
+    window.location.href = "/Waterfall/Webpage/features/work_times/screens/my_work_times.html";
 }
 
 my_vacations_button.onclick = function() {
     // go to the my vacations screen
-    window.location.href = "/Webpage/features/vacations/screens/my_vacations.html";
+    window.location.href = "/Waterfall/Webpage/features/vacations/screens/my_vacations.html";
 }
 
 sickness_button.onclick = function() {
     // go to the sickness screen
-    window.location.href = '/Webpage/features/sickness/screens/sickness.html';
+    window.location.href = '/Waterfall/Webpage/features/sickness/screens/sickness.html';
 }

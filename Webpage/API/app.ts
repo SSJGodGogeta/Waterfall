@@ -12,7 +12,10 @@ import cookieParser from "cookie-parser";
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:63342', // url of the frontend app. adapt as needed
+    credentials: true, // allow sending credentials
+}));
 app.use(express.json());
 
 // Initialize TypeORM Data Source

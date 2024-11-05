@@ -1,37 +1,39 @@
 // Waterfall/Webpage/API/routes/roleRoutes.ts
 import {Router, Request, Response} from "express";
 import {User} from "../../DB/Entities/User.js";
-import {authenticate} from "../authenticationMiddleware.js"
+import {authenticate} from "../authenticationMiddleware.js";
+import bcrypt from 'bcryptjs';
+import crypto from "crypto";
 
 const router = Router();
 
-// @ts-ignore
 router.post("/login", async (req: Request, res: Response) => {
     try {
         // get the email and the password, provided in the body
-        let { request_body } = req.body;
-        let email = request_body.email;
-        let password = request_body.password;
+        let { email, password } = req.body;
 
         // get the user corresponding to the given email
         const user = await User.findOneBy({user_email: email});
         if (!user) {
-            return res.status(401).json({message: "Email or password incorrect"});
+            res.status(401).json({message: "Email or password incorrect"});
+            return;
         }
 
         // hash the given password using the bcrypt.js package and compare it to the stored hash
-        let bcrypt = require('bcryptjs');
-        if (!bcrypt.compareSync(password, user.user_password)) {
-            return res.status(401).json({message: "Email or password incorrect"});
+        if (!bcrypt.compareSync(String(password), user.user_password)) {
+            // uncomment the following line to show what a possible hash would be for a new password
+            // console.log(bcrypt.hashSync(String(password), 10))
+
+            res.status(401).json({message: "Email or password incorrect"});
+            return;
         }
 
         // ----------------------------------------------------------------------------------------------------------
-        // reaching the following section of the code means that a valid combination of an email and a password
+        // reaching the following section of the code is only executed when a valid combination of an email and password
         // was provided by the user sending the post request, because otherwise the function would have exited already
         // ----------------------------------------------------------------------------------------------------------
 
         // generate the user aka session token and store it in the database
-        const crypto = require('crypto');
         user.user_token = crypto.randomBytes(64).toString('hex'); // 128 characters (64 bytes in hex)
         await user.save();
 
@@ -43,14 +45,25 @@ router.post("/login", async (req: Request, res: Response) => {
             maxAge: 24 * 60 * 60 * 1000 // Cookie expiry (24 hours in milliseconds)
         });
 
-        return res.status(200).json({ message: "Login successful" });
+        res.status(200).json({ message: "Login successful" });
+        return
     } catch (error) {
         console.error("Error logging in:", error);
-        return res.status(500).json({message: "Failed to process login"});
+        res.status(500).json({message: "Failed to process login"});
+        return;
     }
 });
 
-// @ts-ignore
+router.get("/currentUser", authenticate, async (req: Request, res: Response) => {
+    try {
+        const users = req.body.user;
+        res.json(users);
+    } catch (error) {
+        console.error("Error getting current user:", error);
+        res.status(500).json({message: "Failed to fetch current user"});
+    }
+});
+
 router.post("/logout", authenticate, async (req: Request, res: Response) => {
     try {
         // remove the user aka session token and with that log the user out
@@ -60,10 +73,12 @@ router.post("/logout", authenticate, async (req: Request, res: Response) => {
         user.user_token = '';
         await user.save();
 
-        return res.status(200).json({ message: "Logout successful" });
+        res.status(200).json({ message: "Logout successful" });
+        return;
     } catch (error) {
         console.error("Error logging out:", error);
-        return res.status(500).json({message: "Failed to process logout"});
+        res.status(500).json({message: "Failed to process logout"});
+        return;
     }
 });
 

@@ -3,23 +3,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const projects_container: HTMLDivElement = document.getElementById("my_projects") as HTMLDivElement;
 
     try {
-        const response = await fetch("http://localhost:3000/api/users");
+        const response = await fetch("http://localhost:3000/api/projects",
+            {
+                method: "GET",
+                credentials: "include",
+            }
+        );
         if (!response.ok) {
             throw new Error("Network response was not ok " + response.statusText);
         }
-        const users = await response.json();
-        console.log("Fetched users:", users);
 
-
-    } catch (error) {
-        console.error("Failed to fetch user:", error);
-    }
-
-    try {
-        const response = await fetch("http://localhost:3000/api/projects");
-        if (!response.ok) {
-            throw new Error("Network response was not ok " + response.statusText);
-        }
         const projects = await response.json();
         console.log("Fetched projects:", projects);
 
@@ -65,7 +58,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 // active_workers.appendChild(currently_active); // add the currently active paragraph to the active workers div
                 //
                 // // generate the worker icon elements
-                // // TODO: replace with actual data. For now we are using placeholder images and counts
                 // const worker_icon: HTMLImageElement = document.createElement('img');
                 // worker_icon.className = 'worker_icon';
                 // worker_icon.src = "/Webpage/assets/demo/profile_pictures/agathe_berke.jpg";
@@ -90,6 +82,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             throw new Error("rolesContainer not found");
         }
     } catch (error) {
-        console.error("Failed to fetch roles:", error);
+        console.error("Failed to fetch projects:", error);
     }
 });
