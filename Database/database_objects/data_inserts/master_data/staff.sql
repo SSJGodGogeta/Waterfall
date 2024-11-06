@@ -8,4 +8,6 @@ INSERT INTO staff(staff_id, first_name, last_name, target_hours, salary_euro, ma
 INSERT INTO staff(staff_id, first_name, last_name, target_hours, salary_euro, max_vacation_days, supervisor_id, user_user_id, role_role_id, project_project_id, group_group_id) VALUES (6, 'Kevin', 'Schmidthaeusler', 40, 1200.00, 28, null, 6, 1, 1, 2);
 COMMIT;
 
-
+-- changeset arman:ar2 runOnChange:true
+UPDATE staff set last_name = 'Schmidhausler' where staff_id = 6;
+commit ;
