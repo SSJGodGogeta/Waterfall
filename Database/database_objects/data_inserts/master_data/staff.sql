@@ -11,3 +11,7 @@ COMMIT;
 -- changeset arman:ar2 runOnChange:true
 UPDATE staff set last_name = 'Schmidhausler' where staff_id = 6;
 commit ;
+
+-- changeset arman:ar3 runOnChange:true
+UPDATE staff set target_hours = 8 ;
+COMMIT

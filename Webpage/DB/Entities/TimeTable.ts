@@ -35,7 +35,7 @@ export class Timetable extends BaseEntity{
     difference_performed_target!: number;
 
     @Column({ length: 45, nullable: true })
-    abscence!: AbsenceType_Techcode;
+    abscence?: AbsenceType_Techcode;
 
     @ManyToOne('Staff', (staff:Staff) => staff.timetables)
     @JoinColumn({
