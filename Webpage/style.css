@@ -70,12 +70,15 @@ input:focus {
     background-color: #eee;
     width: 200px;
     padding: 20px;
-    height: 100%;
+    height: 100vh;
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     overflow-x: hidden; /* Disable horizontal scroll */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .navigationButton {
@@ -249,4 +252,28 @@ input:focus {
 
 .more_info_button {
     margin-top: auto; /* Button wird nach unten gedrückt */
+}
+#refresh {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: auto;
+    margin-bottom: 50px;
+    transition: background-color 0.2s ease;
+}
+
+#refresh:hover {
+    cursor: pointer;
+    background-color: rgb(61, 135, 209);
+    border: none;
+}
+
+/* Style for the refresh icon */
+.refresh-icon {
+    font-size: 1.2em;
 }
