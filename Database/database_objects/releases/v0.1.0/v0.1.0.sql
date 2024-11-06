@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `waterfall_swe`.`user` (
                                                       `user_id` INT NOT NULL AUTO_INCREMENT,
                                                       `user_email` VARCHAR(75) NOT NULL,
                                                     `user_password` VARCHAR(100) NOT NULL,
+                                                    `user_imageurl` VARCHAR(500) NULL DEFAULT NULL,
     PRIMARY KEY (`user_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
