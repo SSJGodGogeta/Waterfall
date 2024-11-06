@@ -12,5 +12,16 @@ INSERT INTO timetable (
              -8,                             -- Difference performed vs. target (assumes target is 8)
              'SICK',                           -- Absence type; Need to be the same as in Absence_TypeTechcode!
              5                                 -- Staff ID of Arman
+         ),
+         (
+             '2024-11-02',                     -- Example date
+             DAYNAME('2024-11-02'),            -- Automatically calculates the weekday
+             '2024-11-02 09:00:00',            -- Start time
+             '2024-11-02 17:00:00',            -- End time
+             0,                               -- Pause in minutes
+             0,                              -- Performed hours (8 hours minus 1-hour break)
+             -8,                             -- Difference performed vs. target (assumes target is 8)
+             'SICK',                           -- Absence type; Need to be the same as in Absence_TypeTechcode!
+             5                                 -- Staff ID of Arman
          );
 
