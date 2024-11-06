@@ -297,3 +297,6 @@ ALTER TABLE `waterfall_swe`.`project`
 ALTER TABLE `waterfall_swe`.`user`
 ADD COLUMN `login_timeStamp` TIMESTAMP
 COLLATE utf8mb4_0900_ai_ci;
+
+-- changeset arman:ar5
+ALTER TABLE `waterfall_swe`.`timetable` MODIFY `index` INT NOT NULL AUTO_INCREMENT UNIQUE;

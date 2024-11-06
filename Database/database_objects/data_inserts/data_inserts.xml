@@ -6,5 +6,6 @@
     <include file="master_data/project.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
     <include file="master_data/user.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
     <include file="master_data/staff.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
+    <include file="master_data/timetable.sql" relativeToChangelogFile="true" labels="master_data,data_inserts"/>
  </databaseChangeLog>
  <!-- Example on how to include a .sql file:-->
