@@ -1,15 +1,15 @@
 // Waterfall/Webpage/API/routes/roleRoutes.ts
 import {Router, Request, Response} from "express";
-import {clearPrivilegeCache, getPrivilegeFromDBOrCache} from "../Service/PrivilegeService";
-import {Privilege} from "../../DB/Entities/Privilege";
-import {authenticate} from "../authenticationMiddleware.js"; // Adjusted path to Role entity
+import {getPrivilegeByKey, getPrivilegeFromDBOrCache} from "../Service/PrivilegeService";
+import {authenticate} from "../authenticationMiddleware.js";
+import {Privilege} from "../../DB/Entities/Privilege.js"; // Adjusted path to Role entity
 
 const router = Router();
-// GET all roles
-
+// No need for a put here, as we dont want anyone to change privileges. Privilege is smth that is set up once and usually never touched again!
+// This class is finished too
 router.get("/", authenticate, async (_req: Request, res: Response) => {
     try {
-        const privileges = await getPrivilegeFromDBOrCache();
+        const privileges: Privilege[]|null = await getPrivilegeFromDBOrCache();
         res.json(privileges);
     } catch (error) {
         console.error("Error fetching privileges:", error);
@@ -17,28 +17,14 @@ router.get("/", authenticate, async (_req: Request, res: Response) => {
     }
 });
 
-router.put("/:id", authenticate, async (req: Request, res: Response) => {
-    const privilegeId = parseInt(req.params.id);
-    const {privilegeTechcode} = req.body;
-
+router.get("/:id", authenticate, async (req: Request, res: Response) => {
     try {
-        const privilege = await Privilege.findOneBy({privilege_id: privilegeId});
-        if (!privilege) {
-            res.status(404).json({message: "Privilege not found"});
-            return;
-        }
-
-        privilege.privilege_techcode = privilegeTechcode;
-        await privilege.save();
-        clearPrivilegeCache();
+        const privilegeId:number = parseInt(req.params.id);
+        const privilege: Privilege|undefined = await getPrivilegeByKey("privilege_id", privilegeId);
         res.json(privilege);
-        return;
     } catch (error) {
-        console.error(error);
-        res.status(500).json({message: "Error updating privilege"});
-        return;
+        console.error("Error fetching privileges:", error);
+        res.status(500).json({message: "Failed to fetch privileges"});
     }
 });
-
-
 export default router;
