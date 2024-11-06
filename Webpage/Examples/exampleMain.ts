@@ -90,12 +90,36 @@ async function calculateHoursThisWeek(staffId: number): Promise<number | null> {
     }
     return performedHoursThisWeek;
 }
+
+//TODO declared by Arman: How ? What are criterias for flex time ? How is it setup ? Do we need a flexTimeTechcode for it ?
+async function calculateFlexTime(staffId:number): Promise<number | null> {
+    const staff = await Staff.findOne({
+        relations: {
+            timetables: true,
+            flexTimes:true
+        },
+        where: {
+            staff_id: staffId,
+        },
+    });
+    if (!staff) {
+        console.log("No such staff");
+        return null;
+    }
+    let flexTime:number = 0;
+    if (!staff.flexTimes) return 0;
+    for (const times of staff.flexTimes) {
+        flexTime += times.available_flextime ?? 0;
+    }
+    return flexTime;
+}
 // runs all the code
 async function main() {
     await dataSource.initialize();
     console.warn("Sick days: " + await calculateSickDays(5));
     console.warn("Remaining vacation days: " + await calculateRemainingVacationDays(5));
     console.warn("Hours this week: " + await calculateHoursThisWeek(5));
+    console.warn("Flex time account: " + await calculateFlexTime(5)); // Wont return a result, as there are no flex Times values in the db atm.
 }
 
 await main();
