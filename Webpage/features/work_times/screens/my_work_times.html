@@ -12,19 +12,33 @@
     <body class="screen">
         <div>
             <div class="sidebar">
-                <img width="130px" height="130px" src="/Webpage/assets/logo.png" alt="logo">
-                <br><br>
-                <li class="navigationButton" id="dashboard">Dashboard</li>
-                <li id="my_work_times" class="navigationButton" data-selected="true">My work times</li>
-                <li id="my_vacations" class="navigationButton">My vacations</li>
-                <li id="sickness" class="navigationButton">Sickness</li>
-                <li id="refresh" class="navigationButton">
-                    <span class="refresh-icon">↻</span>
-                    Refresh page
-                </li>
+                <div>
+                    <img width="130px" height="130px" src="/Webpage/assets/logo.png" alt="logo">
+                    <br><br>
+
+                    <ul class="navigationButtonContainer">
+                        <li  id="dashboard" class="navigationButton">Dashboard</li>
+                        <li id="my_work_times" class="navigationButton" data-selected="true">My work times</li>
+                        <li id="my_vacations" class="navigationButton">My vacations</li>
+                        <li id="sickness" class="navigationButton">Sickness</li>
+                        <li id="refresh" class="navigationButton">
+                            <span class="refresh-icon">↻</span>
+                            Refresh page
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="profile">
+                    <img id="profile_picture" src="/Webpage/assets/placeholder_profile_picture.png" alt="">
+                    <div id="profile_details">
+                        <h4 id="name"></h4>
+                        <p id="role"></p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <script src="/Webpage/dist/navigation.js"></script>
+        <script src="/Webpage/dist/features/user.js"></script>
     </body>
 </html>

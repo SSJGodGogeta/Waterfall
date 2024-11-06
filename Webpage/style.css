@@ -70,7 +70,7 @@ input:focus {
     background-color: #eee;
     width: 200px;
     padding: 20px;
-    height: 100vh;
+    height: 100%;
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
@@ -79,6 +79,11 @@ input:focus {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.navigationButtonContainer {
+    margin-left: 0;
+    padding-left: 0;
 }
 
 .navigationButton {
@@ -104,6 +109,32 @@ input:focus {
 
 .navigationButton:hover:not([data-selected="true"]) {
     border: 2px solid #ddd;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#profile_picture {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#profile_details {
+    font-size: 0.9em;
+    margin-left: 20px;
+}
+
+#name {
+    margin-bottom: 5px;
+}
+
+#role {
+    margin-top: 0;
 }
 
 .content {

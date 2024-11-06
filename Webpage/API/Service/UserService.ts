@@ -10,7 +10,9 @@ export async function getUsersFromDBOrCache(): Promise<User[] | null>  {
         try {
             userCache = (await User.find({
                 relations: {
-                    staff:true
+                    staff: {
+                        role: true,
+                    }
                 }
             }));
         } catch (error) {
