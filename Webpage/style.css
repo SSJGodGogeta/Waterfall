@@ -111,14 +111,6 @@ input:focus {
     border: 2px solid #ddd;
 }
 
-/*<div class="profile">*/
-/*<img id="profile_picture" src="" alt="">*/
-/*<div id="profile_details">*/
-/*<h4 id="name"></h4>*/
-/*<p id="role"></p>*/
-/*</div>*/
-/*</div>*/
-
 .profile {
     display: flex;
     align-items: center;
