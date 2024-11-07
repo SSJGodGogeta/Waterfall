@@ -11,7 +11,7 @@ import {AbsenceType_Techcode} from "../Techcodes/AbsenceType_Techcode.js";
 @Entity('timetable')
 export class Timetable extends BaseEntity{
     @PrimaryGeneratedColumn()
-    index!: string;
+    index!: number;
 
     @Column({ type: 'date' })
     date!: Date;

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>My Work Times</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/Webpage/style.css" type="text/css">
@@ -36,6 +36,33 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <h2 id="my_work_times_headline">My work times</h2>
+                <button class="add-time-button">Add Time</button>
+
+                <!-- Work Times Table -->
+                <table class="work-times-table">
+                    <thead>
+                    <tr>
+                        <th id="date">Date</th>
+                        <th id="week">Week</th>
+                        <th id="weekday">Weekday</th>
+                        <th id="start">Start</th>
+                        <th id="end">End</th>
+                        <th id="pause">Pause</th>
+                        <th id="worked_hour">Worked Hours</th>
+                        <th id="absence">Absence</th>
+                        <th id="difference_to_required">Difference to Required</th>
+                    </tr>
+                    </thead>
+                    <tbody id="work-times-body">
+                    <!-- Data will be inserted here by fetching it from the backend. -->
+                    </tbody>
+                </table>
+            </div>
+
             <div class="logout-section">
                 <button id="shutdownButton" class="shutdown-button">Logout</button>
             </div>
@@ -43,5 +70,6 @@
 
         <script src="/Webpage/dist/navigation.js"></script>
         <script src="/Webpage/dist/features/user.js"></script>
+        <script src="/Webpage/dist/features/work_times/scripts/timeTable.js"></script>
     </body>
 </html>

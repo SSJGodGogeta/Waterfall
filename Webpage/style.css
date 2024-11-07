@@ -68,7 +68,7 @@ input:focus {
 
 .sidebar {
     background-color: #eee;
-    width: 200px;
+    width: 250px;
     padding: 20px;
     height: 100%;
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
@@ -138,7 +138,7 @@ input:focus {
 }
 
 .content {
-    margin-left: 240px;
+    margin-left: 15%;
     padding: 20px 40px;
     width:  calc(100% - 320px);
     overflow-x: hidden;
@@ -329,3 +329,69 @@ input:focus {
 }
 
 
+.container {
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#my_work_times_headline {
+    font-size: 40px;
+    margin-top: 1%;
+    margin-left: 15%;
+    color: black;
+}
+
+.add-time-button {
+    float: right;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 5%;
+    right: 1%;
+}
+
+.work-times-table {
+    width: 85%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    position: absolute;
+    right: 10px;
+}
+
+.work-times-table th, .work-times-table td {
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px gray;
+}
+.work-times-table thead > tr > th{
+    background-color: rgb(191, 191, 191);
+}
+.work-times-table th {
+    background-color: #f5f5f5;
+}
+.work-times-table tbody tr:nth-child(odd) {
+    background-color: #f0f0f0; /* Light grey for odd rows */
+}
+
+.work-times-table tbody tr:nth-child(even) {
+    background-color: white; /* White for even rows */
+}
+
+.positive {
+    color: green;
+    font-weight: bold;
+}
+
+.negative {
+    color: red;
+    font-weight: bold;
+}

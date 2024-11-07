@@ -6,14 +6,14 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         // Retrieve the session token from the cookies send with the request
         const token = req.cookies.session_token;
         if (!token) {
-            res.status(401).json({message: "Unauthorized"});
+            res.status(401).json({message: "Token not defined. Access denied"});
             return;
         }
 
         // Check if the token exists in the database
         const user = await getUserByKey("user_token", token);
         if (!user) {
-            res.status(401).json({message: "Unauthorized"});
+            res.status(401).json({message: "Could not find user by token. Assuming Unauthorized access"});
             return;
         }
         console.log(`Authenticated staff: ${user.staff?.first_name} ${user.staff?.last_name}`);
