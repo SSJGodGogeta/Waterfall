@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const sick_days_value: HTMLHeadingElement = sick_days.querySelector(".statistics_value") as HTMLHeadingElement;
     const remaining_vacation_days_value: HTMLHeadingElement = remaining_vacation_days.querySelector(".statistics_value") as HTMLHeadingElement;
 
-    // TODO: fetch actual statistics from backend
     try {
         const responseCurrentuser = await fetch(
             "http://localhost:3000/api/authentication/currentUser",
