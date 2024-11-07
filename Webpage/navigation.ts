@@ -4,6 +4,7 @@ const my_work_times_button: HTMLDataListElement = document.getElementById("my_wo
 const my_vacations_button: HTMLDataListElement = document.getElementById("my_vacations") as HTMLDataListElement;
 const sickness_button: HTMLDataListElement = document.getElementById("sickness") as HTMLDataListElement;
 const refresh_button: HTMLDataListElement = document.getElementById("refresh") as HTMLDataListElement;
+const shutdown_button: HTMLButtonElement = document.getElementById("shutdownButton") as HTMLButtonElement;
 
 dashboard_button.onclick = function () {
     // go to the dashboard screen
@@ -42,4 +43,19 @@ refresh_button.onclick = async function () {
         console.error("Failed to fetch user:", error);
     }
 
+}
+
+shutdown_button.onclick = async function () {
+    try {
+        const response = await fetch("http://localhost:3000/api/authentication/logout", {
+            method: 'POST',
+            credentials: 'include', // allow receiving cookies
+        });
+        if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+        window.location.href = "/Waterfall/Webpage/authentication/login.html";
+    } catch (error) {
+        console.error("Failed to fetch user:", error);
+    }
 }

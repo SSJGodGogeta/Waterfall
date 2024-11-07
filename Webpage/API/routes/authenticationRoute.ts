@@ -68,13 +68,22 @@ router.get("/currentUser", authenticate, async (req: Request, res: Response) => 
 
 router.post("/logout", authenticate, async (req: Request, res: Response) => {
     try {
-        // remove the user aka session token and with that log the user out
-        let { request_body } = req.body;
-        const user: User = request_body.user;
-
+        const user: User = req.body.user;
+        if (!user) {
+            res.status(400).json({ message: "User not found" });
+            return;
+        }
         user.user_token = '';
         await user.save();
         clearUserCache();
+
+        // Clear the cookie from the client
+        res.clearCookie("session_token", {
+            httpOnly: true,
+            secure: false, // Use true if HTTPS in production
+            sameSite: "lax",
+        });
+
 
         res.status(200).json({ message: "Logout successful" });
         return;

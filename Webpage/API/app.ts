@@ -17,7 +17,7 @@ import {clearStaffCache} from "./Service/StaffService.js";
 import cacheRoute from "./routes/cacheRoute.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = 3000; // Port of the backend (Express)
 
 app.use(cors({
     origin: 'http://localhost:63342', // url of the frontend app. adapt as needed

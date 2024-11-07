@@ -306,3 +306,26 @@ input:focus {
 .refresh-icon {
     font-size: 1.2em;
 }
+.logout-section {
+    position: absolute; /* Allows you to position the button freely */
+    bottom:20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    z-index: 100; /* Make sure the button is above other elements */
+}
+
+.shutdown-button {
+    color: white;
+    background-color: #ff4d4d; /* A red color to indicate "logout" */
+    border: none;
+    border-radius: 10px;
+    padding: 10px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.shutdown-button:hover {
+    background-color: #e63939; /* Darker red on hover */
+}
+
+
