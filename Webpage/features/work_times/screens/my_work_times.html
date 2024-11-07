@@ -40,7 +40,7 @@
             <!-- Main Content -->
             <div class="content">
                 <h1 id="my_work_times_headline">My work times</h1>
-                <button class="add-time-button">Add Time</button>
+                <button class="add-time-button" id="add-time-button" >Add Time</button>
 
                 <!-- Work Times Table -->
                 <table class="work-times-table">
@@ -58,6 +58,18 @@
                     </tr>
                     </thead>
                     <tbody id="work-times-body">
+                    <tr id="input-row" style="display: none;">
+                        <td><input type="date" id="input-date"></td>
+                        <td>Auto-calculate</td>
+                        <td><input type="text" id="input-weekday"></td>
+                        <td><input type="time" id="input-start"></td>
+                        <td><input type="time" id="input-end"></td>
+                        <td><input type="number" id="input-pause" min="0" placeholder="Minutes"></td>
+                        <td><input type="number" id="input-worked-hours" step="0.01" placeholder="Hours"></td>
+                        <td><input type="text" id="input-absence" placeholder="Absence Type"></td>
+                        <td><input type="number" id="input-difference" step="0.01" placeholder="Difference"></td>
+                        <td><button id="save-button">Save</button></td>
+                    </tr>
                     <!-- Data will be inserted here by fetching it from the backend. -->
                     </tbody>
                 </table>
@@ -66,12 +78,12 @@
                     <button id="shutdownButton" class="shutdown-button">Logout</button>
                 </div>
             </div>
-
-
         </div>
 
         <script src="/Webpage/dist/navigation.js"></script>
         <script src="/Webpage/dist/features/user.js"></script>
         <script src="/Webpage/dist/features/work_times/scripts/timeTable.js"></script>
+        <script src="/Webpage/dist/features/work_times/scripts/registerWork.js"></script>
+
     </body>
 </html>

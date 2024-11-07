@@ -48,9 +48,12 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek:boolea
             console.error(`Current Week is from: ${mondayStart}   to   ${sundayEnd}`);
             continue;
         }
-        const workedMinutes = (end.getTime() - start.getTime()) / 60000; // Time in minutes
+
+        const workedMinutes = ((end.getTime() - start.getTime()) / 60000) - timetableEntry.pause_minutes; // Time in minutes
         let change:boolean = false;
-        if (timetableEntry.performed_hours != workedMinutes/60) {
+        // If the hours are not the same as calculated: recalculate. Performed hours always include pause minutes (subtracted).
+
+        if (((timetableEntry.performed_hours*60)) != workedMinutes) {
             timetableEntry.performed_hours = workedMinutes / 60;
             change = true;
         }
@@ -59,7 +62,7 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek:boolea
             change = true;
         }
         change ? await timetableEntry.save() : console.log("No need to save");
-        const workedHours = (workedMinutes - timetableEntry.pause_minutes) / 60;
+        const workedHours = workedMinutes/ 60;
         performedHoursThisWeek += workedHours;
     }
     return performedHoursThisWeek;
