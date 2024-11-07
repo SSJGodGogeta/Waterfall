@@ -300,3 +300,7 @@ COLLATE utf8mb4_0900_ai_ci;
 
 -- changeset arman:ar5
 ALTER TABLE `waterfall_swe`.`timetable` MODIFY `index` INT NOT NULL AUTO_INCREMENT UNIQUE;
+
+-- changeset arman:ar6
+ALTER TABLE `waterfall_swe`.`flex_time`
+DROP COLUMN `flex_time_techcode`;
