@@ -43,13 +43,14 @@ async function calculateRemainingVacationDays(staffId:number): Promise<number | 
     const timetableEntries = staff.timetables;
     return staff.max_vacation_days-timetableEntries.length;
 }
-async function calculateHoursThisWeek(staffId: number): Promise<number | null> {
+async function calculateHoursThisOrPreviousWeek(staffId: number, previousWeek:boolean = false): Promise<number | null> {
     // Get the current date and calculate the start and end of this week
     const currentDate:Date = new Date();
     const dayOfWeek:number = currentDate.getDay();
     const daysToMonday:number = (dayOfWeek + 6) % 7; // Get number of days to Monday
     const mondayStart:Date = new Date(currentDate);
-    mondayStart.setDate(currentDate.getDate() - daysToMonday); // Set to Monday
+    // If u want to calculate the hours of the previousweek, its the same procedure just 7 days earlier => mondaystart
+    previousWeek ? mondayStart.setDate(currentDate.getDate() - daysToMonday-7) : mondayStart.setDate(currentDate.getDate() - daysToMonday) ; // Set to Monday
 
     const sundayEnd = new Date(mondayStart);
     sundayEnd.setDate(mondayStart.getDate() + 6); // Set to Sunday
@@ -118,7 +119,8 @@ async function main() {
     await dataSource.initialize();
     console.warn("Sick days: " + await calculateSickDays(5));
     console.warn("Remaining vacation days: " + await calculateRemainingVacationDays(5));
-    console.warn("Hours this week: " + await calculateHoursThisWeek(5));
+    console.warn("Hours this week: " + await calculateHoursThisOrPreviousWeek(5));
+    console.warn("Hours previous week: " + await calculateHoursThisOrPreviousWeek(5, true));
     console.warn("Flex time account: " + await calculateFlexTime(5)); // Wont return a result, as there are no flex Times values in the db atm.
 }
 
