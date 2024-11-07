@@ -3,6 +3,7 @@ import {getStaffByKey} from "../Service/StaffService.js";
 import {AbsenceType_Techcode} from "../../DB/Techcodes/AbsenceType_Techcode.js";
 import {authenticate} from "../authenticationMiddleware.js";
 import {Staff} from "../../DB/Entities/Staff.js";
+import {FlexTime} from "../../DB/Entities/FlexTime.js";
 
 const router = Router();
 function validateStaffTimeTableEntries(staff:Staff) {
@@ -63,15 +64,29 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek:boolea
     }
     return performedHoursThisWeek;
 }
+// Lässt sich durch difference_performed_target berechnen und staff.target_hours. Vacation muss abgezogen werden
 
-//TODO declared by Arman: How ? What are criterias for flex time ? How is it setup ? Do we need a flexTimeTechcode for it ?
 function calculateFlexTime(staff:Staff): number {
     let flexTime:number = 0;
-    if (!staff.flexTimes) return 0;
-    for (const times of staff.flexTimes) {
-        flexTime += times.available_flextime ?? 0;
+    if (!staff.flexTimes) return flexTime;
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
+    const sollArbeitsStunden:number = staff.target_hours*5*4; // Monatliche arbeitstunden
+    const max_vacation_perMonth:number = staff.max_vacation_days/12; // Anzahl an urlaubstagen pro monat
+    const max_vacation_hour_perMonth:number = max_vacation_perMonth*staff.target_hours; // Anzahl an urlaubsstunden pro monat
+    let totalDifferenceOnPerformedHours:number = 0;
+
+    for (const entry of staff.timetables) {
+        const entryDate = new Date(entry.date);
+        // Check if the entry is in the current month and year
+        if (entryDate.getMonth() === currentMonth && entryDate.getFullYear() === currentYear) {
+            totalDifferenceOnPerformedHours += entry.difference_performed_target;
+        }
     }
-    return flexTime;
+    totalDifferenceOnPerformedHours += max_vacation_hour_perMonth
+    flexTime = totalDifferenceOnPerformedHours - sollArbeitsStunden;
+    return Math.round(flexTime);
 }
 
 router.get("/:id", authenticate, async (req: Request, res: Response) => {
@@ -85,6 +100,26 @@ router.get("/:id", authenticate, async (req: Request, res: Response) => {
         }
         validateStaffTimeTableEntries(staff);
         const flexTime:number =  calculateFlexTime(staff)?? 0;
+        let fTime = await FlexTime.findOne({
+            relations:{
+                staff:true
+            },
+            where:{
+                staff:{
+                    staff_id: staff.staff_id
+                }
+            }
+        })
+        if (!fTime) {
+            fTime = new FlexTime();
+            fTime.staff = staff;
+        }
+        if (fTime.available_flextime != flexTime) {
+            fTime.available_flextime = flexTime;
+            await fTime.save();
+            console.warn(`Flex Time updated/added for ${fTime.staff.staff_id}  (${fTime.staff.first_name} ${fTime.staff.last_name})`);
+        }
+
         const hoursThisWeek:number = await calculateHoursThisOrPreviousWeek(staff) ?? 0;
         const hoursPreviousWeek:number = await calculateHoursThisOrPreviousWeek(staff) ?? 0;
         const sickDays:number =  calculateSickDays(staff) ?? 0;
