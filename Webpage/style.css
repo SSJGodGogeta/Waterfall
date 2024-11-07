@@ -68,7 +68,7 @@ input:focus {
 
 .sidebar {
     background-color: #eee;
-    width: 250px;
+    width: 220px;
     padding: 20px;
     height: 100%;
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
@@ -138,9 +138,9 @@ input:focus {
 }
 
 .content {
-    margin-left: 15%;
+    margin-left: 260px;
     padding: 20px 40px;
-    width:  calc(100% - 320px);
+    width:  calc(100% - 260px - 80px);
     overflow-x: hidden;
 }
 
@@ -284,14 +284,15 @@ input:focus {
 .more_info_button {
     margin-top: auto; /* Button wird nach unten gedrückt */
 }
+
 #refresh {
     background-color: var(--primary-color);
     color: white;
-    font-weight: bold;
+    /*font-weight: bold;*/
     border: none;
     display: flex;
     align-items: center;
-    justify-content: center;
+    /*justify-content: center;*/
     gap: 5px;
     transition: background-color 0.2s ease;
 }
@@ -306,10 +307,11 @@ input:focus {
 .refresh-icon {
     font-size: 1.2em;
 }
+
 .logout-section {
     position: absolute; /* Allows you to position the button freely */
     bottom:20px; /* Distance from the bottom */
-    right: 20px; /* Distance from the right */
+    right: 40px; /* Distance from the right */
     z-index: 100; /* Make sure the button is above other elements */
 }
 
@@ -319,79 +321,85 @@ input:focus {
     border: none;
     border-radius: 10px;
     padding: 10px 30px;
-    font-size: 1.1em;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    /*transition: background-color 0.2s ease;*/
 }
 
 .shutdown-button:hover {
-    background-color: #e63939; /* Darker red on hover */
+    background-color: #d53030; /* Darker red on hover */
 }
-
 
 .container {
     display: flex;
 }
 
-.main-content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-}
-
 #my_work_times_headline {
-    font-size: 40px;
-    margin-top: 1%;
-    margin-left: 15%;
     color: black;
 }
 
 .add-time-button {
     float: right;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
-    padding: 10px 20px;
+    padding: 10px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     position: absolute;
     top: 5%;
-    right: 1%;
+    right: 40px;
 }
 
 .work-times-table {
-    width: 85%;
+    width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    position: absolute;
-    right: 10px;
+    margin-top: 30px;
+    border: #c6c6c6 solid 1px;
+    border-radius: 100px;
+}
+
+table, th, td {
+    border: 1px solid #dcdcdc;
 }
 
 .work-times-table th, .work-times-table td {
-    padding: 10px 0;
-    text-align: center;
-    border-bottom: 1px gray;
+    padding: 10px 10px;
+    text-align: left;
 }
+
 .work-times-table thead > tr > th{
-    background-color: rgb(191, 191, 191);
+    background-color: #D9D9D9;
 }
+
 .work-times-table th {
     background-color: #f5f5f5;
 }
+
 .work-times-table tbody tr:nth-child(odd) {
-    background-color: #f0f0f0; /* Light grey for odd rows */
+    background-color: #f3f3f3; /* Light grey for odd rows */
 }
 
 .work-times-table tbody tr:nth-child(even) {
-    background-color: white; /* White for even rows */
+    background-color: #fafafa; /* White for even rows */
+}
+
+.work-times-table tbody tr:hover {
+    background-color: #e1e1e1;
+    cursor: pointer;
 }
 
 .positive {
-    color: green;
-    font-weight: bold;
+    background-color: #DDF4D1;
 }
 
 .negative {
-    color: red;
-    font-weight: bold;
+    background-color: #F4D1D1;
+}
+
+#date, #week, #weekday, #start, #end, #pause, #worked_hour, #absence,#start, #end {
+    width: 10%;
+}
+
+#difference_to_required {
+    width: 15%;
 }
