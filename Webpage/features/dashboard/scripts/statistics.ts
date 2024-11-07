@@ -12,9 +12,47 @@ document.addEventListener("DOMContentLoaded", async function () {
     const remaining_vacation_days_value: HTMLHeadingElement = remaining_vacation_days.querySelector(".statistics_value") as HTMLHeadingElement;
 
     // TODO: fetch actual statistics from backend
-    // for now, we'll just create some dummy data
-    hours_this_week_value.textContent = `${"35.50"} hr`;
-    flex_time_account_value.textContent = `${"5.40"} hr`;
-    sick_days_value.textContent = `${"2"} days`;
-    remaining_vacation_days_value.textContent = `${"25"} days`;
+    try {
+        const responseCurrentuser = await fetch(
+            "http://localhost:3000/api/authentication/currentUser",
+            {
+                method: "GET",
+                credentials: 'include', // allow receiving cookies
+            }
+        );
+
+        if (!responseCurrentuser.ok) {
+            throw new Error("Network response was not ok " + responseCurrentuser.statusText);
+        }
+
+        const user = await responseCurrentuser.json();
+        console.log("Fetched user:", user);
+
+        const response = await fetch("http://localhost:3000/api/calculateStatistics/:" + user.staff.staff_id,
+        {
+            method: "GET",
+            credentials: "include",
+        }
+        );
+        if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+        const dashboardStatistiics = await response.json();
+        console.log(dashboardStatistiics);
+        // for now, we'll just create some dummy data
+        hours_this_week_value.textContent = `${dashboardStatistiics.hoursThisWeek} hr`;
+        flex_time_account_value.textContent = `${dashboardStatistiics.flexTime} hr`;
+        sick_days_value.textContent = `${dashboardStatistiics.sickDays} days`;
+        remaining_vacation_days_value.textContent = `${dashboardStatistiics.remainingVacationDays} days`;
+        /*
+        flexTime: flexTime,
+            hoursThisWeek: hoursThisWeek,
+            hoursPreviousWeek: hoursPreviousWeek,
+            sickDays: sickDays,
+            remainingVacationDays: remainingVacationDays
+         */
+    }
+    catch (error) {
+        console.error("Failed to get statistics from server:", error);
+    }
 });

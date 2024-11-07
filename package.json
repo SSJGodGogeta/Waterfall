@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start_backend_server": "rimraf Webpage/dist && tsc && node Webpage/dist/API/app.js"
+    "start_backend_server": "rimraf Webpage/dist && tsc && node Webpage/dist/API/app.js",
+    "start_local_test_exampleMain": "rimraf Webpage/dist && tsc && node Webpage/dist/Examples/exampleMain.js"
   },
   "keywords": [],
   "author": "",

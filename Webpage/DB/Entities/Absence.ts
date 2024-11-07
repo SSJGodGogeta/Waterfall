@@ -5,6 +5,7 @@ import {
     JoinColumn, BaseEntity, PrimaryColumn,
 } from 'typeorm';
 import type {Staff} from "./Staff.js";
+import {AbsenceType_Techcode} from "../Techcodes/AbsenceType_Techcode.js";
 
 // Absence Entity
 @Entity('absence')
@@ -22,7 +23,7 @@ export class Absence extends BaseEntity{
     permission_status!: string;
 
     @Column({ length: 45, nullable: false })
-    type_techcode!: string;
+    type_techcode!: AbsenceType_Techcode;
 
     @ManyToOne('Staff', (staff:Staff) => staff.absences)
     @JoinColumn({
