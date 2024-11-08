@@ -50,7 +50,3 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("Failed to fetch timetable data:", error);
     }
 });
-
-const date = new Date();
-date.getFullYear();
-date.getDate();
