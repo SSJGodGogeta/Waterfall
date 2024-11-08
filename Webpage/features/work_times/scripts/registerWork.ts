@@ -28,12 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 throw new Error("Failed to save new entry");
             }
-
             const savedEntry = await response.json();
             console.log("New entry saved:", savedEntry);
-            // Optionally refresh the table to reflect the newly added entry
+            window.location.reload();
         } catch (error) {
             console.error("Error saving entry:", error);
         }
     };
+
 });
