@@ -58,15 +58,6 @@
                     </tr>
                     </thead>
                     <tbody id="work-times-body">
-                    <tr id="input-row" style="display: none;">
-                        <td><input type="date" id="input-date"></td>
-                        <td>Auto-calculate</td>
-                        <td><input type="time" id="input-start"></td>
-                        <td><input type="time" id="input-end"></td>
-                        <td><input type="number" id="input-pause" min="0" placeholder="Minutes"></td>
-                        <td><input type="text" id="input-absence" placeholder="Absence Type"></td>
-                        <td><button id="save-button">Save</button></td>
-                    </tr>
                     <!-- Data will be inserted here by fetching it from the backend. -->
                     </tbody>
                 </table>
@@ -76,7 +67,37 @@
                 </div>
             </div>
         </div>
+        <dialog id="work-time-dialog">
+            <div class="dialogContainer">
+                <form id="work-time-form">
+                    <h2>Add time</h2>
+                    <p class="hint">Note your work times here, so that we can track it easily and pay you the right amount at the end of the month</p>
+                    <label for="work-time-date" class="input-label">Date</label>
+                    <input class="textField" type="date" id="work-time-date" required>
 
+                    <label for="work-time-start" class="input-label">Start at</label>
+                    <input class="textField" type="time" id="work-time-start" required>
+
+                    <label for="work-time-end" class="input-label">End at</label>
+                    <input class="textField" type="time" id="work-time-end" required>
+
+                    <label for="work-time-pause" class="input-label">Pause in min</label>
+                    <input class="textField" type="number" placeholder="0" id="work-time-pause" required>
+
+                    <label for="work-time-absence" class="input-label">Absence?</label>
+                    <input list="absence-types" class="textField" id="work-time-absence" name="absence-techcode" required>
+                    <datalist id="absence-types">
+                        <option value="NONE">
+                        <option value="VACATION">
+                        <option value="SICK">
+                        <option value="FREE">
+                    </datalist>
+
+                    <button style="margin-bottom: 20px" id="add-time-save-button" type="submit">Save</button>
+                    <button style="margin-bottom: 20px" id="cancel-add-time-button" type="button">Cancel</button>
+                </form>
+            </div>
+        </dialog>
         <script src="/Webpage/dist/navigation.js"></script>
         <script src="/Webpage/dist/features/user.js"></script>
         <script src="/Webpage/dist/features/work_times/scripts/timeTable.js"></script>

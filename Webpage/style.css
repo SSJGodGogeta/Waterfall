@@ -315,7 +315,7 @@ input:focus {
     z-index: 100; /* Make sure the button is above other elements */
 }
 
-.shutdown-button {
+.shutdown-button, #cancel-add-time-button {
     color: white;
     background-color: #ff4d4d; /* A red color to indicate "logout" */
     border: none;
@@ -402,4 +402,43 @@ table, th, td {
 
 #difference_to_required {
     width: 15%;
+}
+
+dialog {
+    background-color: transparent;
+    backdrop-filter: blur(2px); /* Blurreffekt */
+    -webkit-backdrop-filter: blur(2px); /* Für Safari */
+
+    position: fixed; /* Fixiert den Dialog über den gesamten Bildschirm */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ganze Bildschirmbreite */
+    height: 100vh; /* Ganze Bildschirmhöhe */
+
+    border: none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#work-time-dialog {
+    display: none;
+}
+
+.dialogContainer {
+    max-width: 500px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.hint {
+    color: grey;
+}
+
+.textField {
+    border: #aaaaaa solid 1px;
 }
