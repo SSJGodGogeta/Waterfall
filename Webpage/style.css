@@ -175,15 +175,15 @@ input:focus {
     background-color: var(--primary-color);
 }
 
-#flex_time_account {
+#flex_time_account, #hours_previous_week {
     background-color: #FE9474;
 }
 
-#sick_days {
+#sick_days, #hours_this_month {
     background-color: #B969FF;
 }
 
-#remaining_vacation_days {
+#remaining_vacation_days, #must_work_time_month {
     background-color: #FF6978;
 }
 

@@ -17,7 +17,9 @@ async function validateStaffTimeTableEntries(staff:Staff) {
             console.error(`Data manipulation detected for staff with ID: ${staff.staff_id} in TimeTable at index: ${tableEntry.index}  by  (${staff.first_name} ${staff.last_name})`);
     }
 }
-
+function getDaysInMonth(date:Date, staff:Staff): number {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()-staff.target_hours;
+}
 export function getWeekday(date: Date): string {
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const weekday = date.getDay()
@@ -46,7 +48,7 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek:boolea
     // Filter the timetable entries for this week, where the staff member worked
     const timetableEntries = staff.timetables.filter(timetable => {
         const entryDate = new Date(timetable.date);
-        return entryDate >= mondayStart && entryDate <= sundayEnd && !timetable.abscence;
+        return entryDate >= mondayStart && entryDate <= sundayEnd && timetable.abscence == AbsenceType_Techcode.NONE;
     });
     // Calculation...
     let performedHoursThisWeek = 0;
@@ -77,6 +79,36 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek:boolea
     }
     return performedHoursThisWeek;
 }
+
+async function calcuclateThisMonthHours(staff:Staff){
+    const currentDate:Date = new Date();
+    const month = currentDate.getMonth(); // 0-11
+    const timetableEntries = staff.timetables.filter(timetable => {
+        const entryDate = new Date(timetable.date);
+        return entryDate.getMonth() == month && timetable.abscence == AbsenceType_Techcode.NONE;
+    });
+    let hours = 0;
+    for (const timetableEntry of timetableEntries){
+        const start = new Date(timetableEntry.start);
+        const end = new Date(timetableEntry.end);
+        const workedMinutes = ((end.getTime() - start.getTime()) / 60000) - timetableEntry.pause_minutes; // Time in minutes
+        let change:boolean = false;
+        // If the hours are not the same as calculated: recalculate. Performed hours always include pause minutes (subtracted).
+        if (((timetableEntry.performed_hours*60)) != workedMinutes) {
+            timetableEntry.performed_hours = workedMinutes / 60;
+            change = true;
+        }
+        if (timetableEntry.difference_performed_target !=  (workedMinutes/60) - staff.target_hours) {
+            timetableEntry.difference_performed_target =  (workedMinutes/60) - staff.target_hours;
+            change = true;
+        }
+        change ? await timetableEntry.save() : console.log("No need to save");
+        const workedHours = workedMinutes/ 60;
+        hours += workedHours;
+    }
+    return hours;
+}
+
 // Lässt sich durch difference_performed_target berechnen und staff.target_hours. Vacation muss abgezogen werden
 
 function calculateFlexTime(staff:Staff): number {
@@ -132,15 +164,19 @@ router.get("/", authenticate, async (req: Request, res: Response) => {
             await fTime.save();
             console.warn(`Flex Time updated/added for ${fTime.staff.staff_id}  (${fTime.staff.first_name} ${fTime.staff.last_name})`);
         }
-
+        const currentDate:Date = new Date();
         const hoursThisWeek:number = await calculateHoursThisOrPreviousWeek(staff) ?? 0;
-        const hoursPreviousWeek:number = await calculateHoursThisOrPreviousWeek(staff) ?? 0;
+        const hoursPreviousWeek:number = await calculateHoursThisOrPreviousWeek(staff, true) ?? 0;
         const sickDays:number =  calculateSickDays(staff) ?? 0;
         const remainingVacationDays:number =  calculateRemainingVacationDays(staff) ?? 0;
+        const hoursThisMonth:number = await calcuclateThisMonthHours(staff) ?? 0;
+        const mustWorkHoursMonth:number = staff.target_hours * getDaysInMonth(currentDate, staff);
         const dashboardStatistics = {
             flexTime: flexTime,
             hoursThisWeek: hoursThisWeek,
             hoursPreviousWeek: hoursPreviousWeek,
+            hoursThisMonth: hoursThisMonth,
+            mustWorkHoursMonth: mustWorkHoursMonth,
             sickDays: sickDays,
             remainingVacationDays: remainingVacationDays
         }
