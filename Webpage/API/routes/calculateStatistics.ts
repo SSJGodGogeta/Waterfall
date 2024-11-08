@@ -6,12 +6,24 @@ import {Staff} from "../../DB/Entities/Staff.js";
 import {FlexTime} from "../../DB/Entities/FlexTime.js";
 
 const router = Router();
-function validateStaffTimeTableEntries(staff:Staff) {
+async function validateStaffTimeTableEntries(staff:Staff) {
     for (const tableEntry of staff.timetables) {
+        if (tableEntry.weekday != getWeekday(new Date(tableEntry.date))) {
+            tableEntry.weekday = getWeekday(new Date(tableEntry.date));
+            await tableEntry.save()
+            console.log("Updated weekday");
+        }
         if (tableEntry.abscence && (tableEntry.difference_performed_target != -(staff.target_hours) || tableEntry.performed_hours > 0))
             console.error(`Data manipulation detected for staff with ID: ${staff.staff_id} in TimeTable at index: ${tableEntry.index}  by  (${staff.first_name} ${staff.last_name})`);
     }
 }
+
+export function getWeekday(date: Date): string {
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const weekday = date.getDay()
+    return weekdays[weekday];
+}
+
 function calculateSickDays(staff:Staff): number | null {
     const timetableEntries = staff.timetables.filter(entry => entry.abscence == AbsenceType_Techcode.SICK);
     return timetableEntries.length;
@@ -44,8 +56,6 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek:boolea
         // No need to check for end as we assume that our company doesnt have night shifts.
         if (start < mondayStart || start > sundayEnd) {
             console.error("Skipped " + start);
-            console.error("Due to data corruption!!\n");
-            console.error(`Current Week is from: ${mondayStart}   to   ${sundayEnd}`);
             continue;
         }
 
@@ -92,16 +102,16 @@ function calculateFlexTime(staff:Staff): number {
     return Math.round(flexTime);
 }
 
-router.get("/:id", authenticate, async (req: Request, res: Response) => {
+router.get("/", authenticate, async (req: Request, res: Response) => {
     try {
-        const staffId:number = parseInt(req.params.id.replaceAll(":", ""));
-        const staff = await getStaffByKey("staff_id", staffId);
+        const user = req.body.user;
+        const staff = await getStaffByKey("staff_id", user.staff.staff_id);
         if (!staff) {
             console.error("No such staff!");
-            console.error(`param was: ${req.params.id}\nstaffId was ${staffId}`);
+            console.error(`param was: ${req.params.id}\nstaffId was ${user.staff.staff_id}`);
             return;
         }
-        validateStaffTimeTableEntries(staff);
+        await validateStaffTimeTableEntries(staff);
         const flexTime:number =  calculateFlexTime(staff)?? 0;
         let fTime = await FlexTime.findOne({
             relations:{

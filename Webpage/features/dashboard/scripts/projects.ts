@@ -1,19 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     // get the projects container, into which the following code will put the individual projects
     const projects_container: HTMLDivElement = document.getElementById("my_projects") as HTMLDivElement;
-
-    const responseCurrentuser = await fetch(
-        "http://localhost:3000/api/authentication/currentUser",
-        {
-            method: "GET",
-            credentials: 'include', // allow receiving cookies
-        }
-    );
-    if (!responseCurrentuser.ok) {
-        throw new Error("Network response was not ok " + responseCurrentuser.statusText);
-    }
-    const user = await responseCurrentuser.json();
-
     try {
         const response = await fetch("http://localhost:3000/api/projects",
             {
@@ -24,8 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (!response.ok) {
             throw new Error("Network response was not ok " + response.statusText);
         }
-
-        const projectsFromApi = await response.json();
+        const {projectsFromApi, user} = await response.json();
         console.log("Fetched projects:", projectsFromApi);
 
         // Get the element with id "roles" and display the data

@@ -11,29 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     saveButton.onclick = async () => {
         try {
-
-            const responseCurrentUser = await fetch(
-                "http://localhost:3000/api/authentication/currentUser",
-                {
-                    method: "GET",
-                    credentials: 'include', // allow receiving cookies
-                }
-            );
-
-            if (!responseCurrentUser.ok) {
-                throw new Error("Network response was not ok " + responseCurrentUser.statusText);
-            }
-            const user = await responseCurrentUser.json();
             const entry = {
                 date: (document.getElementById("input-date") as HTMLInputElement).value,
-                weekday: (document.getElementById("input-weekday") as HTMLInputElement).value,
                 start: (document.getElementById("input-start") as HTMLInputElement).value,
                 end: (document.getElementById("input-end") as HTMLInputElement).value,
                 pause_minutes: (document.getElementById("input-pause") as HTMLInputElement).value,
-                performed_hours: (document.getElementById("input-worked-hours") as HTMLInputElement).value,
                 absence: (document.getElementById("input-absence") as HTMLInputElement).value,
-                difference_performed_target: (document.getElementById("input-difference") as HTMLInputElement).value,
-                staffId: user.staff.staff_id,
             };
                 const response = await fetch("http://localhost:3000/api/timetable", {
                 method: "POST",
