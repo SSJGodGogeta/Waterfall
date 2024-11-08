@@ -172,13 +172,13 @@ router.get("/", authenticate, async (req: Request, res: Response) => {
         const hoursThisMonth:number = await calcuclateThisMonthHours(staff) ?? 0;
         const mustWorkHoursMonth:number = staff.target_hours * getDaysInMonth(currentDate, staff);
         const dashboardStatistics = {
-            flexTime: flexTime,
-            hoursThisWeek: hoursThisWeek,
-            hoursPreviousWeek: hoursPreviousWeek,
-            hoursThisMonth: hoursThisMonth,
-            mustWorkHoursMonth: mustWorkHoursMonth,
-            sickDays: sickDays,
-            remainingVacationDays: remainingVacationDays
+            flexTime: flexTime.toFixed(2),
+            hoursThisWeek: hoursThisWeek.toFixed(2),
+            hoursPreviousWeek: hoursPreviousWeek.toFixed(2),
+            hoursThisMonth: hoursThisMonth.toFixed(2),
+            mustWorkHoursMonth: mustWorkHoursMonth.toFixed(2),
+            sickDays: sickDays.toFixed(2),
+            remainingVacationDays: remainingVacationDays.toFixed(2),
         }
         res.json(dashboardStatistics);
     } catch (error) {

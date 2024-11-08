@@ -171,19 +171,19 @@ input:focus {
     margin-top: 5px;
 }
 
-#hours_this_week {
+#hours_this_week, #max_vacation_days {
     background-color: var(--primary-color);
 }
 
-#flex_time_account, #hours_previous_week {
+#flex_time_account, #hours_previous_week, #unplanned_vacation_days {
     background-color: #FE9474;
 }
 
-#sick_days, #hours_this_month {
+#sick_days, #hours_this_month, #taken_vacation_days {
     background-color: #B969FF;
 }
 
-#remaining_vacation_days, #must_work_time_month {
+#remaining_vacation_days, #must_work_time_month, #denied_vacations {
     background-color: #FF6978;
 }
 
@@ -315,7 +315,7 @@ input:focus {
     z-index: 100; /* Make sure the button is above other elements */
 }
 
-.shutdown-button, #cancel-add-time-button {
+.shutdown-button, #cancel-add-time-button, #cancel-vacation-button {
     color: white;
     background-color: #ff4d4d; /* A red color to indicate "logout" */
     border: none;
@@ -333,11 +333,11 @@ input:focus {
     display: flex;
 }
 
-#my_work_times_headline {
+#my_work_times_headline, #my_vacations_headline {
     color: black;
 }
 
-.add-time-button {
+.add-time-button, .request-vacation-button {
     float: right;
     background-color: var(--primary-color);
     color: white;
@@ -350,7 +350,7 @@ input:focus {
     right: 40px;
 }
 
-.work-times-table {
+.work-times-table, .vacation-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
@@ -396,12 +396,16 @@ table, th, td {
     background-color: #F4D1D1;
 }
 
-#date, #week, #weekday, #start, #end, #pause, #worked_hour, #absence,#start, #end {
+#date, #week, #weekday, #start, #end, #pause, #worked_hour, #absence, #duration, #status {
     width: 10%;
 }
 
 #difference_to_required {
     width: 15%;
+}
+
+#response {
+    width: 30%;
 }
 
 dialog {
@@ -424,7 +428,7 @@ dialog {
     align-items: center;
 }
 
-#work-time-dialog {
+#work-time-dialog, #vacation-dialog {
     display: none;
 }
 
