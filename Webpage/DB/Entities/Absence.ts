@@ -25,6 +25,9 @@ export class Absence extends BaseEntity{
     @Column({ length: 45, nullable: false })
     type_techcode!: AbsenceType_Techcode;
 
+    @Column({ length: 300, nullable: true })
+    response!: string;
+
     @ManyToOne('Staff', (staff:Staff) => staff.absences)
     @JoinColumn({
         name: 'staff_staff_id',
