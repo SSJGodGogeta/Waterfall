@@ -171,11 +171,11 @@ input:focus {
     margin-top: 5px;
 }
 
-#hours_this_week, #max_vacation_days {
+#hours_this_week, #max_vacation_days, #sick_days_this_month {
     background-color: var(--primary-color);
 }
 
-#flex_time_account, #hours_previous_week, #unplanned_vacation_days {
+#flex_time_account, #hours_previous_week, #unplanned_vacation_days, #sick_days_last_month {
     background-color: #FE9474;
 }
 
@@ -333,11 +333,11 @@ input:focus {
     display: flex;
 }
 
-#my_work_times_headline, #my_vacations_headline {
+#my_work_times_headline, #my_vacations_headline, #my_sickness_headline {
     color: black;
 }
 
-.add-time-button, .request-vacation-button {
+.add-time-button, .request-vacation-button, .inform-sickness-button {
     float: right;
     background-color: var(--primary-color);
     color: white;
@@ -350,7 +350,7 @@ input:focus {
     right: 40px;
 }
 
-.work-times-table, .vacation-table {
+.work-times-table, .vacation-table, .sickness-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
@@ -428,7 +428,7 @@ dialog {
     align-items: center;
 }
 
-#work-time-dialog, #vacation-dialog {
+#work-time-dialog, #vacation-dialog, #sickness-dialog {
     display: none;
 }
 
