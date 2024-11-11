@@ -4,6 +4,8 @@ import {AbsenceType_Techcode} from "../../DB/Techcodes/AbsenceType_Techcode.js";
 import {authenticate} from "../authenticationMiddleware.js";
 import {Staff} from "../../DB/Entities/Staff.js";
 import {FlexTime} from "../../DB/Entities/FlexTime.js";
+import {Absence} from "../../DB/Entities/Absence.js";
+import {PermissionStatusTechcode} from "../../DB/Techcodes/PermissionStatus_Techcode.js";
 
 const router = Router();
 async function validateStaffTimeTableEntries(staff:Staff) {
@@ -80,7 +82,7 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek:boolea
     return performedHoursThisWeek;
 }
 
-async function calcuclateThisMonthHours(staff:Staff){
+async function calculateThisMonthHours(staff:Staff){
     const currentDate:Date = new Date();
     const month = currentDate.getMonth(); // 0-11
     const timetableEntries = staff.timetables.filter(timetable => {
@@ -169,7 +171,7 @@ router.get("/", authenticate, async (req: Request, res: Response) => {
         const hoursPreviousWeek:number = await calculateHoursThisOrPreviousWeek(staff, true) ?? 0;
         const sickDays:number =  calculateSickDays(staff) ?? 0;
         const remainingVacationDays:number =  calculateRemainingVacationDays(staff) ?? 0;
-        const hoursThisMonth:number = await calcuclateThisMonthHours(staff) ?? 0;
+        const hoursThisMonth:number = await calculateThisMonthHours(staff) ?? 0;
         const mustWorkHoursMonth:number = staff.target_hours * getDaysInMonth(currentDate, staff);
         const dashboardStatistics = {
             flexTime: flexTime.toFixed(2),
@@ -186,5 +188,37 @@ router.get("/", authenticate, async (req: Request, res: Response) => {
         res.status(500).json({message: "Error calculating dashboard statistics"});
     }
 });
-
+router.get("/vacations", authenticate, async (req: Request, res: Response) => {
+    try {
+        const user = req.body.user;
+        const staff = await getStaffByKey("staff_id", user.staff.staff_id);
+        if (!staff) {
+            console.error("No such staff!");
+            console.error(`param was: ${req.params.id}\nstaffId was ${user.staff.staff_id}`);
+            return;
+        }
+        const absences: Absence[]|undefined = await Absence.find({
+            where:{
+                staff:{
+                    staff_id: staff.staff_id
+                },
+                type_techcode: AbsenceType_Techcode.VACATION,
+            }
+        });
+        if (!absences) {
+            console.error("No Vacations found");
+            return;
+        }
+        const vacationStatistics = {
+            maxAllowedVacationDays: staff.max_vacation_days,
+            unplannedVacationDays: staff.max_vacation_days - absences.filter(absence => absence.permission_status == PermissionStatusTechcode.AKNOWLEDGED || PermissionStatusTechcode.APPROVED).length,
+            takenVacationDays: staff.max_vacation_days - absences.filter(absence => absence.permission_status == PermissionStatusTechcode.APPROVED).length,
+            deniedVacationDays: absences.filter(absence => absence.permission_status == PermissionStatusTechcode.REJECTED).length
+        }
+        res.json(vacationStatistics);
+    } catch (error) {
+        console.error("Error calculating vacation statistics", error);
+        res.status(500).json({message: "Error calculating vacation statistics"});
+    }
+});
 export default router;

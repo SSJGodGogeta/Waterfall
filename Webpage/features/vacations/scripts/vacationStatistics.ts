@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const denied_vacations_value: HTMLHeadingElement = denied_vacations.querySelector(".statistics_value") as HTMLHeadingElement;
     try {
         //TODO: Define a new route to get vacation specific data from the api. This is currently wrong and access the data from my work times.
-        const response = await fetch("http://localhost:3000/api/calculateStatistics",
+        const response = await fetch("http://localhost:3000/api/calculateStatistics/vacations",
             {
                 method: "GET",
                 credentials: "include",
@@ -25,12 +25,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
             throw new Error("Network response was not ok " + response.statusText);
         }
-        const dashboardStatistics = await response.json();
+        const vacationStatistics = await response.json();
         // for now, we'll just create some dummy data
-        max_vacation_days_value.textContent = `${dashboardStatistics.hoursThisWeek} hr`;
-        unplanned_vacation_days_value.textContent = `${dashboardStatistics.hoursPreviousWeek} hr`;
-        taken_vacation_days_value.textContent = `${dashboardStatistics.hoursThisMonth} hr`;
-        denied_vacations_value.textContent = `${dashboardStatistics.mustWorkHoursMonth} hr`;
+        max_vacation_days_value.textContent = `${vacationStatistics.maxAllowedVacationDays} days`;
+        unplanned_vacation_days_value.textContent = `${vacationStatistics.unplannedVacationDays} days`;
+        taken_vacation_days_value.textContent = `${vacationStatistics.takenVacationDays} days`;
+        denied_vacations_value.textContent = `${vacationStatistics.deniedVacationDays} days`;
     }
     catch (error) {
         console.error("Failed to get statistics from server:", error);
