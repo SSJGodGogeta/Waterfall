@@ -31,6 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (!response.ok) {
+                if (response.status == 401) {
+                    window.location.href = "/Waterfall/Webpage/authentication/login.html"
+                    return;
+                }
                 throw new Error("Failed to save new entry");
             }
             await response.json();

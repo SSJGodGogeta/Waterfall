@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const denied_vacations_value: HTMLHeadingElement = denied_vacations.querySelector(".statistics_value") as HTMLHeadingElement;
     try {
         //TODO: Define a new route to get vacation specific data from the api. This is currently wrong and access the data from my work times.
-        // Would be also good to clear up the code later and organize it better. Soo many redundancies and bad structure... Blame me (Arman)
         const response = await fetch("http://localhost:3000/api/calculateStatistics",
             {
                 method: "GET",
@@ -20,6 +19,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         );
         if (!response.ok) {
+            if (response.status == 401) {
+                window.location.href = "/Waterfall/Webpage/authentication/login.html"
+                return;
+            }
             throw new Error("Network response was not ok " + response.statusText);
         }
         const dashboardStatistics = await response.json();

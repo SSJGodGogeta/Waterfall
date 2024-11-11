@@ -36,6 +36,10 @@ refresh_button.onclick = async function () {
             }
         );
         if (!response.ok) {
+            if (response.status == 401) {
+                window.location.href = "/Waterfall/Webpage/authentication/login.html"
+                return;
+            }
             throw new Error("Network response was not ok " + response.statusText);
         }
         window.location.reload();
