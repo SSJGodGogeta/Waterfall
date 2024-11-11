@@ -29,10 +29,6 @@ loginButton.onclick = async function () {
        });
 
        if (!response.ok) {
-           if (response.status == 401) {
-               window.location.href = "/Waterfall/Webpage/authentication/login.html"
-               return;
-           }
            throw new Error(response.status + " - " + response.statusText);
        }
 
