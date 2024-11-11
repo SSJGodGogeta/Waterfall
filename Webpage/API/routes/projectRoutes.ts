@@ -9,8 +9,9 @@ const router = Router();
 
 router.get("/", authenticate, async (_req: Request, res: Response) => {
     try {
-        const projects:Project[]|null = await getProjectFromDBOrCache();
-        res.json(projects);
+        const projectsFromApi:Project[]|null = await getProjectFromDBOrCache();
+        const user = _req.body.user
+        res.json({projectsFromApi, user});
     } catch (error) {
         console.error("Error fetching projects:", error);
         res.status(500).json({message: "Failed to fetch projects"});

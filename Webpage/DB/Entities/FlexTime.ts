@@ -10,9 +10,6 @@ export class FlexTime extends BaseEntity {
     @Column({ type: 'double', nullable: true })
     available_flextime?: number;
 
-    @Column({ length: 45, nullable: true })
-    flex_time_techcode?: string;
-
     // Define Many-to-One relationship to Staff
     @ManyToOne('Staff', (staff: Staff) => staff.flexTimes)
     @JoinColumn({

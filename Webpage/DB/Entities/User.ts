@@ -28,5 +28,5 @@ export class User extends BaseEntity{
     user_token?: string;
 
     @OneToOne('Staff', (staff:Staff) => staff.user)
-    staff?: Staff;
+    staff!: Staff;
 }

@@ -10,9 +10,16 @@ export async function getProjectFromDBOrCache(): Promise<Project[] | null>  {
         try {
             projectCache = (await Project.find({
                 relations: {
-                    group:true,
+                    group: {
+                        staff_members:{
+                            user:true,
+
+                        }
+                    },
                     assignedGroups: true,
-                    assigned_staff_to_project:true
+                    assigned_staff_to_project: {
+                        user:true
+                    }
                 }
             }));
         } catch (error) {

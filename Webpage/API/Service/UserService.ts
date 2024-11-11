@@ -12,6 +12,7 @@ export async function getUsersFromDBOrCache(): Promise<User[] | null>  {
                 relations: {
                     staff: {
                         role: true,
+                        group:true,
                     }
                 }
             }));

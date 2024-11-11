@@ -11,46 +11,26 @@ document.addEventListener("DOMContentLoaded", async function () {
     const sick_days_value: HTMLHeadingElement = sick_days.querySelector(".statistics_value") as HTMLHeadingElement;
     const remaining_vacation_days_value: HTMLHeadingElement = remaining_vacation_days.querySelector(".statistics_value") as HTMLHeadingElement;
 
-    // TODO: fetch actual statistics from backend
     try {
-        const responseCurrentuser = await fetch(
-            "http://localhost:3000/api/authentication/currentUser",
-            {
-                method: "GET",
-                credentials: 'include', // allow receiving cookies
-            }
-        );
-
-        if (!responseCurrentuser.ok) {
-            throw new Error("Network response was not ok " + responseCurrentuser.statusText);
-        }
-
-        const user = await responseCurrentuser.json();
-        console.log("Fetched user:", user);
-
-        const response = await fetch("http://localhost:3000/api/calculateStatistics/:" + user.staff.staff_id,
+        const response = await fetch("http://localhost:3000/api/calculateStatistics",
         {
             method: "GET",
             credentials: "include",
         }
         );
         if (!response.ok) {
+            if (response.status == 401) {
+                window.location.href = "/Waterfall/Webpage/authentication/login.html"
+                return;
+            }
             throw new Error("Network response was not ok " + response.statusText);
         }
-        const dashboardStatistiics = await response.json();
-        console.log(dashboardStatistiics);
+        const dashboardStatistics = await response.json();
         // for now, we'll just create some dummy data
-        hours_this_week_value.textContent = `${dashboardStatistiics.hoursThisWeek} hr`;
-        flex_time_account_value.textContent = `${dashboardStatistiics.flexTime} hr`;
-        sick_days_value.textContent = `${dashboardStatistiics.sickDays} days`;
-        remaining_vacation_days_value.textContent = `${dashboardStatistiics.remainingVacationDays} days`;
-        /*
-        flexTime: flexTime,
-            hoursThisWeek: hoursThisWeek,
-            hoursPreviousWeek: hoursPreviousWeek,
-            sickDays: sickDays,
-            remainingVacationDays: remainingVacationDays
-         */
+        hours_this_week_value.textContent = `${dashboardStatistics.hoursThisWeek} hr`;
+        flex_time_account_value.textContent = `${dashboardStatistics.flexTime} hr`;
+        sick_days_value.textContent = `${dashboardStatistics.sickDays} days`;
+        remaining_vacation_days_value.textContent = `${dashboardStatistics.remainingVacationDays} days`;
     }
     catch (error) {
         console.error("Failed to get statistics from server:", error);
