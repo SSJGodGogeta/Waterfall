@@ -15,6 +15,9 @@ export class User extends BaseEntity{
     @Column({ length: 75 })
     user_email!: string;
 
+    @Column({ length: 500 })
+    user_imageurl!: string;
+
     @Column({ type: 'timestamp' })
     login_timeStamp!: Date;
 
@@ -25,5 +28,5 @@ export class User extends BaseEntity{
     user_token?: string;
 
     @OneToOne('Staff', (staff:Staff) => staff.user)
-    staff?: Staff;
+    staff!: Staff;
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Dashboard</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/Webpage/style.css" type="text/css">
@@ -12,12 +12,33 @@
     <body class="screen">
         <div>
             <div class="sidebar">
-                <img width="130px" height="130px" src="/Webpage/assets/logo.png" alt="logo">
-                <br><br>
-                <li class="navigationButton" id="dashboard" data-selected="true">Dashboard</li>
-                <li id="my_work_times" class="navigationButton">My work times</li>
-                <li id="my_vacations" class="navigationButton">My vacations</li>
-                <li id="sickness" class="navigationButton">Sickness</li>
+                <div>
+                    <img width="130px" height="130px" src="/Webpage/assets/logo.png" alt="logo">
+                    <br><br>
+
+                   <ul class="navigationButtonContainer">
+                       <li  id="dashboard" class="navigationButton" data-selected="true">Dashboard</li>
+                       <li id="my_work_times" class="navigationButton">My work times</li>
+                       <li id="my_vacations" class="navigationButton">My vacations</li>
+                       <li id="sickness" class="navigationButton">Sickness</li>
+                       <li id="refresh" class="navigationButton">
+                           <span class="refresh-icon">↻</span>
+                           Refresh page
+                       </li>
+                   </ul>
+                </div>
+
+                <div class="profile">
+                    <img id="profile_picture" src="/Webpage/assets/placeholder_profile_picture.png" alt="">
+                    <div id="profile_details">
+                        <h4 id="name"></h4>
+                        <p id="role"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="logout-section">
+                <button id="shutdownButton" class="shutdown-button">Logout</button>
             </div>
         </div>
 
@@ -46,12 +67,12 @@
                     <h1 class="statistics_value">-</h1>
                 </div>
             </div>
-            
+
             <div style="height: 40px;"></div>
 
             <h4>My projects:</h4>
             <div class="element_container" id="my_projects">
-                
+
             </div>
 
             <div style="height: 40px;"></div>
@@ -63,7 +84,7 @@
         </div>
 
         <script src="/Webpage/dist/navigation.js"></script>
-        <script src="/Webpage/dist/features/dashboard/scripts/user.js"></script>
+        <script src="/Webpage/dist/features/user.js"></script>
         <script src="/Webpage/dist/features/dashboard/scripts/statistics.js"></script>
         <script src="/Webpage/dist/features/dashboard/scripts/projects.js"></script>
         <script src="/Webpage/dist/features/dashboard/scripts/events.js"></script>

@@ -1,9 +1,10 @@
 // Waterfall/Webpage/API/routes/roleRoutes.ts
 import {Router, Request, Response} from "express";
-import {User} from "../../DB/Entities/User.js";
-import {authenticate} from "../authenticationMiddleware.js";
 import bcrypt from 'bcryptjs';
 import crypto from "crypto";
+import {User} from "../../DB/Entities/User.js";
+import {authenticate} from "../authenticationMiddleware.js";
+import {clearUserCache, getUserByKey} from "../Service/UserService.js";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.post("/login", async (req: Request, res: Response) => {
         let { email, password } = req.body;
 
         // get the user corresponding to the given email
-        const user = await User.findOneBy({user_email: email});
+        const user:User|undefined = await getUserByKey("user_email", email);
         if (!user) {
             res.status(401).json({message: "Email or password incorrect"});
             return;
@@ -36,6 +37,7 @@ router.post("/login", async (req: Request, res: Response) => {
         // generate the user aka session token and store it in the database
         user.user_token = crypto.randomBytes(64).toString('hex'); // 128 characters (64 bytes in hex)
         await user.save();
+        clearUserCache();
 
         // Set the token as a secure HttpOnly cookie
         res.cookie('session_token', user.user_token, {
@@ -66,12 +68,22 @@ router.get("/currentUser", authenticate, async (req: Request, res: Response) => 
 
 router.post("/logout", authenticate, async (req: Request, res: Response) => {
     try {
-        // remove the user aka session token and with that log the user out
-        let { request_body } = req.body;
-        const user: User = request_body.user;
-
+        const user: User = req.body.user;
+        if (!user) {
+            res.status(400).json({ message: "User not found" });
+            return;
+        }
         user.user_token = '';
         await user.save();
+        clearUserCache();
+
+        // Clear the cookie from the client
+        res.clearCookie("session_token", {
+            httpOnly: true,
+            secure: false, // Use true if HTTPS in production
+            sameSite: "lax",
+        });
+
 
         res.status(200).json({ message: "Logout successful" });
         return;

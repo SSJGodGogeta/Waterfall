@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `waterfall_swe`.`user` (
                                                       `user_id` INT NOT NULL AUTO_INCREMENT,
                                                       `user_email` VARCHAR(75) NOT NULL,
                                                     `user_password` VARCHAR(100) NOT NULL,
+                                                    `user_imageurl` VARCHAR(500) NULL DEFAULT NULL,
     PRIMARY KEY (`user_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
@@ -296,3 +297,15 @@ ALTER TABLE `waterfall_swe`.`project`
 ALTER TABLE `waterfall_swe`.`user`
 ADD COLUMN `login_timeStamp` TIMESTAMP
 COLLATE utf8mb4_0900_ai_ci;
+
+-- changeset arman:ar5
+ALTER TABLE `waterfall_swe`.`timetable` MODIFY `index` INT NOT NULL AUTO_INCREMENT UNIQUE;
+
+-- changeset arman:ar6
+ALTER TABLE `waterfall_swe`.`flex_time`
+DROP COLUMN `flex_time_techcode`;
+
+-- changeset arman:ar7
+ALTER TABLE `waterfall_swe`.`absence`
+ADD COLUMN `response` VARCHAR(300)
+    COLLATE utf8mb4_0900_ai_ci;

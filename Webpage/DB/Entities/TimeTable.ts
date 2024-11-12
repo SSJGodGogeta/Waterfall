@@ -4,13 +4,14 @@ import {
     BaseEntity, PrimaryGeneratedColumn, ManyToOne, JoinColumn,
 } from 'typeorm';
 import type {Staff} from "./Staff.js";
+import {AbsenceType_Techcode} from "../Techcodes/AbsenceType_Techcode.js";
 
 
 // Timetable Entity
 @Entity('timetable')
 export class Timetable extends BaseEntity{
     @PrimaryGeneratedColumn()
-    index!: string;
+    index!: number;
 
     @Column({ type: 'date' })
     date!: Date;
@@ -34,7 +35,7 @@ export class Timetable extends BaseEntity{
     difference_performed_target!: number;
 
     @Column({ length: 45, nullable: true })
-    abscence?: string;
+    abscence?: AbsenceType_Techcode;
 
     @ManyToOne('Staff', (staff:Staff) => staff.timetables)
     @JoinColumn({

@@ -1,28 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>My Work Times</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/Webpage/style.css" type="text/css">
     </head>
 
     <body class="screen">
-        <script src="/navigation.js"></script>
-        
         <div>
             <div class="sidebar">
-                <img width="130px" height="130px" src="/assets/logo.png" alt="logo">
-                <br><br>
-                <li class="navigationButton" id="dashboard">Dashboard</li>
-                <li id="my_work_times" class="navigationButton" data-selected="true">My work times</li>
-                <li id="my_vacations" class="navigationButton">My vacations</li>
-                <li id="sickness" class="navigationButton">Sickness</li>
+                <div>
+                    <img width="130px" height="130px" src="/Webpage/assets/logo.png" alt="logo">
+                    <br><br>
+
+                    <ul class="navigationButtonContainer">
+                        <li  id="dashboard" class="navigationButton">Dashboard</li>
+                        <li id="my_work_times" class="navigationButton" data-selected="true">My work times</li>
+                        <li id="my_vacations" class="navigationButton">My vacations</li>
+                        <li id="sickness" class="navigationButton">Sickness</li>
+                        <li id="refresh" class="navigationButton">
+                            <span class="refresh-icon">↻</span>
+                            Refresh page
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="profile">
+                    <img id="profile_picture" src="/Webpage/assets/placeholder_profile_picture.png" alt="">
+                    <div id="profile_details">
+                        <h4 id="name"></h4>
+                        <p id="role"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content">
+                <h1 id="my_work_times_headline">My work times</h1>
+                <button class="add-time-button" id="add-time-button" >Add Time</button>
+
+                <div class="element_container" id="statistics">
+                    <div class="statistics_element" id="hours_this_week">
+                        <p class="statistics_title">Hours this week</p>
+                        <h1 class="statistics_value">-</h1>
+                    </div>
+                    <div class="statistics_element" id="hours_previous_week">
+                        <p class="statistics_title">Hours previous week</p>
+                        <h1 class="statistics_value">-</h1>
+                    </div>
+                    <div class="statistics_element" id="hours_this_month">
+                        <p class="statistics_title">Hours this month</p>
+                        <h1 class="statistics_value">-</h1>
+                    </div>
+                    <div class="statistics_element" id="must_work_time_month">
+                        <p class="statistics_title">Planned hours this month</p>
+                        <h1 class="statistics_value">-</h1>
+                    </div>
+                </div>
+
+                <!-- Work Times Table -->
+                <table class="work-times-table">
+                    <thead>
+                    <tr>
+                        <th id="date">Date</th>
+                        <th id="week">Week</th>
+                        <th id="weekday">Weekday</th>
+                        <th id="start">Start</th>
+                        <th id="end">End</th>
+                        <th id="pause">Pause</th>
+                        <th id="worked_hour">Worked Hours</th>
+                        <th id="absence">Absence</th>
+                        <th id="difference_to_required">Difference to Required</th>
+                    </tr>
+                    </thead>
+                    <tbody id="work-times-body">
+                    <!-- Data will be inserted here by fetching it from the backend. -->
+                    </tbody>
+                </table>
+
+                <div class="logout-section">
+                    <button id="shutdownButton" class="shutdown-button">Logout</button>
+                </div>
             </div>
         </div>
+        <dialog id="work-time-dialog">
+            <div class="dialogContainer">
+                <form id="work-time-form">
+                    <h2>Add time</h2>
+                    <p class="hint">Note your work times here, so that we can track it easily and pay you the right amount at the end of the month</p>
+                    <label for="work-time-date" class="input-label">Date</label>
+                    <input class="textField" type="date" id="work-time-date" required>
 
-        
+                    <label for="work-time-start" class="input-label">Start at</label>
+                    <input class="textField" type="time" id="work-time-start" required>
+
+                    <label for="work-time-end" class="input-label">End at</label>
+                    <input class="textField" type="time" id="work-time-end" required>
+
+                    <label for="work-time-pause" class="input-label">Pause in min</label>
+                    <input class="textField" type="number" placeholder="0" id="work-time-pause" required>
+
+                    <label for="work-time-absence" class="input-label">Absence?</label>
+                    <input list="absence-types" class="textField" id="work-time-absence" name="absence-techcode" required>
+                    <datalist id="absence-types">
+                        <option value="NONE">
+                        <option value="VACATION">
+                        <option value="SICK">
+                        <option value="FREE">
+                    </datalist>
+
+                    <button style="margin-bottom: 20px" id="add-time-save-button" type="submit">Save</button>
+                    <button style="margin-bottom: 20px" id="cancel-add-time-button" type="button">Cancel</button>
+                </form>
+            </div>
+        </dialog>
+        <script src="/Webpage/dist/navigation.js"></script>
+        <script src="/Webpage/dist/features/user.js"></script>
+        <script src="/Webpage/dist/features/work_times/scripts/worktimeStatistics.js"></script>
+        <script src="/Webpage/dist/features/work_times/scripts/timeTable.js"></script>
+        <script src="/Webpage/dist/features/work_times/scripts/registerWork.js"></script>
+
     </body>
 </html>
