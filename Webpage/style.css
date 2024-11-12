@@ -171,11 +171,11 @@ input:focus {
     margin-top: 5px;
 }
 
-#hours_this_week, #max_vacation_days {
+#hours_this_week, #max_vacation_days, #sick_days_this_month {
     background-color: var(--primary-color);
 }
 
-#flex_time_account, #hours_previous_week, #unplanned_vacation_days {
+#flex_time_account, #hours_previous_week, #unplanned_vacation_days, #sick_days_last_month {
     background-color: #FE9474;
 }
 
@@ -322,6 +322,9 @@ input:focus {
     border-radius: 10px;
     padding: 10px 30px;
     cursor: pointer;
+    position: fixed;
+    right: 20px;
+    bottom: 15px;
     /*transition: background-color 0.2s ease;*/
 }
 
@@ -333,11 +336,11 @@ input:focus {
     display: flex;
 }
 
-#my_work_times_headline, #my_vacations_headline {
+#my_work_times_headline, #my_vacations_headline, #my_sickness_headline {
     color: black;
 }
 
-.add-time-button, .request-vacation-button {
+.add-time-button, .request-vacation-button, .inform-sickness-button {
     float: right;
     background-color: var(--primary-color);
     color: white;
@@ -350,7 +353,7 @@ input:focus {
     right: 40px;
 }
 
-.work-times-table, .vacation-table {
+.work-times-table, .vacation-table, .sickness-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
@@ -404,6 +407,45 @@ table, th, td {
     width: 15%;
 }
 
+dialog {
+    background-color: transparent;
+    backdrop-filter: blur(2px); /* Blurreffekt */
+    -webkit-backdrop-filter: blur(2px); /* Für Safari */
+
+    position: fixed; /* Fixiert den Dialog über den gesamten Bildschirm */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ganze Bildschirmbreite */
+    height: 100vh; /* Ganze Bildschirmhöhe */
+
+    border: none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#work-time-dialog {
+    display: none;
+}
+
+.dialogContainer {
+    max-width: 500px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.hint {
+    color: grey;
+}
+
+.textField {
+    border: #aaaaaa solid 1px;
+}
+
 #response {
     width: 30%;
 }
@@ -428,7 +470,7 @@ dialog {
     align-items: center;
 }
 
-#work-time-dialog, #vacation-dialog {
+#work-time-dialog, #vacation-dialog, #sickness-dialog {
     display: none;
 }
 

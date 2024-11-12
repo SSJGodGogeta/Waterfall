@@ -10,6 +10,7 @@ import cacheRoute from "./routes/cacheRoute.js";
 import calculateStatistics from "./routes/calculateStatistics.js";
 import timeTableRoute from "./routes/timeTableRoute.js";
 import vacationRoute from "./routes/vacationRoute.js";
+import sicknessRoute from "./routes/sicknessRoute.js";
 // @ts-ignore
 import cookieParser from "cookie-parser";
 import {clearUserCache} from "./Service/UserService.js";
@@ -53,6 +54,7 @@ app.use("/api/clearCache", cacheRoute)
 app.use("/api/calculateStatistics", calculateStatistics);
 app.use('/api/timetable', timeTableRoute);
 app.use("/api/vacation", vacationRoute);
+app.use("/api/sickness", sicknessRoute);
 
 const server = app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

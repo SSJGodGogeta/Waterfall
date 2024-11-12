@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const hours_this_month_value: HTMLHeadingElement = hours_this_month.querySelector(".statistics_value") as HTMLHeadingElement;
     const must_work_time_month_value: HTMLHeadingElement = must_work_time_month.querySelector(".statistics_value") as HTMLHeadingElement;
     try {
-        const response = await fetch("http://localhost:3000/api/calculateStatistics",
+        const response = await fetch("http://localhost:3000/api/calculateStatistics/worktime",
             {
                 method: "GET",
                 credentials: "include",
@@ -24,12 +24,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
             throw new Error("Network response was not ok " + response.statusText);
         }
-        const dashboardStatistics = await response.json();
+        const workTimeStatistics = await response.json();
         // for now, we'll just create some dummy data
-        hours_this_week_value.textContent = `${dashboardStatistics.hoursThisWeek} hr`;
-        hours_previous_week_value.textContent = `${dashboardStatistics.hoursPreviousWeek} hr`;
-        hours_this_month_value.textContent = `${dashboardStatistics.hoursThisMonth} hr`;
-        must_work_time_month_value.textContent = `${dashboardStatistics.mustWorkHoursMonth} hr`;
+        hours_this_week_value.textContent = `${workTimeStatistics.hoursThisWeek} hr`;
+        hours_previous_week_value.textContent = `${workTimeStatistics.hoursPreviousWeek} hr`;
+        hours_this_month_value.textContent = `${workTimeStatistics.hoursThisMonth} hr`;
+        must_work_time_month_value.textContent = `${workTimeStatistics.mustWorkHoursMonth} hr`;
     }
     catch (error) {
         console.error("Failed to get statistics from server:", error);
