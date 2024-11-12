@@ -112,7 +112,7 @@ async function getDashboardOrWorkTimeStatistics(req: Request, res: Response, das
         const staff = await getStaffByKey("staff_id", user.staff.staff_id);
         if (!staff) {
             console.error("No such staff!");
-            console.error(`param was: ${req.params.id}\nstaffId was ${user.staff.staff_id}`);
+            console.error(`staffId was ${user.staff.staff_id}`);
             return;
         }
         await validateStaffTimeTableEntries(staff);
@@ -170,7 +170,7 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
         const staff = await getStaffByKey("staff_id", user.staff.staff_id);
         if (!staff) {
             console.error("No such staff!");
-            console.error(`param was: ${req.params.id}\nstaffId was ${user.staff.staff_id}`);
+            console.error(`staffId was ${user.staff.staff_id}`);
             return;
         }
         let absences: Absence[] | undefined;
