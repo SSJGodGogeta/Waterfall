@@ -21,7 +21,7 @@ async function validateStaffTimeTableEntries(staff: Staff) {
             await tableEntry.save()
             console.log("Updated weekday");
         }
-        if (tableEntry.abscence && (tableEntry.difference_performed_target != -(staff.target_hours) || tableEntry.performed_hours > 0))
+        if (tableEntry.abscence != AbsenceType_Techcode.NONE && (tableEntry.difference_performed_target != -(staff.target_hours)))
             console.error(`Data manipulation detected for staff with ID: ${staff.staff_id} in TimeTable at index: ${tableEntry.index}  by  (${staff.first_name} ${staff.last_name})`);
     }
 }
@@ -33,8 +33,9 @@ export function getWeekday(date: Date): string {
 }
 
 async function calculateHours(timetableEntries: Timetable[], staff: Staff, mondayStart: Date | undefined, sundayEnd: Date | undefined, monthly: boolean = false): Promise<number> {
-    if (!timetableEntries || !staff) return -1;
+    if (!timetableEntries || !staff || timetableEntries.length == 0) return -1;
     let hours = 0;
+    console.error("ENTRIES: ", timetableEntries.length);
     for (const timetableEntry of timetableEntries) {
         const start = new Date(timetableEntry.start);
         const end = new Date(timetableEntry.end);
@@ -60,30 +61,44 @@ async function calculateHours(timetableEntries: Timetable[], staff: Staff, monda
         const workedHours = workedMinutes / 60;
         hours += workedHours;
     }
+    console.error("HOURS: ", hours);
     return hours;
 }
 
+async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek = false) {
+    const currentDate = new Date();
+    const daysToMonday = (currentDate.getDay() + 6) % 7; // Days to last Monday
 
-async function calculateHoursThisOrPreviousWeek(staff: Staff, previousWeek: boolean = false): Promise<number | null> {
-    // Get the current date and calculate the start and end of this week
-    const daysToMonday: number = (currentDate.getDay() + 6) % 7; // Get number of days to Monday
-    const mondayStart: Date = new Date(currentDate);
-    // If u want to calculate the hours of the previousweek, its the same procedure just 7 days earlier => mondaystart
-    previousWeek ? mondayStart.setDate(currentDate.getDate() - daysToMonday - 7) : mondayStart.setDate(currentDate.getDate() - daysToMonday); // Set to Monday
+    // Adjust `mondayStart` based on `previousWeek`
+    const mondayStart = new Date(currentDate);
+    if (previousWeek) {
+        mondayStart.setDate(currentDate.getDate() - daysToMonday - 8); // Go back to previous week's Monday
+    } else {
+        mondayStart.setDate(currentDate.getDate() - daysToMonday+1); // This week's Monday
+    }
+    mondayStart.setHours(0, 0, 0, 0);
+
+    // Set `sundayEnd` to the end of the same week (current or previous)
     const sundayEnd = new Date(mondayStart);
-    sundayEnd.setDate(mondayStart.getDate() + 6); // Set to Sunday
-    // Filter the timetable entries for this week, where the staff member worked
-    const timetableEntries = staff.timetables.filter(timetable => {
-        const entryDate = new Date(timetable.date);
-        return entryDate >= mondayStart && entryDate <= sundayEnd && timetable.abscence == AbsenceType_Techcode.NONE;
+    sundayEnd.setDate(mondayStart.getDate() + 5); // Move to Sunday of that week
+    sundayEnd.setHours(23, 59, 59, 999);
+
+    console.log("Week Start (Monday):", mondayStart);
+    console.log("Week End (Sunday):", sundayEnd);
+    //console.error("Entries in staff.timetables = ", staff.timetables);
+    // Filter timetables within this week's range, with no absence
+    const timetableEntries = staff.timetables.filter(entry => {
+        return entry.abscence?.includes(AbsenceType_Techcode.NONE) && (entry.start >= mondayStart && entry.end <= sundayEnd);
     });
     return calculateHours(timetableEntries, staff, mondayStart, sundayEnd, false);
 }
 
+
+
 async function calculateThisMonthHours(staff: Staff) {
     const timetableEntries = staff.timetables.filter(timetable => {
-        const entryDate = new Date(timetable.date);
-        return entryDate.getMonth() == currentDate.getMonth() && timetable.abscence == AbsenceType_Techcode.NONE;
+        const date = new Date(timetable.date);
+        return date.getMonth() == currentDate.getMonth() && timetable.abscence?.includes(AbsenceType_Techcode.NONE);
     });
     return calculateHours(timetableEntries, staff, undefined, undefined, true);
 }
