@@ -35,7 +35,6 @@ export function getWeekday(date: Date): string {
 async function calculateHours(timetableEntries: Timetable[], staff: Staff, mondayStart: Date | undefined, sundayEnd: Date | undefined, monthly: boolean = false): Promise<number> {
     if (!timetableEntries || !staff || timetableEntries.length == 0) return -1;
     let hours = 0;
-    console.error("ENTRIES: ", timetableEntries.length);
     for (const timetableEntry of timetableEntries) {
         const start = new Date(timetableEntry.start);
         const end = new Date(timetableEntry.end);
@@ -61,7 +60,6 @@ async function calculateHours(timetableEntries: Timetable[], staff: Staff, monda
         const workedHours = workedMinutes / 60;
         hours += workedHours;
     }
-    console.error("HOURS: ", hours);
     return hours;
 }
 
@@ -117,6 +115,13 @@ function calculateFlexTime(staff: Staff): number {
     return Math.round((totalDifferenceOnPerformedHours - sollArbeitsStunden));
 }
 
+function calculateDays(absences:Absence[]) {
+    let days = 0;
+    for (const unplanned of absences) {
+        days += (unplanned.end_time.getTime()-unplanned.start_time.getTime())/(60000*60*24);
+    }
+    return days;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////         Wrapper          ////////////////////////////////////////
@@ -153,12 +158,10 @@ async function getDashboardOrWorkTimeStatistics(req: Request, res: Response, das
                 await fTime.save();
                 console.warn(`Flex Time updated/added for ${fTime.staff.staff_id}  (${fTime.staff.first_name} ${fTime.staff.last_name})`);
             }
-            const sickDays: number = staff.timetables.filter(entry => entry.abscence == AbsenceType_Techcode.SICK).length ?? 0;
             const remainingVacationDays: number = staff.max_vacation_days - (staff.timetables.filter(entry => entry.abscence == AbsenceType_Techcode.VACATION).length ?? 0);
             const dashboardStatistics = {
                 flexTime: flexTime.toFixed(2),
                 hoursThisWeek: hoursThisWeek.toFixed(2),
-                sickDays: sickDays.toFixed(2),
                 remainingVacationDays: remainingVacationDays.toFixed(2),
             }
             res.json(dashboardStatistics);
@@ -212,12 +215,16 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
             console.error("No Absences found");
             return;
         }
+
         if (vacation) {
+            const unplannedVacations = absences.filter(absence => absence.permission_status?.includes(PermissionStatusTechcode.AKNOWLEDGED) || absence.permission_status?.includes(PermissionStatusTechcode.APPROVED));
+            const takenVacations = absences.filter(absence => absence.permission_status?.includes(PermissionStatusTechcode.APPROVED));
+            const deniedVacation = absences.filter(absence => absence.permission_status?.includes(PermissionStatusTechcode.REJECTED));
             const vacationStatistics = {
                 maxAllowedVacationDays: staff.max_vacation_days,
-                unplannedVacationDays: staff.max_vacation_days - absences.filter(absence => absence.permission_status == PermissionStatusTechcode.AKNOWLEDGED || PermissionStatusTechcode.APPROVED).length,
-                takenVacationDays: staff.max_vacation_days - absences.filter(absence => absence.permission_status == PermissionStatusTechcode.APPROVED).length,
-                deniedVacationDays: absences.filter(absence => absence.permission_status == PermissionStatusTechcode.REJECTED).length
+                unplannedVacationDays: (staff.max_vacation_days - calculateDays(unplannedVacations)).toFixed(2) ,
+                takenVacationDays: calculateDays(takenVacations),
+                deniedVacationDays: calculateDays(deniedVacation)
             }
             res.json(vacationStatistics);
         } else {
@@ -244,8 +251,8 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
                 hoursThisMonth += durationInHours;
             }
             const sicknessStatistics = {
-                sicknessLastMonth: hoursLastMonth / 24, // days
-                sicknessThisMonth: hoursThisMonth / 24  // days
+                sicknessLastMonth: (hoursLastMonth / 24).toFixed(2), // days
+                sicknessThisMonth: (hoursThisMonth / 24).toFixed(2)  // days
             };
             res.json(sicknessStatistics);
         }

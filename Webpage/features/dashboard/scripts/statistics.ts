@@ -23,10 +23,24 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
             throw new Error("Network response was not ok " + response.statusText);
         }
+        const response2 = await fetch("http://localhost:3000/api/calculateStatistics/sickness",
+            {
+                method: "GET",
+                credentials: "include",
+            }
+        );
+        if (!response.ok) {
+            if (response.status == 401) {
+                window.location.href = "/Waterfall/Webpage/authentication/login.html"
+                return;
+            }
+            throw new Error("Network response was not ok " + response.statusText);
+        }
         const dashboardStatistics = await response.json();
+        const sicknessStatistics = await response2.json();
         hours_this_week_value.textContent = `${dashboardStatistics.hoursThisWeek} hr`;
         flex_time_account_value.textContent = `${dashboardStatistics.flexTime} hr`;
-        sick_days_value.textContent = `${dashboardStatistics.sickDays} days`;
+        sick_days_value.textContent = `${sicknessStatistics.sicknessThisMonth} days`;
         remaining_vacation_days_value.textContent = `${dashboardStatistics.remainingVacationDays} days`;
     }
     catch (error) {
