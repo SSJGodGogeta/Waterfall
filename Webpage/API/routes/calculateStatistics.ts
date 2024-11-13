@@ -71,7 +71,7 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek = fals
     // Adjust `mondayStart` based on `previousWeek`
     const mondayStart = new Date(currentDate);
     if (previousWeek) {
-        mondayStart.setDate(currentDate.getDate() - daysToMonday - 8); // Go back to previous week's Monday
+        mondayStart.setDate(currentDate.getDate() - daysToMonday - 7); // Go back to previous week's Monday
     } else {
         mondayStart.setDate(currentDate.getDate() - daysToMonday+1); // This week's Monday
     }
