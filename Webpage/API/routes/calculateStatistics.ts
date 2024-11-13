@@ -7,6 +7,7 @@ import {FlexTime} from "../../DB/Entities/FlexTime.js";
 import {Absence} from "../../DB/Entities/Absence.js";
 import {PermissionStatusTechcode} from "../../DB/Techcodes/PermissionStatus_Techcode.js";
 import {Timetable} from "../../DB/Entities/TimeTable.js";
+import {getUserByKey} from "../Service/UserService.js";
 
 const router = Router();
 const currentDate: Date = new Date();
@@ -41,7 +42,7 @@ async function calculateHours(timetableEntries: Timetable[], staff: Staff, monda
         const workedMinutes = ((end.getTime() - start.getTime()) / 60000) - timetableEntry.pause_minutes; // Time in minutes
         let change: boolean = false;
         // No need to check for end as we assume that our company doesnt have night shifts.
-        if (monthly && mondayStart && sundayEnd) {
+        if (!monthly && mondayStart && sundayEnd) {
             if (start < mondayStart || start > sundayEnd) {
                 console.error("Skipped " + start);
                 continue;
@@ -56,7 +57,7 @@ async function calculateHours(timetableEntries: Timetable[], staff: Staff, monda
             timetableEntry.difference_performed_target = (workedMinutes / 60) - staff.target_hours;
             change = true;
         }
-        change ? await timetableEntry.save() : console.log("No need to save");
+        if (change) await timetableEntry.save();
         const workedHours = workedMinutes / 60;
         hours += workedHours;
     }
@@ -70,7 +71,7 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek = fals
     // Adjust `mondayStart` based on `previousWeek`
     const mondayStart = new Date(currentDate);
     if (previousWeek) {
-        mondayStart.setDate(currentDate.getDate() - daysToMonday - 8); // Go back to previous week's Monday
+        mondayStart.setDate(currentDate.getDate() - daysToMonday - 7); // Go back to previous week's Monday
     } else {
         mondayStart.setDate(currentDate.getDate() - daysToMonday+1); // This week's Monday
     }
@@ -80,10 +81,6 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek = fals
     const sundayEnd = new Date(mondayStart);
     sundayEnd.setDate(mondayStart.getDate() + 5); // Move to Sunday of that week
     sundayEnd.setHours(23, 59, 59, 999);
-
-    console.log("Week Start (Monday):", mondayStart);
-    console.log("Week End (Sunday):", sundayEnd);
-    //console.error("Entries in staff.timetables = ", staff.timetables);
     // Filter timetables within this week's range, with no absence
     const timetableEntries = staff.timetables.filter(entry => {
         return entry.abscence?.includes(AbsenceType_Techcode.NONE) && (entry.start >= mondayStart && entry.end <= sundayEnd);
@@ -126,9 +123,12 @@ function calculateDays(absences:Absence[]) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////         Wrapper          ////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-async function getDashboardOrWorkTimeStatistics(req: Request, res: Response, dashboard: boolean = true) {
+async function getDashboardOrWorkTimeStatistics(req: Request, res: Response, dashboard: boolean = true, userId:number=0) {
     try {
-        const user = req.body.user;
+        let user = req.body.user;
+        if (userId != 0){
+            user = await getUserByKey("user_id", userId);
+        }
         const staff = await getStaffByKey("staff_id", user.staff.staff_id);
         if (!staff) {
             console.error("No such staff!");
@@ -164,7 +164,8 @@ async function getDashboardOrWorkTimeStatistics(req: Request, res: Response, das
                 hoursThisWeek: hoursThisWeek.toFixed(2),
                 remainingVacationDays: remainingVacationDays.toFixed(2),
             }
-            res.json(dashboardStatistics);
+            //res.json(dashboardStatistics);
+            return dashboardStatistics;
         } else {
             const hoursPreviousWeek: number = await calculateHoursThisOrPreviousWeek(staff, true) ?? 0;
             const hoursThisMonth: number = await calculateThisMonthHours(staff) ?? 0;
@@ -175,16 +176,20 @@ async function getDashboardOrWorkTimeStatistics(req: Request, res: Response, das
                 hoursThisMonth: hoursThisMonth.toFixed(2),
                 mustWorkHoursMonth: mustWorkHoursMonth.toFixed(2),
             }
-            res.json(workTimeStatistics);
+            //res.json(workTimeStatistics);
+            return workTimeStatistics;
         }
     } catch (error) {
         console.error("Error calculating dashboard statistics", error);
         res.status(500).json({message: "Error calculating dashboard statistics"});
     }
 }
-async function getVacationsOrSicknessStatistics(req: Request, res: Response, vacation: boolean = true) {
+async function getVacationsOrSicknessStatistics(req: Request, res: Response, vacation: boolean = true, userId:number=0) {
     try {
-        const user = req.body.user;
+        let user = req.body.user;
+        if (userId != 0){
+            user = await getUserByKey("user_id", userId);
+        }
         const staff = await getStaffByKey("staff_id", user.staff.staff_id);
         if (!staff) {
             console.error("No such staff!");
@@ -215,7 +220,6 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
             console.error("No Absences found");
             return;
         }
-
         if (vacation) {
             const unplannedVacations = absences.filter(absence => absence.permission_status?.includes(PermissionStatusTechcode.AKNOWLEDGED) || absence.permission_status?.includes(PermissionStatusTechcode.APPROVED));
             const takenVacations = absences.filter(absence => absence.permission_status?.includes(PermissionStatusTechcode.APPROVED));
@@ -226,7 +230,8 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
                 takenVacationDays: calculateDays(takenVacations).toFixed(2),
                 deniedVacationDays: calculateDays(deniedVacation).toFixed(2)
             }
-            res.json(vacationStatistics);
+            //res.json(vacationStatistics);
+            return vacationStatistics;
         } else {
             const lastMonthDateStart = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
             const lastMonthDateEnd = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
@@ -254,7 +259,8 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
                 sicknessLastMonth: (hoursLastMonth / 24).toFixed(2), // days
                 sicknessThisMonth: (hoursThisMonth / 24).toFixed(2)  // days
             };
-            res.json(sicknessStatistics);
+            // res.json(sicknessStatistics);
+            return sicknessStatistics;
         }
     } catch (error) {
         console.error("Error calculating vacation/sickness statistics", error);
@@ -267,15 +273,33 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
 ////////////////////////////////////////         Routes          ////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/dashboard", authenticate, async (req: Request, res: Response) => {
-    await getDashboardOrWorkTimeStatistics(req, res);
+    const dashboardStatistics = await  getDashboardOrWorkTimeStatistics(req, res);
+    res.json(dashboardStatistics);
 });
 router.get("/worktime", authenticate, async (req: Request, res: Response) => {
-    await getDashboardOrWorkTimeStatistics(req, res, false);
+    const workTimeStatistics= await getDashboardOrWorkTimeStatistics(req, res, false);
+    res.json(workTimeStatistics);
 });
 router.get("/vacations", authenticate, async (req: Request, res: Response) => {
-    await getVacationsOrSicknessStatistics(req, res);
+    const vacationStatistics = await getVacationsOrSicknessStatistics(req, res);
+    res.json(vacationStatistics);
 });
 router.get("/sickness", authenticate, async (req: Request, res: Response) => {
-    await getVacationsOrSicknessStatistics(req,  res,  false);
+    const sicknessStatistics = await getVacationsOrSicknessStatistics(req,  res,  false);
+    res.json(sicknessStatistics);
 });
+
+router.get("/all/:id", authenticate, async (req: Request, res: Response) => {
+    const userId = parseInt(req.params.id);
+    const dashboardStatistics = await  getDashboardOrWorkTimeStatistics(req, res, true, userId);
+    const workTimeStatistics= await getDashboardOrWorkTimeStatistics(req, res, false, userId);
+    const vacationStatistics = await getVacationsOrSicknessStatistics(req, res,true, userId);
+    const sicknessStatistics = await getVacationsOrSicknessStatistics(req,  res,  false, userId);
+    res.json({
+        dashboardStatistics,
+        workTimeStatistics,
+        vacationStatistics,
+        sicknessStatistics
+    })
+})
 export default router;

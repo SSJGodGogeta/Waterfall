@@ -30,13 +30,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             let duration: number =
                 Math.ceil((new Date(entry.end_time).getTime() - new Date(entry.start_time).getTime()) / 60000);
             // Limit duration to two decimal places
-            if (duration > 60) {
+            if (Math.abs(duration) > 60) {
                 duration = duration/60;
                 einheit = "hr"
-            }
-            if (duration > 24) {
-                duration = duration/24;
-                einheit = "day(s)"
+                // duration in hours
+                if (Math.abs(duration) > 24) {
+                    duration = duration/24;
+                    einheit = "day(s)"
+                }
             }
             let durationTwoDecimals: number = parseFloat(duration.toFixed(2));
             row.innerHTML = `

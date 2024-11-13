@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>My Employees</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/Webpage/style.css" type="text/css">
+    </head>
+
+    <body class="screen">
+        <div>
+            <div class="sidebar">
+                <div>
+                    <img width="130px" height="130px" src="/Webpage/assets/logo.png" alt="logo">
+                    <br><br>
+
+                   <ul class="navigationButtonContainer">
+                       <li  id="dashboard" class="navigationButton">Dashboard</li>
+                       <li id="my_work_times" class="navigationButton">My work times</li>
+                       <li id="my_vacations" class="navigationButton">My vacations</li>
+                       <li id="sickness" class="navigationButton">Sickness</li>
+                       <li id="my_employees" class="navigationButton" data-selected="true">My employees</li>
+                       <li id="my_employees_work_time" class="navigationButton">Work Time Approval</li>
+                       <li id="refresh" class="navigationButton">
+                           <span class="refresh-icon">↻</span>
+                           Refresh page
+                       </li>
+                   </ul>
+                </div>
+
+                <div class="profile">
+                    <img id="profile_picture" src="/Webpage/assets/placeholder_profile_picture.png" alt="">
+                    <div id="profile_details">
+                        <h4 id="name"></h4>
+                        <p id="role"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="logout-section">
+                <button id="shutdownButton" class="shutdown-button">Logout</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <h1 id="my_employees_headline">My employees</h1>
+
+            <!-- Work Times Table -->
+            <table class="employee-table">
+                <thead>
+                <tr>
+                    <th id="employee-id">Staff ID</th>
+                    <th id="employee-name">Name</th>
+                    <th id="employee-start-date">Start-Date</th>
+                    <th id="employee-start">Start</th>
+                    <th id="employee-end-date">End-Date</th>
+                    <th id="employee-end">End</th>
+                    <th id="employee-duration">Duration</th>
+                    <th id="employee-type">Absence</th>
+                    <th id="employee-status">Status</th>
+                    <th id="employee-accept-button" ></th>
+                    <th id="employee-deny-button" ></th>
+                </tr>
+                </thead>
+                <tbody id="employee-body">
+                <!-- Data will be inserted here by fetching it from the backend. -->
+                </tbody>
+            </table>
+        </div>
+
+        <script src="/Webpage/dist/navigation.js"></script>
+        <script src="/Webpage/dist/features/employees/scripts/employees.js"></script>
+    </body>
+</html>
