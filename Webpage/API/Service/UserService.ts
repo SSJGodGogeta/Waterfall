@@ -11,7 +11,9 @@ export async function getUsersFromDBOrCache(): Promise<User[] | null>  {
             userCache = (await User.find({
                 relations: {
                     staff: {
-                        role: true,
+                        role: {
+                            privilege: true,
+                        },
                         group:true,
                     }
                 }
