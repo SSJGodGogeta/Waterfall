@@ -54,24 +54,6 @@ router.post("/:id", authenticate, async (req: Request, res: Response) => {
     console.error(absence.permission_status);
     console.error("\n\nSAVING PERMISSION STATUS\n\n");
     await absence.save();
-    try {
-        const response = await fetch(
-            "http://localhost:3000/api/clearCache",
-            {
-                method: "POST",
-                credentials: 'include', // allow receiving cookies
-            }
-        );
-        if (!response.ok) {
-            if (response.status == 401) {
-                return;
-            }
-            throw new Error("Network response was not ok " + response.statusText);
-        }
-        window.location.reload();
-    } catch (error) {
-        console.error("Failed to fetch user:", error);
-    }
     res.status(201).json(absence);  // Return the saved entry
 
 });
