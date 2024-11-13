@@ -28,7 +28,7 @@ async function validateStaffTimeTableEntries(staff: Staff) {
 
 export function getWeekday(date: Date): string {
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const weekday = date.getDay()
+    const weekday = date.getDay();
     return weekdays[weekday];
 }
 
@@ -223,8 +223,8 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
             const vacationStatistics = {
                 maxAllowedVacationDays: staff.max_vacation_days,
                 unplannedVacationDays: (staff.max_vacation_days - calculateDays(unplannedVacations)).toFixed(2) ,
-                takenVacationDays: calculateDays(takenVacations),
-                deniedVacationDays: calculateDays(deniedVacation)
+                takenVacationDays: calculateDays(takenVacations).toFixed(2),
+                deniedVacationDays: calculateDays(deniedVacation).toFixed(2)
             }
             res.json(vacationStatistics);
         } else {
