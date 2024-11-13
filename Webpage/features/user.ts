@@ -11,26 +11,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     const role: HTMLParagraphElement = document.getElementById("role") as HTMLParagraphElement;
 
     try {
-        const response = await fetch(
-            "http://localhost:3000/api/authentication/currentUser",
-            {
-                method: "GET",
-                credentials: 'include', // allow receiving cookies
-            }
-        );
+        let user;
+        const entityJSON = sessionStorage.getItem("user");
 
-        if (!response.ok) {
-            if (response.status == 401) {
-                window.location.href = "/Waterfall/Webpage/authentication/login.html"
-                return;
-            }
-            throw new Error("Network response was not ok " + response.statusText);
+        if (entityJSON) {
+            const entityObj = JSON.parse(entityJSON);
+            // convert the object to a user entity
+            user = Object.assign(entityObj);
+        } else {
+            window.location.href = "/Webpage/authentication/login.html";
+            return;
         }
 
-        const user = await response.json();
+        if (!user) {
+            window.location.href = "/Webpage/authentication/login.html";
+            return;
+        }
         console.log("Fetched user:", user);
 
-        if (user.staff) {
+        if (user!.staff) {
             if (greeting_element) {
                 greeting_element.textContent = `Hello ${user.staff!.first_name} 👋`;
             }

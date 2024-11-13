@@ -488,3 +488,7 @@ dialog {
 .textField {
     border: #aaaaaa solid 1px;
 }
+
+#my_employees {
+    display: none;
+}
