@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const my_vacations_button: HTMLDataListElement = document.getElementById("my_vacations") as HTMLDataListElement;
     const sickness_button: HTMLDataListElement = document.getElementById("sickness") as HTMLDataListElement;
     const my_employees_button: HTMLDataListElement = document.getElementById("my_employees") as HTMLDataListElement;
+    const my_employees_work_time_button: HTMLDataListElement = document.getElementById("my_employees_work_time") as HTMLDataListElement;
     const refresh_button: HTMLDataListElement = document.getElementById("refresh") as HTMLDataListElement;
     const shutdown_button: HTMLButtonElement = document.getElementById("shutdownButton") as HTMLButtonElement;
 
@@ -53,6 +54,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (user && user.staff) {
         if (user.staff.role.privilege.privilege_techcode != "EMPLOYEE") {
             my_employees_button.style.display = "flex";
+            my_employees_work_time_button.style.display = "flex";
         }
 
         if (user.user_imageurl) {
@@ -108,6 +110,30 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error("Failed to fetch user:", error);
         }
         window.location.href = '/Waterfall/Webpage/features/employees/screens/my_employees.html';
+    }
+
+    my_employees_work_time_button.onclick = async function () {
+        // go to the my employee screen
+        try {
+            const response = await fetch(
+                "http://localhost:3000/api/clearCache",
+                {
+                    method: "POST",
+                    credentials: 'include', // allow receiving cookies
+                }
+            );
+            if (!response.ok) {
+                if (response.status == 401) {
+                    window.location.href = "/Waterfall/Webpage/authentication/login.html"
+                    return;
+                }
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            window.location.reload();
+        } catch (error) {
+            console.error("Failed to fetch user:", error);
+        }
+        window.location.href = '/Waterfall/Webpage/features/employees/screens/my_employee_work.html';
     }
 
     refresh_button.onclick = async function () {

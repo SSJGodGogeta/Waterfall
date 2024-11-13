@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         tableBody.innerHTML = ""; // Clear existing rows
         console.warn("Employees: ", employees);
         for (const employee of employees) {
+            if (employee.staff_id == user.staff.staff_id) continue;
             console.warn("Absences of each employee: ", employee.absences);
             for (const entry of employee.absences){
                 if (entry.type_techcode != absenceCode && absenceCode !== "ALL") continue;
@@ -81,38 +82,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const denyButton = row.querySelector('.deny-button') as HTMLButtonElement;
 
                 acceptButton.onclick = async function () {
-                    const response = await fetch(`http://localhost:3000/api/employees/${entry.absence_id}`, {
-                        method: "POST",
-                        credentials: 'include',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ PermissionStatus: "APPROVED" })
-                    });
-                    if (!response.ok) {
-                        if (response.status == 401) {
-                            window.location.href = "/Waterfall/Webpage/authentication/login.html";
-                            return;
-                        }
-                        throw new Error("Network response was not ok " + response.statusText);
-                    }
+                    await buttonOnCliCk("APPROVED", entry);
                 };
-
                 denyButton.onclick = async function () {
-                    const response = await fetch(`http://localhost:3000/api/employees/${entry.absence_id}`, {
-                        method: "POST",
-                        credentials: 'include',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ PermissionStatus: "REJECTED" })
-                    });
-                    if (!response.ok) {
-                        if (response.status == 401) {
-                            window.location.href = "/Waterfall/Webpage/authentication/login.html";
-                            return;
-                        }
-                        throw new Error("Network response was not ok " + response.statusText);
-                    }
+                    await buttonOnCliCk("REJECTED", entry);
                 };
+            }// End of inner for loop
 
-            }
         }
     } catch (error) {
         console.error("Failed to fetch timetable data:", error);
@@ -125,4 +101,40 @@ function getAbsenceCode(user:any): string|undefined{
     else if (pT == "HR") return "SICK";
     else if (pT == "ADMIN") return "ALL";
     else return undefined
+}
+
+async function buttonOnCliCk(status:string, entry:any) {
+    if (entry.permission_status == "AKNOWLEDGED") {
+        const response = await fetch(`http://localhost:3000/api/employees/${entry.absence_id}`, {
+            method: "POST",
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ PermissionStatus: status })
+        });
+        if (!response.ok) {
+            if (response.status == 401) {
+                window.location.href = "/Waterfall/Webpage/authentication/login.html";
+                return;
+            }
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+        try {
+            const response = await fetch(
+                "http://localhost:3000/api/clearCache",
+                {
+                    method: "POST",
+                    credentials: 'include', // allow receiving cookies
+                }
+            );
+            if (!response.ok) {
+                if (response.status == 401) {
+                    return;
+                }
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            window.location.reload();
+        } catch (error) {
+            console.error("Failed to fetch user:", error);
+        }
+    }
 }
