@@ -27,13 +27,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             if ((entry.index % 2) === 1) row.classList.add('odd-row'); // Adds grey background to odd rows
 
             const date:Date = new Date(entry.date);
-            const onejan = new Date(date.getFullYear(), 0, 1);
-            const millisInDay = 86400000;
+            const weekNumber = getWeekNumber(date);
             // Convert dates to timestamps in milliseconds
 
-            const dayDiff = (date.getTime() - onejan.getTime()) / millisInDay;
-            // Calculate the week number
-            const weekNumber = Math.ceil((dayDiff + onejan.getDay() + 1) / 7);
             const absence:string = entry.abscence ?? "--";
             row.innerHTML = `
                 <td>${date.toLocaleDateString()}</td>
@@ -54,3 +50,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("Failed to fetch timetable data:", error);
     }
 });
+
+function getWeekNumber(date: Date): number {
+    const target = new Date(date);
+    target.setDate(target.getDate() + 4 - (target.getDay() || 7));
+    const yearStart = new Date(target.getFullYear(), 0, 1);
+    return Math.ceil((((target.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+}
