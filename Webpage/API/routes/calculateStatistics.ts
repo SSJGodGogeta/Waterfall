@@ -41,7 +41,7 @@ async function calculateHours(timetableEntries: Timetable[], staff: Staff, monda
         const workedMinutes = ((end.getTime() - start.getTime()) / 60000) - timetableEntry.pause_minutes; // Time in minutes
         let change: boolean = false;
         // No need to check for end as we assume that our company doesnt have night shifts.
-        if (monthly && mondayStart && sundayEnd) {
+        if (!monthly && mondayStart && sundayEnd) {
             if (start < mondayStart || start > sundayEnd) {
                 console.error("Skipped " + start);
                 continue;
@@ -56,7 +56,7 @@ async function calculateHours(timetableEntries: Timetable[], staff: Staff, monda
             timetableEntry.difference_performed_target = (workedMinutes / 60) - staff.target_hours;
             change = true;
         }
-        change ? await timetableEntry.save() : console.log("No need to save");
+        if (change) await timetableEntry.save();
         const workedHours = workedMinutes / 60;
         hours += workedHours;
     }
@@ -80,10 +80,6 @@ async function calculateHoursThisOrPreviousWeek(staff:Staff, previousWeek = fals
     const sundayEnd = new Date(mondayStart);
     sundayEnd.setDate(mondayStart.getDate() + 5); // Move to Sunday of that week
     sundayEnd.setHours(23, 59, 59, 999);
-
-    console.log("Week Start (Monday):", mondayStart);
-    console.log("Week End (Sunday):", sundayEnd);
-    //console.error("Entries in staff.timetables = ", staff.timetables);
     // Filter timetables within this week's range, with no absence
     const timetableEntries = staff.timetables.filter(entry => {
         return entry.abscence?.includes(AbsenceType_Techcode.NONE) && (entry.start >= mondayStart && entry.end <= sundayEnd);
@@ -215,7 +211,6 @@ async function getVacationsOrSicknessStatistics(req: Request, res: Response, vac
             console.error("No Absences found");
             return;
         }
-
         if (vacation) {
             const unplannedVacations = absences.filter(absence => absence.permission_status?.includes(PermissionStatusTechcode.AKNOWLEDGED) || absence.permission_status?.includes(PermissionStatusTechcode.APPROVED));
             const takenVacations = absences.filter(absence => absence.permission_status?.includes(PermissionStatusTechcode.APPROVED));
