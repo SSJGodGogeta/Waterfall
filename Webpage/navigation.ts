@@ -3,6 +3,7 @@ const dashboard_button: HTMLDataListElement = document.getElementById("dashboard
 const my_work_times_button: HTMLDataListElement = document.getElementById("my_work_times") as HTMLDataListElement;
 const my_vacations_button: HTMLDataListElement = document.getElementById("my_vacations") as HTMLDataListElement;
 const sickness_button: HTMLDataListElement = document.getElementById("sickness") as HTMLDataListElement;
+const my_employees_button: HTMLDataListElement = document.getElementById("my_employees") as HTMLDataListElement;
 const refresh_button: HTMLDataListElement = document.getElementById("refresh") as HTMLDataListElement;
 const shutdown_button: HTMLButtonElement = document.getElementById("shutdownButton") as HTMLButtonElement;
 
@@ -25,6 +26,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     sickness_button.onclick = function () {
         // go to the sickness screen
         window.location.href = '/Waterfall/Webpage/features/sickness/screens/sickness.html';
+    }
+
+    my_employees_button.onclick = function () {
+        // go to the my employee screen
+        window.location.href = '/Waterfall/Webpage/features/employees/screens/my_employees.html';
     }
 
     refresh_button.onclick = async function () {
