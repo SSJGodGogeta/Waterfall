@@ -1,12 +1,19 @@
-const dashboard_button: HTMLDataListElement = document.getElementById("dashboard") as HTMLDataListElement;
-const my_work_times_button: HTMLDataListElement = document.getElementById("my_work_times") as HTMLDataListElement;
-const my_vacations_button: HTMLDataListElement = document.getElementById("my_vacations") as HTMLDataListElement;
-const sickness_button: HTMLDataListElement = document.getElementById("sickness") as HTMLDataListElement;
-const my_employees_button: HTMLDataListElement = document.getElementById("my_employees") as HTMLDataListElement;
-const refresh_button: HTMLDataListElement = document.getElementById("refresh") as HTMLDataListElement;
-const shutdown_button: HTMLButtonElement = document.getElementById("shutdownButton") as HTMLButtonElement;
-
 document.addEventListener("DOMContentLoaded", async function () {
+    const dashboard_button: HTMLDataListElement = document.getElementById("dashboard") as HTMLDataListElement;
+    const my_work_times_button: HTMLDataListElement = document.getElementById("my_work_times") as HTMLDataListElement;
+    const my_vacations_button: HTMLDataListElement = document.getElementById("my_vacations") as HTMLDataListElement;
+    const sickness_button: HTMLDataListElement = document.getElementById("sickness") as HTMLDataListElement;
+    const my_employees_button: HTMLDataListElement = document.getElementById("my_employees") as HTMLDataListElement;
+    const refresh_button: HTMLDataListElement = document.getElementById("refresh") as HTMLDataListElement;
+    const shutdown_button: HTMLButtonElement = document.getElementById("shutdownButton") as HTMLButtonElement;
+
+    const profile_picture: HTMLImageElement = document.getElementById("profile_picture") as HTMLImageElement;
+    const name: HTMLHeadingElement = document.getElementById("name") as HTMLHeadingElement;
+    const role: HTMLParagraphElement = document.getElementById("role") as HTMLParagraphElement;
+
+    // only available in dashboard
+    const greeting_element: HTMLHeadingElement|null = document.getElementById("greeting") as HTMLHeadingElement|null;
+
     let user;
 
     // check if user is in session storage
@@ -44,9 +51,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     if (user && user.staff) {
-        console.log(user.staff.role);
         if (user.staff.role.privilege.privilege_techcode == "SUPERVISOR") {
             my_employees_button.style.display = "flex";
+        }
+
+        if (user.user_imageurl) {
+            profile_picture.src = user.user_imageurl;
+        }
+        name.textContent = `${user.staff.first_name} ${user.staff.last_name}`;
+        role.textContent = `${user.staff.role.role_name} at STC`;
+
+        if (greeting_element) {
+            greeting_element.textContent = `Hello ${user.staff!.first_name} 👋`;
         }
     }
 
