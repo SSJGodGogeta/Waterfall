@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     if (user && user.staff) {
-        if (user.staff.role.privilege.privilege_techcode == "SUPERVISOR") {
+        if (user.staff.role.privilege.privilege_techcode != "EMPLOYEE") {
             my_employees_button.style.display = "flex";
         }
 
@@ -86,13 +86,33 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location.href = '/Waterfall/Webpage/features/sickness/screens/sickness.html';
     }
 
-    my_employees_button.onclick = function () {
+    my_employees_button.onclick = async function () {
         // go to the my employee screen
+        try {
+            const response = await fetch(
+                "http://localhost:3000/api/clearCache",
+                {
+                    method: "POST",
+                    credentials: 'include', // allow receiving cookies
+                }
+            );
+            if (!response.ok) {
+                if (response.status == 401) {
+                    window.location.href = "/Waterfall/Webpage/authentication/login.html"
+                    return;
+                }
+                throw new Error("Network response was not ok " + response.statusText);
+            }
+            window.location.reload();
+        } catch (error) {
+            console.error("Failed to fetch user:", error);
+        }
         window.location.href = '/Waterfall/Webpage/features/employees/screens/my_employees.html';
     }
 
     refresh_button.onclick = async function () {
         try {
+            sessionStorage.clear();
             const response = await fetch(
                 "http://localhost:3000/api/clearCache",
                 {

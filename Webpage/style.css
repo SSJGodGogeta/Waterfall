@@ -315,7 +315,7 @@ input:focus {
     z-index: 100; /* Make sure the button is above other elements */
 }
 
-.shutdown-button, #cancel-add-time-button, #cancel-vacation-button {
+.shutdown-button {
     color: white;
     background-color: #ff4d4d; /* A red color to indicate "logout" */
     border: none;
@@ -353,7 +353,7 @@ input:focus {
     right: 40px;
 }
 
-.work-times-table, .vacation-table, .sickness-table {
+.work-times-table, .vacation-table, .sickness-table, .employee-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
@@ -365,28 +365,28 @@ table, th, td {
     border: 1px solid #dcdcdc;
 }
 
-.work-times-table th, .work-times-table td {
+.work-times-table th, .work-times-table td, .employee-table th, .employee-table td {
     padding: 10px 10px;
     text-align: left;
 }
 
-.work-times-table thead > tr > th{
+.work-times-table thead > tr > th, .employee-table thead > tr > th{
     background-color: #D9D9D9;
 }
 
-.work-times-table th {
+.work-times-table th, .employee-table th {
     background-color: #f5f5f5;
 }
 
-.work-times-table tbody tr:nth-child(odd) {
+.work-times-table tbody tr:nth-child(odd), .employee-table tbody tr:nth-child(odd) {
     background-color: #f3f3f3; /* Light grey for odd rows */
 }
 
-.work-times-table tbody tr:nth-child(even) {
+.work-times-table tbody tr:nth-child(even), .employee-table tbody tr:nth-child(even) {
     background-color: #fafafa; /* White for even rows */
 }
 
-.work-times-table tbody tr:hover {
+.work-times-table tbody tr:hover, .employee-table tbody tr:hover {
     background-color: #e1e1e1;
     cursor: pointer;
 }
@@ -491,4 +491,30 @@ dialog {
 
 #my_employees {
     display: none;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deciding-button:hover {
+    background-color: transparent;
+}
+
+.deciding-button {
+    padding: 0;
+    background-color: transparent;
+}
+
+.deciding-button-image {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.deciding-button-image[data-enabled="false"] {
+    filter: grayscale(100%);
+    opacity: 0.5;
 }

@@ -45,8 +45,31 @@
 
         <div class="content">
             <h1 id="my_employees_headline">My employees</h1>
+
+            <!-- Work Times Table -->
+            <table class="employee-table">
+                <thead>
+                <tr>
+                    <th id="employee-id">Staff ID</th>
+                    <th id="employee-name">Name</th>
+                    <th id="employee-start-date">Start-Date</th>
+                    <th id="employee-start">Start</th>
+                    <th id="employee-end-date">End-Date</th>
+                    <th id="employee-end">End</th>
+                    <th id="employee-duration">Duration</th>
+                    <th id="employee-type">Absence</th>
+                    <th id="employee-status">Status</th>
+                    <th id="employee-accept-button" ></th>
+                    <th id="employee-deny-button" ></th>
+                </tr>
+                </thead>
+                <tbody id="employee-body">
+                <!-- Data will be inserted here by fetching it from the backend. -->
+                </tbody>
+            </table>
         </div>
 
         <script src="/Webpage/dist/navigation.js"></script>
+        <script src="/Webpage/dist/features/employees/scripts/employees.js"></script>
     </body>
 </html>
