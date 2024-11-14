@@ -57,9 +57,23 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).toLocaleDateString([],)}</td>
                 <td>${new Date(currentDate.getFullYear(), currentDate.getMonth()+1,0).toLocaleDateString([],)}</td>
                 <td>${dashboardStatistics.flexTime} hrs</td>
-                <td>${workTimeStatistics.hoursThisMonth}/${workTimeStatistics.mustWorkHoursMonth} / ${workTimeStatistics.hoursThisWeek}/${workTimeStatistics.hoursPreviousWeek}</td>
-                <td>${sicknessStatistics.sicknessThisMonth}/${sicknessStatistics.sicknessLastMonth}</td>
-                <td>${vacationStatistics.maxAllowedVacationDays}/${vacationStatistics.takenVacationDays} / ${vacationStatistics.unplannedVacationDays}/${vacationStatistics.deniedVacationDays}</td>
+                <td>
+                    <div class="tooltip">${workTimeStatistics.hoursThisMonth}/${workTimeStatistics.mustWorkHoursMonth}<br>${workTimeStatistics.hoursThisWeek}/${workTimeStatistics.hoursPreviousWeek}
+                        <span class="tooltiptext">hours this month / planned hours this month<br><br>
+                        hours this week / hours previous week</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="tooltip">${sicknessStatistics.sicknessThisMonth}/${sicknessStatistics.sicknessLastMonth}
+                        <span class="tooltiptext">sickness this month / sickness last month</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="tooltip">${vacationStatistics.maxAllowedVacationDays}/${vacationStatistics.takenVacationDays}<br>${vacationStatistics.unplannedVacationDays}/${vacationStatistics.deniedVacationDays}
+                       <span class="tooltiptext">max vacation days / taken vacation days<br><br>
+                       unplanned vacation days / rejected vacation days</span> 
+                    </div>
+                </td>
                 `;
                 tableBody.appendChild(row);
             }// End of inner for loop

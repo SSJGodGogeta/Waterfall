@@ -518,3 +518,29 @@ dialog {
     filter: grayscale(100%);
     opacity: 0.5;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 130px;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltiptext {
+    margin-left: 20px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
