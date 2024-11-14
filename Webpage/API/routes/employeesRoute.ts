@@ -52,7 +52,18 @@ router.post("/:id", authenticate, async (req: Request, res: Response) => {
     }
     absence.permission_status = PermissionStatus;
     console.error(absence.permission_status);
-    console.error("\n\nSAVING PERMISSION STATUS\n\n");
+    if(PermissionStatus.includes("APPROVED")) {
+        let message = `Your request has been approved! Message:\n`;
+        if (absence.type_techcode.includes("VACATION")) message += "You deserved this vacation.";
+        else if (absence.type_techcode.includes("SICK")) message += "Get well soon!" ;
+        absence.response = message;
+    }
+    else if (PermissionStatus.includes("REJECTED")) {
+        let message = "Your request has been denied! Message:\n";
+        if (absence.type_techcode.includes("VACATION")) message += "Im sorry but we cant afford this right now. We need you!";
+        else if (absence.type_techcode.includes("SICK")) message += "Please upload the medical report of your sickness and contact your supervisor.";
+        absence.response = message;
+    }
     await absence.save();
     res.status(201).json(absence);  // Return the saved entry
 
