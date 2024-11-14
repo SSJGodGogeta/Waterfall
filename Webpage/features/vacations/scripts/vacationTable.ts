@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${new Date(entry.end_time).toLocaleDateString([], )}</td>
                 <td>${new Date(entry.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                 <td>${durationTwoDecimals}  ${einheit}</td>
-                <td>${entry.permission_status}</td>
+                <td class="${entry.permission_status.includes("AKNOWLEDGED") ? '' : entry.permission_status.includes("APPROVED") ? 'positive' : 'negative'}">${entry.permission_status}</td>
                 <td>${entry.response}</td>
             `;
             tableBody.appendChild(row);
