@@ -35,8 +35,8 @@ const frontEndPort = 63342;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../../features")));
-console.log("Serving static files from:", path.join(__dirname, "../../features"));
+app.use(express.static(path.join(__dirname, "../../../../")));
+console.log("Serving static files from:", path.join(__dirname, "../../../../"));
 
 // Serve static files from the authentication directory (for login.html and other files)
 app.use('/Webpage/authentication', express.static(path.join(__dirname, "../../authentication")));
