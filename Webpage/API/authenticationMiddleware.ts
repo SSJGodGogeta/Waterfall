@@ -7,12 +7,14 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         const token = req.cookies.session_token;
         if (!token) {
             res.status(401).json({message: "Unauthenticated #1"});
+            console.error("No token");
             return;
         }
 
         // Check if the token exists in the database
         const user = await getUserByKey("user_token", token);
         if (!user) {
+            console.error("No user");
             res.status(401).json({message: "Unauthenticated #2"});
             return;
         }

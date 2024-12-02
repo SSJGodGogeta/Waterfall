@@ -37,13 +37,13 @@ router.post("/login", async (req: Request, res: Response) => {
         // generate the user aka session token and store it in the database
         user.user_token = crypto.randomBytes(64).toString('hex'); // 128 characters (64 bytes in hex)
         await user.save();
-        clearUserCache();
+        // clearUserCache();
 
         // Set the token as a secure HttpOnly cookie
         res.cookie('session_token', user.user_token, {
             httpOnly: true, // js cant access the cookie (prevent XSS Attacks)
-            secure: true, // Only send over HTTPS
-            sameSite: 'strict', // save but will not support cross site workflows like oauth2
+            secure: false, // Only send over HTTPS
+            sameSite: 'none', // save but will not support cross site workflows like oauth2
             maxAge: 24 * 60 * 60 * 1000 // Cookie expiry (24 hours in milliseconds)
         });
 
