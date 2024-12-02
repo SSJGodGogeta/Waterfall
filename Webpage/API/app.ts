@@ -31,9 +31,8 @@ import path from 'path';
 const serverIp = "116.203.25.18";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
-const frontEndPort = 63342;
 app.use(cors({
-    origin: `http://${serverIp}:${frontEndPort}`, // url of the frontend app. adapt as needed
+    origin: `http://${serverIp}:${PORT}`, // url of the frontend app. adapt as needed
     credentials: true, // allow sending credentials
 }));
 // use cookieParser to access the cookies, send with the request
