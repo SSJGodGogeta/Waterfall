@@ -39,6 +39,9 @@ console.log("Serving static files from:", path.join(__dirname, "../../features")
 // Serve CSS and other static resources
 app.use('/Webpage/style.css', express.static(path.join(__dirname, "../../style.css")));
 console.log("Serving CSS from:", path.join(__dirname, "../../style.css"));
+// navigation.ts /Webpage/dist/navigation.js
+app.use('/Webpage/dist/navigation.js', express.static(path.join(__dirname, "../../navigation.ts")));
+console.log("Serving CSS from:", path.join(__dirname, "../../navigation.ts"));
 
 app.use(cors({
     origin: `http://${serverIp}:${PORT}`, // url of the frontend app. adapt as needed
