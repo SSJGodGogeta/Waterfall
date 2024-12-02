@@ -29,7 +29,7 @@ import path from 'path';
 
 
 const serverIp = "116.203.25.18";
-const frontendPort = "63342";
+const frontendPort = "50000";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
 
