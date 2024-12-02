@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const sick_days_last_month_value: HTMLHeadingElement = sick_days_last_month.querySelector(".statistics_value") as HTMLHeadingElement;
 
     try {
-        const response = await fetch("http://localhost:3000/api/calculateStatistics/sickness",
+        const response = await fetch("http://116.203.25.18:3000/api/calculateStatistics/sickness",
             {
                 method: "GET",
                 credentials: "include",

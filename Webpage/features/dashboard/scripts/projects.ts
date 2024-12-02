@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // get the projects container, into which the following code will put the individual projects
     const projects_container: HTMLDivElement = document.getElementById("my_projects") as HTMLDivElement;
     try {
-        const response = await fetch("http://localhost:3000/api/projects",
+        const response = await fetch("http://116.203.25.18:3000/api/projects",
             {
                 method: "GET",
                 credentials: "include",

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const hours_this_month_value: HTMLHeadingElement = hours_this_month.querySelector(".statistics_value") as HTMLHeadingElement;
     const must_work_time_month_value: HTMLHeadingElement = must_work_time_month.querySelector(".statistics_value") as HTMLHeadingElement;
     try {
-        const response = await fetch("http://localhost:3000/api/calculateStatistics/worktime",
+        const response = await fetch("http://116.203.25.18:3000/api/calculateStatistics/worktime",
             {
                 method: "GET",
                 credentials: "include",

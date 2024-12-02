@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const remaining_vacation_days_value: HTMLHeadingElement = remaining_vacation_days.querySelector(".statistics_value") as HTMLHeadingElement;
 
     try {
-        const response = await fetch("http://localhost:3000/api/calculateStatistics/dashboard",
+        const response = await fetch("http://116.203.25.18:3000/api/calculateStatistics/dashboard",
         {
             method: "GET",
             credentials: "include",
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
             throw new Error("Network response was not ok " + response.statusText);
         }
-        const response2 = await fetch("http://localhost:3000/api/calculateStatistics/sickness",
+        const response2 = await fetch("http://116.203.25.18:3000/api/calculateStatistics/sickness",
             {
                 method: "GET",
                 credentials: "include",

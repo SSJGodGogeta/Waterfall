@@ -16,7 +16,7 @@ loginButton.onclick = async function () {
        let email: String = emailAdressInput.value!.trim().toLowerCase(); // trim and lowercase the email address
        let password: String = passwordInput.value!; // read the password
 
-       const response = await fetch("http://localhost:3000/api/authentication/login", {
+       const response = await fetch("http://116.203.25.18:3000/api/authentication/login", {
            method: 'POST',
            headers: {
                'Content-Type': 'application/json',

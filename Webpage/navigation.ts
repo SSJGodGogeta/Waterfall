@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     shutdown_button.onclick = async function () {
         try {
-            const response = await fetch("http://localhost:3000/api/authentication/logout", {
+            const response = await fetch("http://116.203.25.18:3000/api/authentication/logout", {
                 method: 'POST',
                 credentials: 'include', // allow receiving cookies
             });

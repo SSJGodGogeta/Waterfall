@@ -31,29 +31,35 @@ import path from 'path';
 const serverIp = "116.203.25.18";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
+const frontEndPort = 63342;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../../features")));
 console.log("Serving static files from:", path.join(__dirname, "../../features"));
+
 // Serve static files from the authentication directory (for login.html and other files)
 app.use('/Webpage/authentication', express.static(path.join(__dirname, "../../authentication")));
 console.log("Serving authentication folder from:", path.join(__dirname, "../../authentication"));
+
 // Serve JS files from dist folder, ensuring the login.js file is included
 app.use('/Webpage/dist/authentication', express.static(path.join(__dirname, "../../dist/authentication")));
 console.log("Serving js files of authentication from:", path.join(__dirname, "../../dist/authentication"));
+
 // Serve CSS and other static resources
 app.use('/Webpage/style.css', express.static(path.join(__dirname, "../../style.css")));
 console.log("Serving CSS from:", path.join(__dirname, "../../style.css"));
+
 // Serve JS files from dist folder
 app.use('/Webpage/dist', express.static(path.join(__dirname, "../../dist")));
 console.log("Serving js files from:", path.join(__dirname, "../../dist"));
+
 // /Webpage/assets/logo.png
 app.use('/Webpage/assets/', express.static(path.join(__dirname, "../../assets/")));
 console.log("Serving assets from:", path.join(__dirname, "../../assets/"));
 
 app.use(cors({
-    origin: `http://${serverIp}:${PORT}`, // url of the frontend app. adapt as needed
+    origin: `http://${serverIp}:${frontEndPort}`, // url of the frontend app. adapt as needed
     credentials: true, // allow sending credentials
 }));
 app.use(express.json());
@@ -84,7 +90,7 @@ app.use("/api/sickness", sicknessRoute);
 app.use("", dumbassRoute);
 app.use("/api/employees", employeesRoute);
 const server = app.listen(PORT, '0.0.0.0',() => {
-    console.log(`Server running on http://${serverIp}:${PORT}`);
+    console.log(`Backend Server running on http://${serverIp}:${PORT}`);
 });
 
 

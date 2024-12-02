@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Cant save. One or more objects are empty but required.");
                 return;
             }
-            const response = await fetch("http://localhost:3000/api/sickness", {
+            const response = await fetch("http://116.203.25.18:3000/api/sickness", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(entry),

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const taken_vacation_days_value: HTMLHeadingElement = taken_vacation_days.querySelector(".statistics_value") as HTMLHeadingElement;
     const denied_vacations_value: HTMLHeadingElement = denied_vacations.querySelector(".statistics_value") as HTMLHeadingElement;
     try {
-        const response = await fetch("http://localhost:3000/api/calculateStatistics/vacations",
+        const response = await fetch("http://116.203.25.18:3000/api/calculateStatistics/vacations",
             {
                 method: "GET",
                 credentials: "include",
