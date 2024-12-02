@@ -39,9 +39,9 @@ console.log("Serving static files from:", path.join(__dirname, "../../features")
 // Serve CSS and other static resources
 app.use('/Webpage/style.css', express.static(path.join(__dirname, "../../style.css")));
 console.log("Serving CSS from:", path.join(__dirname, "../../style.css"));
-// navigation.ts /Webpage/dist/navigation.js
-app.use('/Webpage/dist/navigation.js', express.static(path.join(__dirname, "..")));
-console.log("Serving navigation.js from:", path.join(__dirname, ".."));
+// Serve JS files from dist folder
+app.use('/Webpage/dist', express.static(path.join(__dirname, "../../dist")));
+console.log("Serving js files from:", path.join(__dirname, "../../dist"));
 // /Webpage/assets/logo.png
 app.use('/Webpage/assets/', express.static(path.join(__dirname, "../../assets/")));
 console.log("Serving assets from:", path.join(__dirname, "../../assets/"));
