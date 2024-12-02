@@ -26,12 +26,13 @@ import {clearStaffCache} from "./Service/StaffService.js";
 
 
 
-
+const serverIp = "116.203.25.18";
+const frontendPort = "63342";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
 
 app.use(cors({
-    origin: 'http://localhost:63342', // url of the frontend app. adapt as needed
+    origin: `http://${serverIp}:${frontendPort}`, // url of the frontend app. adapt as needed
     credentials: true, // allow sending credentials
 }));
 app.use(express.json());
@@ -61,8 +62,8 @@ app.use("/api/vacation", vacationRoute);
 app.use("/api/sickness", sicknessRoute);
 app.use("", dumbassRoute);
 app.use("/api/employees", employeesRoute);
-const server = app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+const server = app.listen(PORT, '0.0.0.0',() => {
+    console.log(`Server running on http://${serverIp}:${PORT}`);
 });
 
 
