@@ -21,7 +21,8 @@ import {clearPrivilegeCache} from "./Service/PrivilegeService.js";
 import {clearProjectCache} from "./Service/ProjectService.js";
 import {clearStaffGroupCache} from "./Service/StaffGroupService.js";
 import {clearStaffCache} from "./Service/StaffService.js";
-import path from "node:path";
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 
 
@@ -32,7 +33,8 @@ const frontendPort = "63342";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
 
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../features")));
 
 app.use(cors({
