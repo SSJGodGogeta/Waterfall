@@ -36,7 +36,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../../features")));
 console.log("Serving static files from:", path.join(__dirname, "../../features"));
-
+// Serve CSS and other static resources
+app.use('/Webpage/style.css', express.static(path.join(__dirname, "../../style.css")));
+console.log("Serving CSS from:", path.join(__dirname, "../../style.css"));
 
 app.use(cors({
     origin: `http://${serverIp}:${PORT}`, // url of the frontend app. adapt as needed
