@@ -41,7 +41,7 @@ router.post("/login", async (req: Request, res: Response) => {
 
         // Set the token as a secure HttpOnly cookie
         res.cookie('session_token', user.user_token, {
-            httpOnly: true, // js cant access the cookie (prevent XSS Attacks)
+            httpOnly: false, // js cant access the cookie (prevent XSS Attacks)
             secure: false, // Only send over HTTPS
             sameSite: 'none', // save but will not support cross site workflows like oauth2
             maxAge: 24 * 60 * 60 * 1000 // Cookie expiry (24 hours in milliseconds)

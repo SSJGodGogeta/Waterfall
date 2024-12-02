@@ -8,15 +8,15 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (!token) {
             res.status(401).json({message: "Unauthenticated #1"});
             console.error("No token");
-            //return;
+            return;
         }
 
         // Check if the token exists in the database
         const user = await getUserByKey("user_token", token);
         if (!user) {
             console.error("No user");
-            //res.status(401).json({message: "Unauthenticated #2"});
-            // return;
+            res.status(401).json({message: "Unauthenticated #2"});
+            return;
         }
         console.log(`Authenticated staff: ${user?.staff?.first_name} ${user?.staff?.last_name}`);
 
