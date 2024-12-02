@@ -36,6 +36,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../../features")));
 console.log("Serving static files from:", path.join(__dirname, "../../features"));
+// Serve static files from the authentication directory (for login.html and other files)
+app.use('/Webpage/authentication', express.static(path.join(__dirname, "../../authentication")));
+console.log("Serving authentication folder from:", path.join(__dirname, "../../authentication"));
+// Serve JS files from dist folder, ensuring the login.js file is included
+app.use('/Webpage/dist/authentication', express.static(path.join(__dirname, "../../dist/authentication")));
+console.log("Serving js files of authentication from:", path.join(__dirname, "../../dist/authentication"));
 // Serve CSS and other static resources
 app.use('/Webpage/style.css', express.static(path.join(__dirname, "../../style.css")));
 console.log("Serving CSS from:", path.join(__dirname, "../../style.css"));
