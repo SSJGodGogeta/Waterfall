@@ -29,7 +29,6 @@ import path from 'path';
 
 
 const serverIp = "116.203.25.18";
-const frontendPort = "50000";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
 
@@ -38,7 +37,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../features")));
 
 app.use(cors({
-    origin: `http://${serverIp}:${frontendPort}`, // url of the frontend app. adapt as needed
+    origin: `http://${serverIp}:${PORT}`, // url of the frontend app. adapt as needed
     credentials: true, // allow sending credentials
 }));
 app.use(express.json());
