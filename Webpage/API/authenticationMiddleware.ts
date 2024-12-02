@@ -8,7 +8,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (!token) {
             res.status(401).json({message: "Unauthenticated #1"});
             console.error("No token");
-            return;
+            //return;
         }
 
         // Check if the token exists in the database
