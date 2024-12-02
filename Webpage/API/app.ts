@@ -40,8 +40,8 @@ console.log("Serving static files from:", path.join(__dirname, "../../features")
 app.use('/Webpage/style.css', express.static(path.join(__dirname, "../../style.css")));
 console.log("Serving CSS from:", path.join(__dirname, "../../style.css"));
 // navigation.ts /Webpage/dist/navigation.js
-app.use('/Webpage/dist/navigation.js', express.static(path.join(__dirname, "../../navigation.ts")));
-console.log("Serving navigation.ts from:", path.join(__dirname, "../../navigation.ts"));
+app.use('/Webpage/dist/navigation.js', express.static(path.join(__dirname, "../navigation.js")));
+console.log("Serving navigation.js from:", path.join(__dirname, "../navigation.js"));
 // /Webpage/assets/logo.png
 app.use('/Webpage/assets/', express.static(path.join(__dirname, "../../assets/")));
 console.log("Serving assets from:", path.join(__dirname, "../../assets/"));
