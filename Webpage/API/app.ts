@@ -36,6 +36,8 @@ app.use(cors({
     origin: `http://${serverIp}:${frontEndPort}`, // url of the frontend app. adapt as needed
     credentials: true, // allow sending credentials
 }));
+// use cookieParser to access the cookies, send with the request
+app.use(cookieParser());
 app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -73,8 +75,7 @@ dataSource.initialize()
         process.exit(1); // Will close the app with code 1
     });
 
-// use cookieParser to access the cookies, send with the request
-app.use(cookieParser());
+
 
 // Use role routes
 app.use("/api/authentication", authenticationRoute)
