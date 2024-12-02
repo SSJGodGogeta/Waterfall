@@ -32,11 +32,13 @@ const serverIp = "116.203.25.18";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
 const frontEndPort = 63342;
-
+app.use(cors({
+    origin: `http://${serverIp}:${frontEndPort}`, // url of the frontend app. adapt as needed
+    credentials: true, // allow sending credentials
+}));
+app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../../../../")));
-console.log("Serving static files from:", path.join(__dirname, "../../../../"));
 
 // Serve static files from the authentication directory (for login.html and other files)
 app.use('/Webpage/authentication', express.static(path.join(__dirname, "../../authentication")));
@@ -45,6 +47,9 @@ console.log("Serving authentication folder from:", path.join(__dirname, "../../a
 // Serve JS files from dist folder, ensuring the login.js file is included
 app.use('/Webpage/dist/authentication', express.static(path.join(__dirname, "../../dist/authentication")));
 console.log("Serving js files of authentication from:", path.join(__dirname, "../../dist/authentication"));
+
+app.use(express.static(path.join(__dirname, "../../../../")));
+console.log("Serving static files from:", path.join(__dirname, "../../../../"));
 
 // Serve CSS and other static resources
 app.use('/Webpage/style.css', express.static(path.join(__dirname, "../../style.css")));
@@ -57,12 +62,6 @@ console.log("Serving js files from:", path.join(__dirname, "../../dist"));
 // /Webpage/assets/logo.png
 app.use('/Webpage/assets/', express.static(path.join(__dirname, "../../assets/")));
 console.log("Serving assets from:", path.join(__dirname, "../../assets/"));
-
-app.use(cors({
-    origin: `http://${serverIp}:${frontEndPort}`, // url of the frontend app. adapt as needed
-    credentials: true, // allow sending credentials
-}));
-app.use(express.json());
 
 // Initialize TypeORM Data Source
 dataSource.initialize()
