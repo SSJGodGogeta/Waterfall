@@ -34,8 +34,9 @@ const PORT = 3000; // Port of the backend (Express)
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../features")));
-console.log("Serving static files from:", path.join(__dirname, "../features"));
+app.use(express.static(path.join(__dirname, "../../features")));
+console.log("Serving static files from:", path.join(__dirname, "../../features"));
+
 
 app.use(cors({
     origin: `http://${serverIp}:${PORT}`, // url of the frontend app. adapt as needed
