@@ -46,6 +46,7 @@ router.post("/login", async (req: Request, res: Response) => {
             sameSite: 'none', // save but will not support cross site workflows like oauth2
             maxAge: 24 * 60 * 60 * 1000 // Cookie expiry (24 hours in milliseconds)
         });
+        console.log(`Session token:\n${user.user_token}\n${req.cookies.session_token}`);
 
         res.status(200).json({ message: "Login successful" });
         return
