@@ -21,6 +21,7 @@ import {clearPrivilegeCache} from "./Service/PrivilegeService.js";
 import {clearProjectCache} from "./Service/ProjectService.js";
 import {clearStaffGroupCache} from "./Service/StaffGroupService.js";
 import {clearStaffCache} from "./Service/StaffService.js";
+import path from "node:path";
 
 
 
@@ -30,6 +31,9 @@ const serverIp = "116.203.25.18";
 const frontendPort = "63342";
 const app = express();
 const PORT = 3000; // Port of the backend (Express)
+
+
+app.use(express.static(path.join(__dirname, "../features")));
 
 app.use(cors({
     origin: `http://${serverIp}:${frontendPort}`, // url of the frontend app. adapt as needed
